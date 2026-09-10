@@ -323,9 +323,121 @@ end
 
 ---
 
-## Step 11: Prepare for Open Source
+## Step 11: Build Without Xcode
 
-### 11.1 Choose a License
+You can build and export the `.app` from the command line. This is useful for CI/CD or if you prefer not to open Xcode.
+
+### 11.1 Requirements
+
+- macOS with **Xcode Command Line Tools** installed.
+- To install them, run:
+
+```bash
+xcode-select --install
+```
+
+### 11.2 Build a Release App Bundle
+
+Run this from the project root:
+
+```bash
+# 1. Clean and archive the app
+xcodebuild archive \
+  -project TextSummarizer.xcodeproj \
+  -scheme TextSummarizer \
+  -destination "generic/platform=macOS" \
+  -archivePath build/TextSummarizer.xcarchive \
+  -configuration Release
+
+# 2. Export the .app bundle
+xcodebuild -exportArchive \
+  -archivePath build/TextSummarizer.xcarchive \
+  -exportPath build/Export \
+  -exportOptionsPlist export-options.plist
+```
+
+The exported `.app` will be at:
+
+```text
+build/Export/TextSummarizer.app
+```
+
+### 11.3 Run the App
+
+Double-click `build/Export/TextSummarizer.app`, or run from the terminal:
+
+```bash
+open build/Export/TextSummarizer.app
+```
+
+### 11.4 Required export-options.plist
+
+Create a file named `export-options.plist` in the project root:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>developer-id</string>
+    <key>teamID</key>
+    <string>YOUR_TEAM_ID</string>
+    <key>signingStyle</key>
+    <string>automatic</string>
+    <key>stripSwiftSymbols</key>
+    <true/>
+    <key>thinFor</key>
+    <string>arm64,x86_64</string>
+</dict>
+</plist>
+```
+
+To sign the app, replace `YOUR_TEAM_ID` with your Apple Developer Team ID. You can find it in the Apple Developer portal or in Xcode under **Signing & Capabilities**.
+
+If you want to export an **unsigned** `.app` for local testing only, use this minimal `export-options.plist` instead:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>mac-application</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>stripSwiftSymbols</key>
+    <true/>
+</dict>
+</plist>
+```
+
+> **Note:** Unsigned apps may show a Gatekeeper warning the first time you open them. Go to **System Settings → Privacy & Security** and click **Open Anyway**.
+
+### 11.5 Package for Distribution
+
+Create a `.zip` or `.dmg` from the exported `.app`:
+
+```bash
+# Zip
+zip -r build/TextSummarizer.zip build/Export/TextSummarizer.app
+
+# Or create a DMG with create-dmg (install with brew install create-dmg)
+create-dmg \
+  --volname "Text Summarizer" \
+  --window-pos 200 120 \
+  --window-size 800 400 \
+  --icon-size 100 \
+  --app-drop-link 600 185 \
+  build/TextSummarizer.dmg \
+  build/Export/TextSummarizer.app
+```
+
+---
+
+## Step 12: Prepare for Open Source
+
+### 12.1 Choose a License
 
 Common choices for macOS utilities:
 
@@ -339,7 +451,7 @@ For broad adoption, **MIT** is recommended.
 
 Create a `LICENSE` file at the repository root.
 
-### 11.2 Write a README.md
+### 12.2 Write a README.md
 
 Include at least:
 
@@ -351,7 +463,7 @@ Include at least:
 6. Privacy note: no telemetry, API keys in Keychain.
 7. License section.
 
-### 11.3 Repository Hygiene
+### 12.3 Repository Hygiene
 
 | File                    | Purpose                                                          |
 | :---------------------- | :--------------------------------------------------------------- |
@@ -362,7 +474,7 @@ Include at least:
 | `Docs/PRD.md`         | Product requirements.                                            |
 | `Docs/setup-guide.md` | This guide.                                                      |
 
-### 11.4 Avoid Secrets in Git
+### 12.4 Avoid Secrets in Git
 
 - API keys must live only in the macOS Keychain.
 - Never commit `.env` files or hardcoded credentials.

@@ -54,7 +54,9 @@ struct TextSummarizerApp: App {
                 settingsPanel.show()
             }
         } label: {
-            Image(systemName: "doc.text")
+            Image("MenuBarIcon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
         .menuBarExtraStyle(.window)
     }

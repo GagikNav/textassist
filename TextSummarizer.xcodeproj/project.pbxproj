@@ -163,6 +163,7 @@
 				BA4D752330533B4B008D9442 /* Sources */,
 				BA4D752430533B4B008D9442 /* Frameworks */,
 				BA4D752530533B4B008D9442 /* Resources */,
+				BA4D754830533D00008D9442 /* Compile Asset Catalog */,
 			);
 			buildRules = (
 			);
@@ -227,6 +228,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BA4D754830533D00008D9442 /* Compile Asset Catalog */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/TextSummarizer/Assets.xcassets",
+			);
+			name = "Compile Asset Catalog";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Assets.car",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ASSETCATALOG=\"$SRCROOT/TextSummarizer/Assets.xcassets\"\nOUTPUT_DIR=\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\nPARTIAL_PLIST=\"$DERIVED_FILE_DIR/assetcatalog_info.plist\"\nmkdir -p \"$OUTPUT_DIR\"\nxcrun actool --output-format human-readable-text --notices --warnings --platform macosx --minimum-deployment-target \"$MACOSX_DEPLOYMENT_TARGET\" --target-device mac --app-icon AppIcon --accent-color AccentColor --development-region en --enable-on-demand-resources NO --output-partial-info-plist \"$PARTIAL_PLIST\" \"$ASSETCATALOG\" --compile \"$OUTPUT_DIR\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BA4D752330533B4B008D9442 /* Sources */ = {
