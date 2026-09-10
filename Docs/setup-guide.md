@@ -1,0 +1,399 @@
+# Text Summarizer — Project Setup Guide
+
+## Overview
+
+This guide explains how to set up the **Text Summarizer** project for macOS development. It is written for developers who are new to macOS or Swift. The project starts as a local build, but it is structured so it can later be distributed via **Homebrew** and published as an **open-source project**.
+
+---
+
+## Target Use Cases
+
+| Stage                           | Goal                                                   | What This Guide Covers |
+| :------------------------------ | :----------------------------------------------------- | :--------------------- |
+| **Local development**     | Build and run the app on your own Mac                  | Steps 1–9             |
+| **Homebrew distribution** | Let users install with`brew install text-summarizer` | Step 10                |
+| **Open source**           | Publish source code on GitHub under a public license   | Step 11                |
+
+---
+
+## Recommended Tech Stack
+
+| Layer              | Choice                                                                                      | Reason                                                                                                |
+| :----------------- | :------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------- |
+| Language           | **Swift 5.9+**                                                                        | Required for native macOS APIs: Accessibility, Keychain, global hotkeys, floating panels.             |
+| UI                 | **SwiftUI + AppKit interop**                                                          | SwiftUI is fast to write; AppKit is used for the menu-bar status item and non-activating popup panel. |
+| Project format     | **Xcode project** (`.xcodeproj`)                                                    | Easier for beginners than SPM alone. Handles signing, entitlements, assets, and app packaging.        |
+| Global hotkeys     | **[KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)** SPM package | Modern, sandbox-friendly, includes a recorder UI.                                                     |
+| Markdown rendering | **[MarkdownUI](https://github.com/gonzalezreal/swift-markdown-ui)** SPM package        | Renders Markdown in SwiftUI with minimal effort.                                                      |
+| Minimum macOS      | **macOS 13 Ventura**                                                                  | Broad compatibility; revisit macOS 14 only if newer features are needed.                              |
+
+---
+
+## Refined Project Structure
+
+Use this folder layout inside the Xcode project. Group names in Xcode can match these folders.
+
+```text
+TextSummarizer/
+├── TextSummarizer.xcodeproj
+├── TextSummarizer/
+│   ├── App/
+│   │   └── TextSummarizerApp.swift          # @main entry point
+│   ├── Core/
+│   │   ├── HotkeyManager.swift              # Global shortcuts
+│   │   ├── TextCaptureService.swift         # Accessibility + ⌘C fallback
+│   │   └── SummarizationOrchestrator.swift  # Wires capture → style → provider → popup
+│   ├── Models/
+│   │   ├── CapturedText.swift               # Text + source app name
+│   │   ├── SummaryStyle.swift               # Style name + prompt template
+│   │   ├── SummaryRequest.swift             # Provider request payload
+│   │   └── CaptureError.swift               # Accessibility / no selection / too long
+│   ├── Providers/
+│   │   ├── LLMProvider.swift                # Shared protocol
+│   │   ├── OllamaProvider.swift             # Local Ollama backend
+│   │   └── OpenAICompatibleProvider.swift   # OpenAI-compatible APIs
+│   ├── Stores/
+│   │   ├── SettingsStore.swift              # UserDefaults wrapper
+│   │   ├── StyleStore.swift                 # Built-in + custom styles
+│   │   └── HistoryStore.swift               # Recent summaries (v1.1)
+│   ├── UI/
+│   │   ├── MenuBar/
+│   │   │   └── MenuBarStatusView.swift      # Status item + dropdown menu
+│   │   ├── StylePicker/
+│   │   │   └── StylePickerPanel.swift       # Compact style chooser
+│   │   ├── Popup/
+│   │   │   └── SummaryPopup.swift           # Floating summary panel
+│   │   └── Settings/
+│   │       ├── SettingsWindow.swift         # Tabbed settings host
+│   │       ├── GeneralSettingsView.swift    # Hotkeys, launch at login, limits
+│   │       ├── StylesSettingsView.swift     # Manage style templates
+│   │       ├── ProvidersSettingsView.swift  # Ollama / OpenAI setup + test
+│   │       └── OutputSettingsView.swift     # Folder, auto-save, filename
+│   ├── Utilities/
+│   │   ├── KeychainStore.swift              # macOS Keychain wrapper
+│   │   ├── MarkdownWriter.swift             # Save .md files with frontmatter
+│   │   ├── PromptTemplater.swift            # Replace {{text}} in prompts
+│   │   └── StreamParsers.swift              # NDJSON / SSE token parsers
+│   ├── Resources/
+│   │   ├── Assets.xcassets                  # App icon, colors
+│   │   └── Localizable.xcstrings            # String Catalog for localization
+│   ├── Info.plist
+│   └── TextSummarizer.entitlements
+├── TextSummarizerTests/
+│   ├── PromptTemplateTests.swift
+│   ├── StreamParserTests.swift
+│   ├── MarkdownWriterTests.swift
+│   └── KeychainStoreTests.swift
+├── LICENSE
+├── README.md
+└── Docs/
+    ├── PRD.md
+    └── setup-guide.md
+```
+
+---
+
+## Step-by-Step Setup
+
+### Step 1: Install Xcode
+
+1. Open the **Mac App Store**.
+2. Search for **Xcode**.
+3. Click **Get** or **Install**.
+4. Wait for the download to finish (about 10 GB).
+5. Open Xcode and accept the license agreement.
+
+> **Why Xcode?** It includes the Swift compiler, macOS SDK, Interface Builder, and debugger. Everything needed to build a native macOS app.
+
+---
+
+### Step 2: Create the Xcode Project
+
+1. Open Xcode.
+2. Choose **File → New → Project…** or press `Shift-Command-N`.
+3. Select **macOS** at the top of the template chooser.
+4. Choose **App**, then click **Next**.
+5. Fill in the project details:
+
+| Field                   | Recommended Value                                     |
+| :---------------------- | :---------------------------------------------------- |
+| Product Name            | `TextSummarizer`                                    |
+| Team                    | None for now, or your Apple ID team later for signing |
+| Organization Identifier | `com.yourname` or your reverse-domain name          |
+| Interface               | `SwiftUI`                                           |
+| Language                | `Swift`                                             |
+| Minimum Deployments     | macOS`13.0`                                         |
+
+6. Choose a folder to save the project.
+7. Make sure **Create Git repository on my Mac** is checked.
+8. Click **Create**.
+
+---
+
+### Step 3: Configure the App as a Menu-Bar Agent
+
+The app must live in the menu bar with no Dock icon.
+
+1. In the Project navigator, click the top-level **TextSummarizer** project.
+2. Select the **TextSummarizer** target.
+3. Go to the **Info** tab.
+4. Find **Custom macOS Application Target Properties**.
+5. Click the **+** button to add a new row.
+6. Enter:
+   - Key: `LSUIElement`
+   - Type: `Boolean`
+   - Value: `YES`
+
+---
+
+### Step 4: Turn Off the App Sandbox
+
+The App Sandbox blocks simulated ⌘C and some Accessibility workflows. The PRD recommends distribution **outside the Mac App Store**, so the sandbox should be disabled.
+
+1. In the Project navigator, find `TextSummarizer.entitlements`.
+2. If it does not exist, create it with **File → New → File → Property List** and name it `TextSummarizer.entitlements`.
+3. Set its contents to:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+</dict>
+</plist>
+```
+
+4. In the target settings, under **Signing & Capabilities**, make sure this entitlements file is selected.
+
+---
+
+### Step 5: Add Swift Package Dependencies
+
+Two external packages are needed.
+
+| Package           | URL                                                   | Purpose                        |
+| :---------------- | :---------------------------------------------------- | :----------------------------- |
+| KeyboardShortcuts | `https://github.com/sindresorhus/KeyboardShortcuts` | Global hotkeys and recorder UI |
+| MarkdownUI        | `https://github.com/gonzalezreal/swift-markdown-ui` | Render Markdown in the popup   |
+
+To add them:
+
+1. Select the project in the Project navigator.
+2. Go to the **Package Dependencies** tab.
+3. Click **+**.
+4. Paste the URL for `KeyboardShortcuts`.
+5. Click **Add Package**.
+6. Repeat for `MarkdownUI`.
+
+---
+
+### Step 6: Create the Folder Groups
+
+Organize the project by creating these groups in the Project navigator:
+
+1. Right-click the blue **TextSummarizer** folder.
+2. Choose **New Group**.
+3. Create these top-level groups:
+   - `App`
+   - `Core`
+   - `Models`
+   - `Providers`
+   - `Stores`
+   - `UI`
+   - `Utilities`
+4. Inside `UI`, create subgroups:
+   - `MenuBar`
+   - `StylePicker`
+   - `Popup`
+   - `Settings`
+5. Drag existing files (like `ContentView.swift`) into the correct group, or delete them if not needed.
+
+---
+
+### Step 7: Install Ollama for Local Testing
+
+The default LLM backend is a local Ollama instance.
+
+1. Visit [https://ollama.com](https://ollama.com).
+2. Download and install Ollama for macOS.
+3. Open Terminal and pull a small model for testing:
+
+```bash
+ollama pull qwen2.5:0.5b
+```
+
+4. Start the Ollama server:
+
+```bash
+ollama serve
+```
+
+5. Verify it is running:
+
+```bash
+curl http://localhost:11434/api/tags
+```
+
+You should see a JSON response listing installed models.
+
+---
+
+### Step 8: Build the First Milestone
+
+Do not build the full app at once. Start with the smallest working version that proves the riskiest parts.
+
+**Milestone 1: Capture text with a global hotkey**
+
+The goal is:
+
+1. A menu-bar icon appears.
+2. Pressing `⌥⇧S` triggers the app.
+3. The app reads selected text using the Accessibility API.
+4. The captured text is printed to the Xcode console.
+
+Files to create first:
+
+- [TextSummarizerApp.swift](../TextSummarizer/App/TextSummarizerApp.swift)
+- [HotkeyManager.swift](../TextSummarizer/Core/HotkeyManager.swift)
+- [TextCaptureService.swift](../TextSummarizer/Core/TextCaptureService.swift)
+
+Once this works, add the style picker, provider, popup, and save features.
+
+---
+
+### Step 9: Run the App Locally
+
+1. Select a Mac target in the Xcode toolbar (for example, **My Mac**).
+2. Press `Command-R` to build and run.
+3. The first time you run, macOS will ask for Accessibility permission.
+4. Go to **System Settings → Privacy & Security → Accessibility**, find **TextSummarizer**, and enable it.
+5. Return to Xcode and run again.
+
+---
+
+## Step 10: Prepare for Homebrew Distribution
+
+Homebrew is a good fit for an open-source macOS utility. To make the app installable with `brew install text-summarizer`, follow these guidelines during development.
+
+### 10.1 Build a Release Binary
+
+1. In Xcode, select **Product → Archive**.
+2. In the Organizer, select the archive and click **Distribute App**.
+3. Choose **Direct Distribution** (or **Copy App** for local testing).
+4. Export the `.app` bundle.
+5. Optionally, place the `.app` inside a `.dmg` or `.zip` for release.
+
+### 10.2 Code Signing and Notarization
+
+Homebrew casks can distribute signed or unsigned binaries, but signed and notarized apps are trusted by macOS and do not show Gatekeeper warnings.
+
+1. Join the **Apple Developer Program** (paid, required for notarization).
+2. In Xcode, set your Team in **Signing & Capabilities**.
+3. Use **Product → Archive → Distribute App → Direct Distribution** with notarization enabled.
+4. Wait for Apple to notarize the app.
+
+### 10.3 Versioning and Releases
+
+1. Use **Git tags** for versions, for example `v1.0.0`.
+2. On GitHub, create a **Release** for each tag.
+3. Attach the `.dmg` or `.zip` to the release.
+4. Include a checksum (SHA-256) for the file.
+
+### 10.4 Homebrew Cask File
+
+A Homebrew cask file looks like this:
+
+```ruby
+cask "text-summarizer" do
+  version "1.0.0"
+  sha256 "abc123..."
+
+  url "https://github.com/yourusername/text-summarizer/releases/download/v#{version}/TextSummarizer-#{version}.dmg"
+  name "Text Summarizer"
+  desc "Menu-bar utility that summarizes selected text with a local or remote LLM"
+  homepage "https://github.com/yourusername/text-summarizer"
+
+  app "TextSummarizer.app"
+end
+```
+
+> **Tip:** You can maintain the cask in your own tap first (`brew tap yourusername/tap`), then later submit it to `homebrew/cask`.
+
+---
+
+## Step 11: Prepare for Open Source
+
+### 11.1 Choose a License
+
+Common choices for macOS utilities:
+
+| License    | Good for                                     |
+| :--------- | :------------------------------------------- |
+| MIT        | Simple, permissive, allows commercial use.   |
+| GPL-3.0    | Requires derivative works to be open source. |
+| Apache-2.0 | Permissive, includes patent grant.           |
+
+For broad adoption, **MIT** is recommended.
+
+Create a `LICENSE` file at the repository root.
+
+### 11.2 Write a README.md
+
+Include at least:
+
+1. One-sentence description.
+2. Screenshot or short demo GIF.
+3. Features list.
+4. Installation instructions (Homebrew + manual).
+5. Setup instructions for Ollama and OpenAI-compatible providers.
+6. Privacy note: no telemetry, API keys in Keychain.
+7. License section.
+
+### 11.3 Repository Hygiene
+
+| File                    | Purpose                                                          |
+| :---------------------- | :--------------------------------------------------------------- |
+| `.gitignore`          | Ignore Xcode build folders,`xcuserdata`, `DerivedData`, etc. |
+| `README.md`           | Project overview and install instructions.                       |
+| `LICENSE`             | Open-source license.                                             |
+| `CHANGELOG.md`        | Version history.                                                 |
+| `Docs/PRD.md`         | Product requirements.                                            |
+| `Docs/setup-guide.md` | This guide.                                                      |
+
+### 11.4 Avoid Secrets in Git
+
+- API keys must live only in the macOS Keychain.
+- Never commit `.env` files or hardcoded credentials.
+- Add API key placeholders to documentation only.
+
+---
+
+## Common Beginner Mistakes
+
+| Mistake                             | How to Avoid                                                            |
+| :---------------------------------- | :---------------------------------------------------------------------- |
+| Using the App Sandbox               | Disable it in entitlements, or Accessibility/⌘C fallback will fail.    |
+| Forgetting Accessibility permission | macOS blocks`AXUIElement` without it. Guide users to System Settings. |
+| Building the full UI first          | Start with console output to prove text capture works.                  |
+| Hardcoding API keys                 | Always use the Keychain for OpenAI-compatible providers.                |
+| Choosing too new a macOS target     | Keep macOS 13 for broad compatibility.                                  |
+
+---
+
+## Next Steps
+
+After the project is set up, create these files in order:
+
+1. [TextSummarizerApp.swift](../TextSummarizer/App/TextSummarizerApp.swift) — App entry point.
+2. [HotkeyManager.swift](../TextSummarizer/Core/HotkeyManager.swift) — Global hotkey with KeyboardShortcuts.
+3. [TextCaptureService.swift](../TextSummarizer/Core/TextCaptureService.swift) — Accessibility API + ⌘C fallback.
+
+Once Milestone 1 works, continue with the style picker, provider layer, popup, and Markdown writer.
+
+---
+
+## Related Documents
+
+- [PRD.md](./PRD.md) — Full product requirements and architecture.
