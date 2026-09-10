@@ -10,18 +10,24 @@ struct MenuBarStatusView: View {
             Button("Summarize Selection") {
                 onSummarize()
             }
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
 
             Divider()
 
             Button("Settings…") {
                 onSettings()
             }
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
 
             Divider()
 
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
             .keyboardShortcut("Q")
         }
         .padding(.vertical, 4)
