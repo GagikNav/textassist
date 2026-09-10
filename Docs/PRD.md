@@ -7,7 +7,7 @@
 | **Platform** | macOS 13 Ventura and later |
 | **Version** | 1.0 (draft) |
 | **Status** | Proposed |
-| **Last updated** | 2026-09-09 |
+| **Last updated** | 2026-09-11 |
 
 ---
 
@@ -107,7 +107,7 @@ Priority: **P0** = MVP blocker, **P1** = v1.0, **P2** = v1.1+.
 | ID | Requirement | Priority |
 | :- | :--- | :- |
 | FR-2.1 | After capture (primary hotkey), a compact **style picker** appears near the mouse cursor or screen center listing all styles with keyboard shortcuts (1–9). | P0 |
-| FR-2.2 | Built-in styles (see §6): **Short Summary**, **Bullet Points**, **Detailed Summary**, **Key Takeaways & Action Items**, **ELI5**, **Custom Prompt**. | P0 |
+| FR-2.2 | Built-in styles (see §6): **Short Summary**, **Bullet Points**, **Detailed Summary**, **Key Takeaways & Action Items**, **ELI5**, **Chat Thread**, **Custom Prompt**. | P0 |
 | FR-2.3 | The last-used style is remembered and offered as default; Escape cancels the whole operation with zero side effects. | P0 |
 | FR-2.4 | Users can create, edit, reorder, and delete **custom styles** (name + prompt template with `{{text}}` placeholder) in Settings. | P1 |
 
@@ -169,6 +169,7 @@ Each style is a prompt template. `{{text}}` is replaced by the captured selectio
 | **Detailed Summary** | `3` | Multi-paragraph with section headings if source is long | "Write a detailed summary of the following text using Markdown headings where appropriate…\n\n{{text}}" |
 | **Key Takeaways & Action Items** | `4` | `## Takeaways` + `## Action Items` sections | "Extract key takeaways and any action items from the following text…\n\n{{text}}" |
 | **ELI5** | `5` | Plain-language explanation for a beginner | "Explain the following text in simple terms a non-expert would understand…\n\n{{text}}" |
+| **Chat Thread** | `6` | Summarize by participant; list each person's name and a brief overview of their contributions | "You are given a chat thread. Summarize it by participant. For each person, give their name and a brief overview of what they contributed or asked…\n\n{{text}}" |
 | **Custom Prompt…** | `0` | Inline text field; template saved on use | User-defined, must contain `{{text}}` |
 
 System prompt (default, provider-agnostic):
@@ -489,7 +490,7 @@ Presets ship in Settings: OpenAI (`https://api.openai.com/v1`), OpenRouter (`htt
 - [ ] `TextCaptureService` (AX + ⌘C fallback + clipboard restore) with `CaptureError` taxonomy.
 - [ ] `HotkeyManager` with ⌥⇧S; permission onboarding flow.
 - [ ] `OllamaProvider` (models list + streaming chat).
-- [ ] `StylePickerPanel` with the 6 built-in styles.
+- [ ] `StylePickerPanel` with the 7 built-in styles.
 - [ ] `SummaryPopup` (non-activating `NSPanel` at cursor) with MarkdownUI streaming render, **Save as Markdown** (⌘S, one-click to output folder + "Save As…" variant), Copy, Regenerate.
 - [ ] Markdown writer per §7 (frontmatter, filename scheme) to default output folder.
 - [ ] Unit tests: prompt templating, NDJSON/SSE parsers, filename/frontmatter generator, error mapping.

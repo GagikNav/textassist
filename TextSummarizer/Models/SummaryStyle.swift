@@ -40,13 +40,14 @@ struct SummaryStyle: Identifiable, Hashable, Sendable {
 // MARK: - Built-in styles
 
 extension SummaryStyle {
-    /// The six built-in summary styles defined in the PRD.
+    /// The seven built-in summary styles defined in the PRD.
     static let builtIn: [SummaryStyle] = [
         .shortSummary,
         .bulletPoints,
         .detailedSummary,
         .keyTakeaways,
         .eli5,
+        .chatThread,
         .customPrompt
     ]
 
@@ -100,6 +101,18 @@ extension SummaryStyle {
         shortcutKey: "5",
         promptTemplate: """
         Explain the following text in simple terms a non-expert would understand. Use plain language and short sentences.
+
+        {{text}}
+        """
+    )
+
+    /// Summarizes a chat thread by participant.
+    static let chatThread = SummaryStyle(
+        id: "chat-thread",
+        name: "Chat Thread",
+        shortcutKey: "6",
+        promptTemplate: """
+        You are given a chat thread. Summarize it by participant. For each person, give their name and a brief overview of what they contributed or asked. Keep it concise and use Markdown bullet points. Do not add information not present in the thread.
 
         {{text}}
         """
