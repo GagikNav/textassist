@@ -15,6 +15,7 @@ final class SummarizationOrchestrator: ObservableObject {
     private let llmProvider: any LLMProvider
 
     private var pickerPanel: StylePickerPanel?
+    private var customPromptPanel: CustomPromptPanel?
     private var summaryPopup: SummaryPopup?
     private var streamingTask: Task<Void, Never>?
 
@@ -53,15 +54,42 @@ final class SummarizationOrchestrator: ObservableObject {
 
     private func showStylePicker(for captured: CapturedText) {
         pickerPanel?.close()
+        customPromptPanel?.close()
+        customPromptPanel = nil
 
         pickerPanel = StylePickerPanel(styleStore: styleStore) { [weak self] style in
             self?.pickerPanel = nil
-            Task { [weak self] in
-                await self?.showSummaryPopup(for: captured, style: style)
+
+            if style.id == SummaryStyle.customPrompt.id {
+                self?.showCustomPromptPanel(for: captured)
+            } else {
+                Task { [weak self] in
+                    await self?.showSummaryPopup(for: captured, style: style)
+                }
             }
         }
 
         pickerPanel?.show()
+    }
+
+    // MARK: - Custom prompt panel
+
+    private func showCustomPromptPanel(for captured: CapturedText) {
+        customPromptPanel?.close()
+
+        customPromptPanel = CustomPromptPanel(
+            onConfirm: { [weak self] style in
+                self?.customPromptPanel = nil
+                Task { [weak self] in
+                    await self?.showSummaryPopup(for: captured, style: style)
+                }
+            },
+            onCancel: { [weak self] in
+                self?.customPromptPanel = nil
+            }
+        )
+
+        customPromptPanel?.show()
     }
 
     // MARK: - Summary popup

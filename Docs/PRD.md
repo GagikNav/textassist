@@ -170,7 +170,7 @@ Each style is a prompt template. `{{text}}` is replaced by the captured selectio
 | **Key Takeaways & Action Items** | `4` | `## Takeaways` + `## Action Items` sections | "Extract key takeaways and any action items from the following text…\n\n{{text}}" |
 | **ELI5** | `5` | Plain-language explanation for a beginner | "Explain the following text in simple terms a non-expert would understand…\n\n{{text}}" |
 | **Chat Thread** | `6` | Summarize by participant; list each person's name and a brief overview of their contributions | "You are given a chat thread. Summarize it by participant. For each person, give their name and a brief overview of what they contributed or asked…\n\n{{text}}" |
-| **Custom Prompt…** | `0` | Inline text field; template saved on use | User-defined, must contain `{{text}}` |
+| **Custom Prompt** | `0` | Opens a plain-text box for the instruction; the captured text is appended automatically | User types only the instruction; app builds `"<instruction>\n\n{{text}}"`. Not persisted between sessions. |
 
 System prompt (default, provider-agnostic):
 
