@@ -1,61 +1,62 @@
 import SwiftUI
 import AppKit
 
-/// A compact, non-activating floating panel that lets the user pick a summary style.
+/// A floating, non-activating popup that displays a streaming Markdown summary.
 ///
-/// The panel appears near the mouse cursor, accepts digit shortcuts (`1`–`6`, `0`),
-/// and closes automatically when the user makes a choice or presses `Escape`.
+/// The popup appears near the mouse cursor, can be resized, and does not
+/// activate the app so the user can keep working in the source application.
+///
+/// When the user closes the panel with its close button, the `onClose`
+/// callback is invoked so the owner can cancel any ongoing stream.
 @MainActor
-final class StylePickerPanel {
-    private let styleStore: StyleStore
-    private let onSelect: (SummaryStyle) -> Void
+final class SummaryPopup: NSObject {
+    /// Default popup size chosen to balance readability with screen real estate.
+    /// This is roughly 15% larger than the first iteration.
+    static let defaultSize = CGSize(width: 600, height: 420)
+
+    /// Minimum size the user can resize the popup to.
+    static let minimumSize = CGSize(width: 360, height: 280)
+
+    /// Called when the panel is closed by the user.
+    var onClose: (() -> Void)?
+
+    private let viewModel: SummaryPopupViewModel
     private var panel: KeyablePanel?
 
-    /// Creates a new picker panel.
-    /// - Parameters:
-    ///   - styleStore: The store that provides styles and remembers the last choice.
-    ///   - onSelect: Closure called when the user picks a style.
-    init(styleStore: StyleStore, onSelect: @escaping (SummaryStyle) -> Void) {
-        self.styleStore = styleStore
-        self.onSelect = onSelect
+    /// Creates a popup with the given view model.
+    /// - Parameter viewModel: The observable state and actions for the popup.
+    init(viewModel: SummaryPopupViewModel) {
+        self.viewModel = viewModel
+        super.init()
     }
 
-    /// Shows the picker near the current mouse cursor.
-    /// If a picker is already open, it is replaced.
+    /// Shows the popup near the current mouse cursor.
+    /// If a popup is already open, it is replaced.
     func show() {
         close()
 
-        let pickerView = StylePickerView(
-            styles: styleStore.styles,
-            lastUsedStyleID: styleStore.lastUsedStyleID,
-            onSelect: { [weak self] style in
-                self?.styleStore.recordSelection(style)
-                self?.close()
-                self?.onSelect(style)
-            },
-            onCancel: { [weak self] in
-                self?.close()
-            }
+        let hostingController = NSHostingController(
+            rootView: SummaryPopupView(viewModel: self.viewModel)
         )
-
-        let hostingController = NSHostingController(rootView: pickerView)
-        // Match the SwiftUI view's intended width; height is determined by the content.
-        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 220, height: 200))
+        hostingController.view.frame = CGRect(origin: .zero, size: Self.defaultSize)
 
         let panel = KeyablePanel(
             contentRect: hostingController.view.bounds,
-            styleMask: [.borderless, .nonactivatingPanel],
+            styleMask: [.titled, .closable, .resizable, .nonactivatingPanel],
             backing: .buffered,
             defer: false
         )
 
+        panel.title = viewModel.currentStyle.name
         panel.level = .floating
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.backgroundColor = NSColor.windowBackgroundColor
         panel.hasShadow = true
         panel.isFloatingPanel = true
         panel.becomesKeyOnlyIfNeeded = false
+        panel.minSize = Self.minimumSize
         panel.contentView = hostingController.view
+        panel.delegate = self
 
         self.panel = panel
         positionPanelNearCursor(panel)
@@ -64,8 +65,19 @@ final class StylePickerPanel {
 
     /// Closes and releases the panel.
     func close() {
+        panel?.delegate = nil
         panel?.close()
         panel = nil
+    }
+}
+
+// MARK: - NSWindowDelegate
+
+extension SummaryPopup: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+        panel?.delegate = nil
+        panel = nil
+        onClose?()
     }
 
     // MARK: - Positioning
