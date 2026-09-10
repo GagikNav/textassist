@@ -67,17 +67,6 @@ final class StylePickerPanel {
         panel?.close()
         panel = nil
     }
-}
-
-// MARK: - KeyablePanel
-
-/// A borderless panel that is allowed to become the key window so it can
-/// receive digit-key and Escape keyboard events, while still being
-/// non-activating so it does not steal focus from the user's current app.
-private final class KeyablePanel: NSPanel {
-    override var canBecomeKeyWindow: Bool { true }
-    override var canBecomeMainWindow: Bool { false }
-}
 
     // MARK: - Positioning
 
@@ -106,4 +95,14 @@ private final class KeyablePanel: NSPanel {
 
         panel.setFrameOrigin(origin)
     }
+}
+
+// MARK: - KeyablePanel
+
+/// A borderless panel that is allowed to become the key window so it can
+/// receive digit-key and Escape keyboard events, while still being
+/// non-activating so it does not steal focus from the user's current app.
+private final class KeyablePanel: NSPanel {
+    override var canBecomeKey: Bool { true }
+    override var canBecomeMain: Bool { false }
 }

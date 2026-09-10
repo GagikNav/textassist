@@ -11,11 +11,13 @@ extension KeyboardShortcuts.Name {
 /// Registers and handles the global hotkey that triggers text capture.
 ///
 /// After capturing text, it shows a style picker so the user can choose how
-/// the selection should be summarized.
+/// the selection should be summarized, then streams the result from the
+/// configured LLM provider.
 @MainActor
 final class HotkeyManager: ObservableObject {
     private let textCaptureService: any TextCapturing
     private let styleStore: StyleStore
+    private let llmProvider: any LLMProvider
     private var pickerPanel: StylePickerPanel?
 
     /// Creates a hotkey manager with the given services.
@@ -23,9 +25,13 @@ final class HotkeyManager: ObservableObject {
     /// - Parameters:
     ///   - textCaptureService: The service used to read the current selection.
     ///   - styleStore: The store that provides summary styles.
-    init(textCaptureService: any TextCapturing, styleStore: StyleStore) {
+    ///   - llmProvider: The provider used to generate summaries.
+    init(textCaptureService: any TextCapturing,
+         styleStore: StyleStore,
+         llmProvider: any LLMProvider) {
         self.textCaptureService = textCaptureService
         self.styleStore = styleStore
+        self.llmProvider = llmProvider
         registerShortcuts()
     }
 
@@ -64,9 +70,33 @@ final class HotkeyManager: ObservableObject {
         pickerPanel = StylePickerPanel(styleStore: styleStore) { [weak self] style in
             self?.pickerPanel = nil
             print("Selected style: \(style.name)")
-            print("Prompt:\n\(style.prompt(for: captured.text))")
+            Task {
+                await self?.streamSummary(for: captured, style: style)
+            }
         }
 
         pickerPanel?.show()
+    }
+
+    /// Sends the captured text and chosen style to the LLM provider and
+    /// prints the streamed tokens to the console.
+    private func streamSummary(for captured: CapturedText, style: SummaryStyle) async {
+        let request = SummaryRequest(
+            style: style,
+            text: captured.text,
+            model: OllamaProvider.defaultModel
+        )
+
+        do {
+            print("Streaming summary from \(llmProvider.displayName)...")
+            for try await delta in llmProvider.summarize(request) {
+                print(delta, terminator: "")
+            }
+            print("\n--- Stream complete ---")
+        } catch let error as LocalizedError {
+            print("\nSummary failed: \(error.localizedDescription)")
+        } catch {
+            print("\nUnexpected error: \(error.localizedDescription)")
+        }
     }
 }

@@ -9,16 +9,18 @@ struct TextSummarizerApp: App {
     /// The manager registers its global shortcut as soon as it is created.
     @StateObject private var hotkeyManager: HotkeyManager
 
-    /// Creates the app and shares a single `StyleStore` between
-    /// the settings UI and the hotkey manager.
+    /// Creates the app and shares a single `StyleStore` and `LLMProvider`
+    /// between the settings UI and the hotkey manager.
     init() {
         let store = StyleStore()
         let captureService = TextCaptureService()
+        let provider = OllamaProvider()
         _styleStore = StateObject(wrappedValue: store)
         _hotkeyManager = StateObject(
             wrappedValue: HotkeyManager(
                 textCaptureService: captureService,
-                styleStore: store
+                styleStore: store,
+                llmProvider: provider
             )
         )
     }
