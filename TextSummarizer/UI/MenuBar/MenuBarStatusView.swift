@@ -3,6 +3,7 @@ import SwiftUI
 /// SwiftUI view that defines the contents of the menu-bar dropdown menu.
 struct MenuBarStatusView: View {
     let onSummarize: () -> Void
+    let onSettings: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -13,7 +14,7 @@ struct MenuBarStatusView: View {
             Divider()
 
             Button("Settings…") {
-                // Placeholder for the settings window (Phase 2).
+                onSettings()
             }
 
             Divider()
@@ -29,6 +30,6 @@ struct MenuBarStatusView: View {
 
 #if DEBUG
 #Preview {
-    MenuBarStatusView(onSummarize: {})
+    MenuBarStatusView(onSummarize: {}, onSettings: {})
 }
 #endif

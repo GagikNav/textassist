@@ -8,9 +8,6 @@ struct SummaryRequest: Sendable {
     /// The text captured from the frontmost app.
     let text: String
 
-    /// The provider-specific model identifier.
-    let model: String
-
     /// Maximum number of tokens the provider should generate.
     let maxTokens: Int
 
@@ -21,19 +18,16 @@ struct SummaryRequest: Sendable {
     /// - Parameters:
     ///   - style: The chosen summary style.
     ///   - text: The captured selection.
-    ///   - model: Model identifier, for example `phi3:instruct`.
     ///   - maxTokens: Maximum tokens to generate. Default is `1024`.
     ///   - temperature: Sampling temperature. Default is `0.2`.
     init(
         style: SummaryStyle,
         text: String,
-        model: String,
         maxTokens: Int = 1024,
         temperature: Double = 0.2
     ) {
         self.style = style
         self.text = text
-        self.model = model
         self.maxTokens = maxTokens
         self.temperature = temperature
     }

@@ -143,11 +143,7 @@ final class SummarizationOrchestrator: ObservableObject {
         style: SummaryStyle,
         viewModel: SummaryPopupViewModel
     ) async {
-        let request = SummaryRequest(
-            style: style,
-            text: captured.text,
-            model: OllamaProvider.defaultModel
-        )
+        let request = SummaryRequest(style: style, text: captured.text)
 
         viewModel.streamedText = ""
         viewModel.isStreaming = true

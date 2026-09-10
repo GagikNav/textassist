@@ -4,36 +4,24 @@ import Foundation
 ///
 /// Uses `POST /api/chat` with streaming NDJSON responses.
 final class OllamaProvider: LLMProvider {
-    /// Default Ollama API endpoint.
-    static let defaultBaseURL = URL(string: "http://localhost:11434")!
-
-    /// Default model to use until a model selector is added.
-    static let defaultModel = "phi3:instruct"
-
-    /// Base URL of the Ollama server, for example `http://localhost:11434`.
-    let baseURL: URL
-
-    /// Model identifier passed to Ollama, for example `phi3:instruct`.
-    let model: String
-
     /// Shared decoder reused across requests.
     private let decoder = JSONDecoder()
 
+    /// Stores the user's Ollama base URL and model choice.
+    private let settings: SettingsStore
+
     var displayName: String { "Ollama" }
 
-    /// Creates an Ollama provider.
-    /// - Parameters:
-    ///   - baseURL: The server base URL. Defaults to `http://localhost:11434`.
-    ///   - model: The model name. Defaults to `phi3:instruct`.
-    init(baseURL: URL = OllamaProvider.defaultBaseURL,
-         model: String = OllamaProvider.defaultModel) {
-        self.baseURL = baseURL
-        self.model = model
+    /// Creates an Ollama provider that reads its configuration from the given store.
+    /// - Parameter settings: The source of truth for base URL and model.
+    init(settings: SettingsStore) {
+        self.settings = settings
     }
 
     // MARK: - Model listing
 
     func listModels() async throws -> [String] {
+        let baseURL = await MainActor.run { settings.baseURL }
         let url = baseURL.appendingPathComponent("/api/tags")
         let (data, response) = try await URLSession.shared.data(from: url)
         try verifyHTTPStatus(response)
@@ -48,9 +36,10 @@ final class OllamaProvider: LLMProvider {
         AsyncThrowingStream { continuation in
             let task = Task {
                 do {
-                    let urlRequest = try makeChatRequest(request)
+                    let (baseURL, model) = await MainActor.run { (settings.baseURL, settings.model) }
+                    let urlRequest = try makeChatRequest(request, baseURL: baseURL, model: model)
                     let (bytes, response) = try await URLSession.shared.bytes(for: urlRequest)
-                    try verifyHTTPStatus(response)
+                    try verifyHTTPStatus(response, model: model)
 
                     for try await line in bytes.lines {
                         guard !line.isEmpty else { continue }
@@ -90,7 +79,7 @@ final class OllamaProvider: LLMProvider {
 
     // MARK: - Request building
 
-    private func makeChatRequest(_ request: SummaryRequest) throws -> URLRequest {
+    private func makeChatRequest(_ request: SummaryRequest, baseURL: URL, model: String) throws -> URLRequest {
         let url = baseURL.appendingPathComponent("/api/chat")
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
@@ -121,7 +110,7 @@ final class OllamaProvider: LLMProvider {
 
     // MARK: - Helpers
 
-    private func verifyHTTPStatus(_ response: URLResponse) throws {
+    private func verifyHTTPStatus(_ response: URLResponse, model: String = "") throws {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw OllamaError.unexpectedStatus(0)
         }
