@@ -92,14 +92,18 @@ struct TextCaptureService: TextCapturing {
             &selectedTextValue
         )
 
-        if selectedTextResult == .success, let text = selectedTextValue as? String {
+        if selectedTextResult == .success,
+           let text = selectedTextValue as? String,
+           !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return text
         }
 
         // Some apps expose the full value instead of selected text.
         var value: AnyObject?
         let valueResult = AXUIElementCopyAttributeValue(focusedElement, kAXValueAttribute as CFString, &value)
-        if valueResult == .success, let text = value as? String {
+        if valueResult == .success,
+           let text = value as? String,
+           !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return text
         }
 

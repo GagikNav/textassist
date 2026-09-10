@@ -11,12 +11,12 @@
 Milestone 1 implements the smallest usable slice of the product:
 
 - A **menu-bar-only macOS agent** (no Dock icon, no main window).
-- A **global hotkey** (`⌥⇧S`) that works while another app is focused.
+t- A **global hotkey** (`⌥⇧S`) that works while another app is focused.
 - **Text capture** from the frontmost app using the Accessibility API.
 - A **⌘C + pasteboard fallback** with clipboard restore, for apps like Microsoft Word that do not expose `AXSelectedText`.
 - A minimal **menu-bar dropdown** (Summarize Selection, Settings placeholder, Quit).
 - **User-facing errors** for missing Accessibility permission, no selection, secure fields, and overly long selections.
-- **Project configuration fixes**: deployment target macOS 13.0, App Sandbox disabled, entitlements file created, `.gitignore` added.
+- **Project configuration fixes**: deployment arget macOS 13.0, App Sandbox disabled, entitlements file created, `.gitignore` added.
 
 This milestone intentionally does **not** include: style picker, LLM providers, summary popup, Markdown saving, settings persistence beyond defaults, or history. Those are planned for subsequent milestones.
 
