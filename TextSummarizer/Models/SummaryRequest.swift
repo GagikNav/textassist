@@ -18,12 +18,12 @@ struct SummaryRequest: Sendable {
     /// - Parameters:
     ///   - style: The chosen summary style.
     ///   - text: The captured selection.
-    ///   - maxTokens: Maximum tokens to generate. Default is `1024`.
+    ///   - maxTokens: Maximum tokens to generate. Default is `4096`.
     ///   - temperature: Sampling temperature. Default is `0.2`.
     init(
         style: SummaryStyle,
         text: String,
-        maxTokens: Int = 1024,
+        maxTokens: Int = 4096,
         temperature: Double = 0.2
     ) {
         self.style = style

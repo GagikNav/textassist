@@ -10,6 +10,18 @@ final class OllamaProvider: LLMProvider {
     /// Stores the user's Ollama base URL and model choice.
     private let settings: SettingsStore
 
+    /// Long-running session for streaming chat requests.
+    ///
+    /// Large context windows can take the local model well over the default
+    /// 60s request timeout to produce a first token or the next chunk, which
+    /// would otherwise abort the stream mid-summary.
+    private let streamingSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 600
+        configuration.timeoutIntervalForResource = 1800
+        return URLSession(configuration: configuration)
+    }()
+
     var displayName: String { "Ollama" }
 
     /// Creates an Ollama provider that reads its configuration from the given store.
@@ -38,7 +50,7 @@ final class OllamaProvider: LLMProvider {
                 do {
                     let (baseURL, model) = await MainActor.run { (settings.baseURL, settings.model) }
                     let urlRequest = try makeChatRequest(request, baseURL: baseURL, model: model)
-                    let (bytes, response) = try await URLSession.shared.bytes(for: urlRequest)
+                    let (bytes, response) = try await streamingSession.bytes(for: urlRequest)
                     try verifyHTTPStatus(response, model: model)
 
                     for try await line in bytes.lines {
@@ -56,6 +68,10 @@ final class OllamaProvider: LLMProvider {
                         }
 
                         if decoded.done == true {
+                            if decoded.doneReason == "length" {
+                                // Stopped because maxTokens was reached, not an error.
+                                print("Ollama stream stopped early: hit maxTokens limit")
+                            }
                             continuation.finish()
                             return
                         }
@@ -94,12 +110,23 @@ final class OllamaProvider: LLMProvider {
             stream: true,
             options: ChatOptions(
                 temperature: request.temperature,
-                numPredict: request.maxTokens
+                numPredict: request.maxTokens,
+                numCtx: contextWindowSize(for: request)
             )
         )
 
         urlRequest.httpBody = try JSONEncoder().encode(body)
         return urlRequest
+    }
+
+    /// Estimates a context window large enough to hold the prompt and the
+    /// generated response, since Ollama defaults to only 2048 tokens and
+    /// would otherwise truncate long captured text mid-stream.
+    private func contextWindowSize(for request: SummaryRequest) -> Int {
+        // Rough heuristic: ~4 characters per token, plus generation headroom.
+        let estimatedPromptTokens = request.userMessage.count / 4
+        let required = estimatedPromptTokens + request.maxTokens + 256
+        return min(max(required, 2048), 32768)
     }
 
     /// Provider-agnostic default system prompt from the PRD.
@@ -163,10 +190,12 @@ private extension OllamaProvider {
     struct ChatOptions: Encodable {
         let temperature: Double
         let numPredict: Int
+        let numCtx: Int
 
         enum CodingKeys: String, CodingKey {
             case temperature
             case numPredict = "num_predict"
+            case numCtx = "num_ctx"
         }
     }
 

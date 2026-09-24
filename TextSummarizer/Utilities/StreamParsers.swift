@@ -16,6 +16,15 @@ struct NDJSONLine: Decodable {
     let done: Bool?
     let error: String?
 
+    /// Why generation stopped, for example `"stop"` or `"length"`.
+    /// Present only on the final line, when `done` is `true`.
+    let doneReason: String?
+
+    enum CodingKeys: String, CodingKey {
+        case message, done, error
+        case doneReason = "done_reason"
+    }
+
     /// Parses one NDJSON line.
     /// - Parameters:
     ///   - line: A single line of NDJSON from the stream.
