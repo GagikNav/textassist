@@ -265,11 +265,130 @@ Once this works, add the style picker, provider, popup, and save features.
 
 ### Step 9: Run the App Locally
 
-1. Select a Mac target in the Xcode toolbar (for example, **My Mac**).
-2. Press `Command-R` to build and run.
-3. The first time you run, macOS will ask for Accessibility permission.
-4. Go to **System Settings → Privacy & Security → Accessibility**, find **TextSummarizer**, and enable it.
-5. Return to Xcode and run again.
+This project currently has one application target and scheme named **Text Assist**. The project folder is named `TextSummarizer`, but commands must use the target's actual name: `Text Assist`.
+
+#### 9.1 Open the project and resolve dependencies
+
+1. Open **Terminal**.
+2. Change to the project folder. Replace the path if you saved the project elsewhere:
+
+```bash
+cd /Users/gagik/projects/TextSummarizer
+```
+
+3. Open the project in Xcode:
+
+```bash
+open TextSummarizer.xcodeproj
+```
+
+4. Xcode downloads the Swift packages the first time the project opens. Wait for the activity indicator in the top-right corner to finish. If package resolution fails, use **File → Packages → Resolve Package Versions**.
+
+The project includes these packages already, so do **not** add them again:
+
+| Package | Used for |
+| :------ | :------- |
+| `KeyboardShortcuts` | Registers the global hotkey. |
+| `MarkdownUI` | Displays Markdown-formatted summaries. |
+
+#### 9.2 Build and run with Xcode
+
+1. In the Xcode toolbar, select the **Text Assist** scheme.
+2. Select **My Mac** as the run destination.
+3. Press `Command-B` to build the app. A successful build displays **Build Succeeded** in Xcode.
+4. Press `Command-R` to build (if needed) and start the app.
+5. Look for the app icon in the macOS menu bar. This is a menu-bar app, so it intentionally does not appear in the Dock.
+6. To stop the app while debugging, press `Command-.` in Xcode or choose **Product → Stop**.
+
+When the app is running from Xcode, use Xcode's console to see `print` output and errors:
+
+1. Choose **View → Debug Area → Activate Console**.
+2. Select text in another application, such as TextEdit.
+3. Press the configured shortcut, currently `Option-Shift-S` (`⌥⇧S`).
+4. Confirm that the captured text or a useful error message appears in the console.
+
+#### 9.3 Grant macOS permissions
+
+The global shortcut does not need a permission dialog. Reading selected text does require **Accessibility** permission.
+
+1. Start the app once using `Command-R`.
+2. Open **System Settings → Privacy & Security → Accessibility**.
+3. Enable **Text Assist**. If it is not listed, click **+**, then choose the built app from Xcode's Derived Data folder or start the app again and return to this screen.
+4. Stop and run the app again from Xcode.
+5. Test it with text selected in TextEdit or another standard macOS app.
+
+> **Tip:** Permission is linked to the built application. If you clean Derived Data, switch signing identities, or run an app copied to a different location, macOS may ask you to grant permission again.
+
+#### 9.4 Build, run, and install from Terminal
+
+Use these commands when you prefer the terminal or need to check that the project builds without opening Xcode. Run them from the project root.
+
+First, resolve Swift package dependencies. This requires internet access the first time:
+
+```bash
+xcodebuild -resolvePackageDependencies \
+  -project TextSummarizer.xcodeproj \
+  -scheme "Text Assist"
+```
+
+Build a debug version. `Debug` keeps debugging information and is the right configuration while developing:
+
+```bash
+xcodebuild build \
+  -project TextSummarizer.xcodeproj \
+  -scheme "Text Assist" \
+  -configuration Debug \
+  -destination "platform=macOS" \
+  -derivedDataPath build/DerivedData
+```
+
+The resulting app bundle is placed at:
+
+```text
+build/DerivedData/Build/Products/Debug/Text Assist.app
+```
+
+Start that build with:
+
+```bash
+open "build/DerivedData/Build/Products/Debug/Text Assist.app"
+```
+
+To install the debug build into your user Applications folder, close any running copy first and copy the `.app` bundle:
+
+```bash
+osascript -e 'tell application "Text Assist" to quit' 2>/dev/null || true
+rm -rf "$HOME/Applications/Text Assist.app"
+ditto "build/DerivedData/Build/Products/Debug/Text Assist.app" "$HOME/Applications/Text Assist.app"
+open "$HOME/Applications/Text Assist.app"
+```
+
+`ditto` copies an application bundle correctly, including its internal folders and file metadata. Installing into `~/Applications` affects only your user account and does not require an administrator password. Grant Accessibility permission to this installed copy if macOS requests it.
+
+#### 9.5 Clean a broken local build
+
+Use a clean build only when normal building fails after a dependency, Xcode, or build-setting change. Cleaning makes the next build slower because Xcode recreates all generated files.
+
+In Xcode, choose **Product → Clean Build Folder** while holding `Option`, then build again with `Command-B`.
+
+For the terminal build directory used above, run:
+
+```bash
+rm -rf build/DerivedData
+```
+
+Then repeat the dependency-resolution and debug-build commands from section 9.4.
+
+#### 9.6 Development checklist
+
+Before considering a local change ready, check the following:
+
+1. The project builds with no errors.
+2. The menu-bar icon appears after launching the app.
+3. The hotkey activates the app.
+4. Accessibility permission is enabled and selected text is captured.
+5. Ollama is running when you test real summaries.
+6. The Xcode console contains no unexpected errors.
 
 ---
 
@@ -315,7 +434,7 @@ cask "text-summarizer" do
   desc "Menu-bar utility that summarizes selected text with a local or remote LLM"
   homepage "https://github.com/yourusername/text-summarizer"
 
-  app "TextSummarizer.app"
+  app "Text Assist.app"
 end
 ```
 
@@ -344,7 +463,7 @@ Run this from the project root:
 # 1. Clean and archive the app
 xcodebuild archive \
   -project TextSummarizer.xcodeproj \
-  -scheme TextSummarizer \
+  -scheme "Text Assist" \
   -destination "generic/platform=macOS" \
   -archivePath build/TextSummarizer.xcarchive \
   -configuration Release
@@ -359,15 +478,15 @@ xcodebuild -exportArchive \
 The exported `.app` will be at:
 
 ```text
-build/Export/TextSummarizer.app
+build/Export/Text Assist.app
 ```
 
 ### 11.3 Run the App
 
-Double-click `build/Export/TextSummarizer.app`, or run from the terminal:
+Double-click `build/Export/Text Assist.app`, or run from the terminal:
 
 ```bash
-open build/Export/TextSummarizer.app
+open "build/Export/Text Assist.app"
 ```
 
 ### 11.4 Required export-options.plist
@@ -420,7 +539,9 @@ Create a `.zip` or `.dmg` from the exported `.app`:
 
 ```bash
 # Zip
-zip -r build/TextSummarizer.zip build/Export/TextSummarizer.app
+ditto -c -k --sequesterRsrc --keepParent \
+  "build/Export/Text Assist.app" \
+  build/Text-Assist.zip
 
 # Or create a DMG with create-dmg (install with brew install create-dmg)
 create-dmg \
@@ -430,7 +551,7 @@ create-dmg \
   --icon-size 100 \
   --app-drop-link 600 185 \
   build/TextSummarizer.dmg \
-  build/Export/TextSummarizer.app
+  "build/Export/Text Assist.app"
 ```
 
 ---
