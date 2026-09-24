@@ -12,16 +12,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BA4D752730533B4B008D9442 /* TextSummarizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextSummarizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4D752730533B4B008D9442 /* Text Assist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Text Assist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BA4D753630533BE0008D9442 /* Exceptions for "TextSummarizer" folder in "TextSummarizer" target */ = {
+		BA4D753630533BE0008D9442 /* Exceptions for "TextSummarizer" folder in "Text Assist" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = BA4D752630533B4B008D9442 /* TextSummarizer */;
+			target = BA4D752630533B4B008D9442 /* Text Assist */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -29,7 +29,7 @@
 		BA4D752930533B4B008D9442 /* TextSummarizer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				BA4D753630533BE0008D9442 /* Exceptions for "TextSummarizer" folder in "TextSummarizer" target */,
+				BA4D753630533BE0008D9442 /* Exceptions for "TextSummarizer" folder in "Text Assist" target */,
 			);
 			path = TextSummarizer;
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 		BA4D752830533B4B008D9442 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BA4D752730533B4B008D9442 /* TextSummarizer.app */,
+				BA4D752730533B4B008D9442 /* Text Assist.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BA4D752630533B4B008D9442 /* TextSummarizer */ = {
+		BA4D752630533B4B008D9442 /* Text Assist */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BA4D753230533B4C008D9442 /* Build configuration list for PBXNativeTarget "TextSummarizer" */;
+			buildConfigurationList = BA4D753230533B4C008D9442 /* Build configuration list for PBXNativeTarget "Text Assist" */;
 			buildPhases = (
 				BA4D752330533B4B008D9442 /* Sources */,
 				BA4D752430533B4B008D9442 /* Frameworks */,
@@ -172,13 +172,13 @@
 			fileSystemSynchronizedGroups = (
 				BA4D752930533B4B008D9442 /* TextSummarizer */,
 			);
-			name = TextSummarizer;
+			name = "Text Assist";
 			packageProductDependencies = (
 				BA4D753830533C13008D9442 /* MarkdownUI */,
 				BA4D753B30533C1B008D9442 /* KeyboardShortcuts */,
 			);
-			productName = TextSummarizer;
-			productReference = BA4D752730533B4B008D9442 /* TextSummarizer.app */;
+			productName = "Text Assist";
+			productReference = BA4D752730533B4B008D9442 /* Text Assist.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +214,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BA4D752630533B4B008D9442 /* TextSummarizer */,
+				BA4D752630533B4B008D9442 /* Text Assist */,
 			);
 		};
 /* End PBXProject section */
@@ -395,6 +395,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TextSummarizer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Text Assist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -426,6 +427,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TextSummarizer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Text Assist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,7 +458,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BA4D753230533B4C008D9442 /* Build configuration list for PBXNativeTarget "TextSummarizer" */ = {
+		BA4D753230533B4C008D9442 /* Build configuration list for PBXNativeTarget "Text Assist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA4D753330533B4C008D9442 /* Debug */,

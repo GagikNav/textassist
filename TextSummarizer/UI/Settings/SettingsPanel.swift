@@ -39,7 +39,7 @@ final class SettingsPanel {
             defer: false
         )
 
-        panel.title = "Text Summarizer Settings"
+        panel.title = "Text Assist Settings"
         panel.level = .floating
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.backgroundColor = NSColor.windowBackgroundColor

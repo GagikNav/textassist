@@ -17,7 +17,7 @@ enum CaptureError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .accessibilityNotGranted:
-            return "Text Summarizer needs Accessibility permission to read the selected text."
+            return "Text Assist needs Accessibility permission to read the selected text."
         case .noSelection:
             return "No text selection found."
         case .secureField:
