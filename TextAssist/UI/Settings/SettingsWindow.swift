@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Root view for the app's Settings / Preferences window.
 ///
-/// This view is hosted by the `Settings` scene in `TextSummarizerApp`.
+/// This view is hosted by the `Settings` scene in `TextAssistApp`.
 struct SettingsView: View {
     @ObservedObject var settings: SettingsStore
     let provider: any LLMProvider

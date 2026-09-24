@@ -5,7 +5,7 @@ import Combine
 /// Coordinates the end-to-end summarization flow:
 /// capture → style picker → provider stream → popup.
 ///
-/// This class is owned by `TextSummarizerApp` and lives for the lifetime of
+/// This class is owned by `TextAssistApp` and lives for the lifetime of
 /// the app. It keeps at most one style picker and one summary popup open at
 /// a time.
 @MainActor

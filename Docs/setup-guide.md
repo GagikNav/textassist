@@ -1,8 +1,8 @@
-# Text Summarizer — Project Setup Guide
+# Text Assist — Project Setup Guide
 
 ## Overview
 
-This guide explains how to set up the **Text Summarizer** project for macOS development. It is written for developers who are new to macOS or Swift. The project starts as a local build, but it is structured so it can later be distributed via **Homebrew** and published as an **open-source project**.
+This guide explains how to set up the **Text Assist** project for macOS development. It is written for developers who are new to macOS or Swift. The project starts as a local build, but it is structured so it can later be distributed via **Homebrew** and published as an **open-source project**.
 
 ---
 
@@ -11,7 +11,7 @@ This guide explains how to set up the **Text Summarizer** project for macOS deve
 | Stage                           | Goal                                                   | What This Guide Covers |
 | :------------------------------ | :----------------------------------------------------- | :--------------------- |
 | **Local development**     | Build and run the app on your own Mac                  | Steps 1–9             |
-| **Homebrew distribution** | Let users install with`brew install text-summarizer` | Step 10                |
+| **Homebrew distribution** | Let users install with `brew install text-assist` | Step 10                |
 | **Open source**           | Publish source code on GitHub under a public license   | Step 11                |
 
 ---
@@ -34,11 +34,11 @@ This guide explains how to set up the **Text Summarizer** project for macOS deve
 Use this folder layout inside the Xcode project. Group names in Xcode can match these folders.
 
 ```text
-TextSummarizer/
-├── TextSummarizer.xcodeproj
-├── TextSummarizer/
+TextAssist/
+├── TextAssist.xcodeproj
+├── TextAssist/
 │   ├── App/
-│   │   └── TextSummarizerApp.swift          # @main entry point
+│   │   └── TextAssistApp.swift              # @main entry point
 │   ├── Core/
 │   │   ├── HotkeyManager.swift              # Global shortcuts
 │   │   ├── TextCaptureService.swift         # Accessibility + ⌘C fallback
@@ -78,8 +78,8 @@ TextSummarizer/
 │   │   ├── Assets.xcassets                  # App icon, colors
 │   │   └── Localizable.xcstrings            # String Catalog for localization
 │   ├── Info.plist
-│   └── TextSummarizer.entitlements
-├── TextSummarizerTests/
+│   └── TextAssist.entitlements
+├── TextAssistTests/
 │   ├── PromptTemplateTests.swift
 │   ├── StreamParserTests.swift
 │   ├── MarkdownWriterTests.swift
@@ -117,7 +117,7 @@ TextSummarizer/
 
 | Field                   | Recommended Value                                     |
 | :---------------------- | :---------------------------------------------------- |
-| Product Name            | `TextSummarizer`                                    |
+| Product Name            | `Text Assist`                                       |
 | Team                    | None for now, or your Apple ID team later for signing |
 | Organization Identifier | `com.yourname` or your reverse-domain name          |
 | Interface               | `SwiftUI`                                           |
@@ -134,8 +134,8 @@ TextSummarizer/
 
 The app must live in the menu bar with no Dock icon.
 
-1. In the Project navigator, click the top-level **TextSummarizer** project.
-2. Select the **TextSummarizer** target.
+1. In the Project navigator, click the top-level **TextAssist** project.
+2. Select the **Text Assist** target.
 3. Go to the **Info** tab.
 4. Find **Custom macOS Application Target Properties**.
 5. Click the **+** button to add a new row.
@@ -150,8 +150,8 @@ The app must live in the menu bar with no Dock icon.
 
 The App Sandbox blocks simulated ⌘C and some Accessibility workflows. The PRD recommends distribution **outside the Mac App Store**, so the sandbox should be disabled.
 
-1. In the Project navigator, find `TextSummarizer.entitlements`.
-2. If it does not exist, create it with **File → New → File → Property List** and name it `TextSummarizer.entitlements`.
+1. In the Project navigator, find `TextAssist.entitlements`.
+2. If it does not exist, create it with **File → New → File → Property List** and name it `TextAssist.entitlements`.
 3. Set its contents to:
 
 ```xml
@@ -193,7 +193,7 @@ To add them:
 
 Organize the project by creating these groups in the Project navigator:
 
-1. Right-click the blue **TextSummarizer** folder.
+1. Right-click the blue **TextAssist** folder.
 2. Choose **New Group**.
 3. Create these top-level groups:
    - `App`
@@ -255,9 +255,9 @@ The goal is:
 
 Files to create first:
 
-- [TextSummarizerApp.swift](../TextSummarizer/App/TextSummarizerApp.swift)
-- [HotkeyManager.swift](../TextSummarizer/Core/HotkeyManager.swift)
-- [TextCaptureService.swift](../TextSummarizer/Core/TextCaptureService.swift)
+- [TextAssistApp.swift](../TextAssist/App/TextAssistApp.swift)
+- [HotkeyManager.swift](../TextAssist/Core/HotkeyManager.swift)
+- [TextCaptureService.swift](../TextAssist/Core/TextCaptureService.swift)
 
 Once this works, add the style picker, provider, popup, and save features.
 
@@ -265,7 +265,7 @@ Once this works, add the style picker, provider, popup, and save features.
 
 ### Step 9: Run the App Locally
 
-This project currently has one application target and scheme named **Text Assist**. The project folder is named `TextSummarizer`, but commands must use the target's actual name: `Text Assist`.
+This project currently has one application target and scheme named **Text Assist**. The project folder is named `TextAssist`, while the target uses the user-facing name with a space.
 
 #### 9.1 Open the project and resolve dependencies
 
@@ -273,13 +273,13 @@ This project currently has one application target and scheme named **Text Assist
 2. Change to the project folder. Replace the path if you saved the project elsewhere:
 
 ```bash
-cd /Users/gagik/projects/TextSummarizer
+cd /Users/gagik/projects/TextAssist
 ```
 
 3. Open the project in Xcode:
 
 ```bash
-open TextSummarizer.xcodeproj
+open TextAssist.xcodeproj
 ```
 
 4. Xcode downloads the Swift packages the first time the project opens. Wait for the activity indicator in the top-right corner to finish. If package resolution fails, use **File → Packages → Resolve Package Versions**.
@@ -327,7 +327,7 @@ First, resolve Swift package dependencies. This requires internet access the fir
 
 ```bash
 xcodebuild -resolvePackageDependencies \
-  -project TextSummarizer.xcodeproj \
+  -project TextAssist.xcodeproj \
   -scheme "Text Assist"
 ```
 
@@ -335,7 +335,7 @@ Build a debug version. `Debug` keeps debugging information and is the right conf
 
 ```bash
 xcodebuild build \
-  -project TextSummarizer.xcodeproj \
+  -project TextAssist.xcodeproj \
   -scheme "Text Assist" \
   -configuration Debug \
   -destination "platform=macOS" \
@@ -394,7 +394,7 @@ Before considering a local change ready, check the following:
 
 ## Step 10: Prepare for Homebrew Distribution
 
-Homebrew is a good fit for an open-source macOS utility. To make the app installable with `brew install text-summarizer`, follow these guidelines during development.
+Homebrew is a good fit for an open-source macOS utility. To make the app installable with `brew install text-assist`, follow these guidelines during development.
 
 ### 10.1 Build a Release Binary
 
@@ -425,14 +425,14 @@ Homebrew casks can distribute signed or unsigned binaries, but signed and notari
 A Homebrew cask file looks like this:
 
 ```ruby
-cask "text-summarizer" do
+cask "text-assist" do
   version "1.0.0"
   sha256 "abc123..."
 
-  url "https://github.com/yourusername/text-summarizer/releases/download/v#{version}/TextSummarizer-#{version}.dmg"
-  name "Text Summarizer"
+  url "https://github.com/yourusername/text-assist/releases/download/v#{version}/Text-Assist-#{version}.dmg"
+  name "Text Assist"
   desc "Menu-bar utility that summarizes selected text with a local or remote LLM"
-  homepage "https://github.com/yourusername/text-summarizer"
+  homepage "https://github.com/yourusername/text-assist"
 
   app "Text Assist.app"
 end
@@ -462,15 +462,15 @@ Run this from the project root:
 ```bash
 # 1. Clean and archive the app
 xcodebuild archive \
-  -project TextSummarizer.xcodeproj \
+  -project TextAssist.xcodeproj \
   -scheme "Text Assist" \
   -destination "generic/platform=macOS" \
-  -archivePath build/TextSummarizer.xcarchive \
+  -archivePath build/TextAssist.xcarchive \
   -configuration Release
 
 # 2. Export the .app bundle
 xcodebuild -exportArchive \
-  -archivePath build/TextSummarizer.xcarchive \
+  -archivePath build/TextAssist.xcarchive \
   -exportPath build/Export \
   -exportOptionsPlist export-options.plist
 ```
@@ -545,12 +545,12 @@ ditto -c -k --sequesterRsrc --keepParent \
 
 # Or create a DMG with create-dmg (install with brew install create-dmg)
 create-dmg \
-  --volname "Text Summarizer" \
+  --volname "Text Assist" \
   --window-pos 200 120 \
   --window-size 800 400 \
   --icon-size 100 \
   --app-drop-link 600 185 \
-  build/TextSummarizer.dmg \
+  build/Text-Assist.dmg \
   "build/Export/Text Assist.app"
 ```
 
@@ -619,9 +619,9 @@ Include at least:
 
 After the project is set up, create these files in order:
 
-1. [TextSummarizerApp.swift](../TextSummarizer/App/TextSummarizerApp.swift) — App entry point.
-2. [HotkeyManager.swift](../TextSummarizer/Core/HotkeyManager.swift) — Global hotkey with KeyboardShortcuts.
-3. [TextCaptureService.swift](../TextSummarizer/Core/TextCaptureService.swift) — Accessibility API + ⌘C fallback.
+1. [TextAssistApp.swift](../TextAssist/App/TextAssistApp.swift) — App entry point.
+2. [HotkeyManager.swift](../TextAssist/Core/HotkeyManager.swift) — Global hotkey with KeyboardShortcuts.
+3. [TextCaptureService.swift](../TextAssist/Core/TextCaptureService.swift) — Accessibility API + ⌘C fallback.
 
 Once Milestone 1 works, continue with the style picker, provider layer, popup, and Markdown writer.
 

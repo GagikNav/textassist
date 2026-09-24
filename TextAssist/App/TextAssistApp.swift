@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct TextSummarizerApp: App {
+struct TextAssistApp: App {
     /// Stores Ollama base URL and model.
     @StateObject private var settings: SettingsStore
 

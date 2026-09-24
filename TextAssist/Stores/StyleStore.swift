@@ -15,7 +15,7 @@ final class StyleStore: ObservableObject {
         }
     }
 
-    private static let lastUsedStyleIDKey = "com.textsummarizer.lastUsedStyleID"
+    private static let lastUsedStyleIDKey = "com.textassist.lastUsedStyleID"
 
     /// Creates the store with the built-in styles and the last-used default.
     init(styles: [SummaryStyle] = SummaryStyle.builtIn) {

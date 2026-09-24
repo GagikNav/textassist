@@ -1,8 +1,8 @@
 import AppKit
 import Foundation
 
-let outputDir = "TextSummarizer/Assets.xcassets/AppIcon.appiconset"
-let sourcePath = "TextSummarizer/Assets.xcassets/icon-source/convert_to_text_500dp_8B7DBE_FILL0_wght400_GRAD0_opsz48.png"
+let outputDir = "TextAssist/Assets.xcassets/AppIcon.appiconset"
+let sourcePath = "TextAssist/Assets.xcassets/icon-source/convert_to_text_500dp_8B7DBE_FILL0_wght400_GRAD0_opsz48.png"
 let sizes = [(16, "16x16"), (32, "32x32"), (128, "128x128"), (256, "256x256"), (512, "512x512")]
 
 func loadSource() -> NSImage {

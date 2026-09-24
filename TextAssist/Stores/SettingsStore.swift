@@ -14,8 +14,8 @@ final class SettingsStore: ObservableObject, @unchecked Sendable {
     /// Default model used on first launch.
     static let defaultModel = "phi3:instruct"
 
-    private static let baseURLKey = "com.textsummarizer.ollamaBaseURL"
-    private static let modelKey = "com.textsummarizer.ollamaModel"
+    private static let baseURLKey = "com.textassist.ollamaBaseURL"
+    private static let modelKey = "com.textassist.ollamaModel"
 
     /// Base URL of the Ollama server, for example `http://localhost:11434`.
     @Published var baseURL: URL {
