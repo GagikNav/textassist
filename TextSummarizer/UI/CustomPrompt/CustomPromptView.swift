@@ -50,7 +50,7 @@ struct CustomPromptView: View {
 
                 Spacer()
 
-                Button("Summarize") {
+                Button("Submit") {
                     onConfirm(trimmedPrompt)
                 }
                 .keyboardShortcut(.return, modifiers: .command)
