@@ -259,6 +259,21 @@ App/TextAssistApp.swift          (edit)
 - Do not refactor unrelated code. Do not rename existing types.
 - "Done when" lists what to check by hand in the running app. No tests to write.
 
+### Epic 0 — Design and mockup (gate)
+
+#### T0.1 Design mockup for all v2 surfaces
+- **Depends on:** none · **Size:** M · **Type:** design, no code
+- **Blocks:** Epics 1–6. No implementation task starts until this mockup is approved.
+- **Deliverable:** a visual mockup (Figma, Sketch, Keynote, or SwiftUI preview screenshots — pick one) placed in `Docs/design/v2/`, covering every surface the epics touch:
+  1. **Picker v2** — grouped list (Transform / Write / Chat / Custom), shortcut keys, last-used checkmark, panel size for 16+ rows (§4.2).
+  2. **Result popup, Transform mode** — Markdown body, "Original" disclosure, style dropdown, Chat ⌘T button (§4.3).
+  3. **Result popup, Write mode** — plain-text body, Clean/Diff segmented toggle (red-removed/green-added), Replace ⌘↩, Chat ⌘T, elapsed time (§4.3).
+  4. **Chat popup** — pinned selection card (collapsed and expanded), starter chips, user/assistant bubbles, streaming state, Stop button, input bar (§4.4).
+  5. **Menu-bar popover** — Ollama status dot (green/red/gray), model label, Recent section (P1), model picker (P1) (§4.5).
+  6. **Settings window** — General section with hotkey recorders and launch-at-login toggle (P1).
+- **Define explicitly:** corner radius, paddings, spacing scale, fonts and sizes (header / body / caption), colors for diff (removed/added) and the status dot, button styles (bordered / borderedProminent / borderless), empty states, panel min/default sizes. The ASCII sketches in §4 are the baseline — the mockup refines them, it does not redesign the flows.
+- **Done when:** the mockup covers all six surfaces above, the design tokens are written down in `Docs/design/v2/README.md`, and the developer approves it. Only then do Epics 1–6 start.
+
 ### Epic 1 — Foundation: models, provider, capture metadata
 
 #### T1.1 Extend `SummaryStyle` and add Write and Chat styles
@@ -1783,11 +1798,14 @@ Toggle("Launch at login", isOn: $launchAtLogin)
 
 | # | Milestone | Epics / tasks | Demo |
 |:--|:--|:--|:--|
+| M0 | Design approved | T0.1 | Mockup of all v2 surfaces in `Docs/design/v2/`, approved |
 | M1 | Foundation compiles, nothing regressed | T1.1–T1.4 | Short Summary works as before |
 | M2 | Write + Replace | T2.1–T2.2, T3.1–T3.5 | `⌥⇧S → g → ⌘↩` fixes text in TextEdit |
 | M3 | Chat | T4.1–T4.4 | Chat with pinned selection and "Continue in Chat" |
 | M4 | Status | T5.1–T5.2 | Green/red dot in menu bar |
 | M5 | Polish (P1) | T6.1–T6.4 | Direct hotkeys, history, settings |
+
+**Gate:** M0 must be approved before any other milestone starts. Epics 1–6 implement the approved design.
 
 Parallelizable: T1.3, T1.4, T3.2, T3.3, T5.1 have no dependencies on each other and can be given to separate agents once T1.1 exists. Orchestrator edits (T3.5, T4.4, T6.1, T6.2) all touch the same file, so run them **sequentially**.
 
