@@ -5,6 +5,7 @@ _Generated 2026-10-04 00:00 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
 | #13 | T3.2 | agent:review | 2026-10-03 | [issue-13-textdiffer.md](./issue-13-textdiffer.md) |
+| #10 | T2.1 | agent:done | 2026-10-03 | [issue-10-grouped-stylepickerview.md](./issue-10-grouped-stylepickerview.md) |
 | #9 | T1.1 | agent:review | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #7 | T1.3 | agent:in-progress | 2026-10-03 | [issue-7-outputcleaner.md](./issue-7-outputcleaner.md) |

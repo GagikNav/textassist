@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 23:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 00:00 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,10 +20,13 @@ _Generated 2026-10-03 23:59 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #13 T3.2 TextDiffer
+- _none_
 
 **Ready**
-- _none_
+- #22 T5.1 OllamaStatusMonitor
+- #21 T4.1 ChatViewModel
+- #15 T3.3 PasteboardSnapshot and TextReplacementService
+- #14 T3.1 SummaryPopupViewModel additions
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
@@ -98,6 +101,7 @@ _Generated 2026-10-03 23:59 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Recent handoffs
 
 - [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
+- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
