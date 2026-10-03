@@ -8,7 +8,7 @@
 | Issue | #23 (T5.2) |
 | Epic | #5 (Epic 5 — Menu bar status) |
 | Milestone | M4 - Menu bar status |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-23-menu-bar-popover-with-status` |
 | Worktree | `build/worktrees/issue-23-menu-bar-popover-with-status` |
 | Base commit | `b00f21f` |
