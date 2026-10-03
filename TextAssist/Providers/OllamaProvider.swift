@@ -42,9 +42,9 @@ final class OllamaProvider: LLMProvider {
         return payload.models.map(\.name)
     }
 
-    // MARK: - Streaming summary
+    // MARK: - Streaming
 
-    func summarize(_ request: SummaryRequest) -> AsyncThrowingStream<String, Error> {
+    func stream(_ request: ChatCompletionRequest) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
             let task = Task {
                 do {
@@ -95,7 +95,7 @@ final class OllamaProvider: LLMProvider {
 
     // MARK: - Request building
 
-    private func makeChatRequest(_ request: SummaryRequest, baseURL: URL, model: String) throws -> URLRequest {
+    private func makeChatRequest(_ request: ChatCompletionRequest, baseURL: URL, model: String) throws -> URLRequest {
         let url = baseURL.appendingPathComponent("/api/chat")
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
@@ -103,10 +103,7 @@ final class OllamaProvider: LLMProvider {
 
         let body = ChatRequest(
             model: model,
-            messages: [
-                ChatMessage(role: "system", content: Self.systemPrompt),
-                ChatMessage(role: "user", content: request.userMessage)
-            ],
+            messages: request.messages.map { ChatMessage(role: $0.role.rawValue, content: $0.content) },
             stream: true,
             options: ChatOptions(
                 temperature: request.temperature,
@@ -119,21 +116,13 @@ final class OllamaProvider: LLMProvider {
         return urlRequest
     }
 
-    /// Estimates a context window large enough to hold the prompt and the
-    /// generated response, since Ollama defaults to only 2048 tokens and
-    /// would otherwise truncate long captured text mid-stream.
-    private func contextWindowSize(for request: SummaryRequest) -> Int {
-        // Rough heuristic: ~4 characters per token, plus generation headroom.
-        let estimatedPromptTokens = request.userMessage.count / 4
-        let required = estimatedPromptTokens + request.maxTokens + 256
+    /// Estimates a context window large enough for the whole conversation plus the reply.
+    /// Ollama defaults to 2048 tokens and would otherwise truncate long input silently.
+    private func contextWindowSize(for request: ChatCompletionRequest) -> Int {
+        let characters = request.messages.reduce(0) { $0 + $1.content.count }
+        let required = characters / 4 + request.maxTokens + 256   // ~4 chars per token
         return min(max(required, 2048), 32768)
     }
-
-    /// Provider-agnostic default system prompt from the PRD.
-    private static let systemPrompt = """
-        You are a precise summarization engine. Follow the user's instructions exactly. \
-        Never add information not present in the source. Respond in Markdown.
-        """
 
     // MARK: - Helpers
 
