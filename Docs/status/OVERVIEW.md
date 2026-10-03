@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 12:39 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: _not linked — run `gh auth refresh -s project` then re-run_
@@ -20,31 +20,31 @@ _Generated 2026-10-03 12:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #7 T1.3 OutputCleaner for rewrite results
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
 - #13 T3.2 TextDiffer
-- #8 T1.4 Capture metadata: source app PID and capture origin
-- #7 T1.3 OutputCleaner for rewrite results
 - #9 T1.1 Extend SummaryStyle and add Write and Chat styles
+- #8 T1.4 Capture metadata: source app PID and capture origin
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
-- #24 T6.3 Settings: hotkey recorders and launch at login
 - #25 T6.1 Direct-action hotkeys (skip the picker)
 - #26 T6.2 Recent history
+- #24 T6.3 Settings: hotkey recorders and launch at login
+- #23 T5.2 Menu-bar popover with status
+- #21 T4.1 ChatViewModel
 - #19 T4.4 Orchestrator wiring for Chat
 - #20 T4.2 ChatPopupView
 - #18 T4.3 Panel positioning helper and ChatPopup
-- #23 T5.2 Menu-bar popover with status
-- #21 T4.1 ChatViewModel
-- #15 T3.3 PasteboardSnapshot and TextReplacementService
 - #16 T3.5 Orchestrator: clean, diff, replace, filter styles
 - #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
+- #15 T3.3 PasteboardSnapshot and TextReplacementService
 - #14 T3.1 SummaryPopupViewModel additions
-- #10 T2.1 Grouped StylePickerView
 - #12 T1.2 Generalize the provider (multi-turn, per-request system prompt)
 - #11 T2.2 Size the picker panel to its content
+- #10 T2.1 Grouped StylePickerView
 
 **Epics ready to delegate**
 - #6 Epic 6 — P1 extras
@@ -115,4 +115,4 @@ _Generated 2026-10-03 12:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-_None yet._
+- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
