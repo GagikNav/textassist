@@ -25,6 +25,19 @@ struct SummaryPopupView: View {
         HStack(spacing: 14) {
             stylePicker
 
+            if viewModel.isWriteMode {
+                Picker("", selection: $viewModel.viewMode) {
+                    ForEach(ResultViewMode.allCases) { mode in
+                        Text(mode.rawValue)
+                            .tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .frame(width: 130)
+                .disabled(viewModel.isStreaming || !viewModel.isDiffAvailable)
+            }
+
             Spacer()
 
             Button {
@@ -68,19 +81,13 @@ struct SummaryPopupView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    originalDisclosure
+
                     if let errorMessage = viewModel.errorMessage {
                         errorBanner(message: errorMessage)
                     }
 
-                    Markdown(viewModel.streamedText.isEmpty ? " " : viewModel.streamedText)
-                        .markdownTextStyle(
-                            textStyle: {
-                                FontFamily(.custom(".AppleSystemUIFont"))
-                                FontSize(16)
-                            }
-                        )
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
+                    resultBody
 
                     Spacer(minLength: 0)
 
@@ -97,6 +104,47 @@ struct SummaryPopupView: View {
                 scrollToBottom(proxy: proxy)
             }
         }
+    }
+
+    @ViewBuilder
+    private var resultBody: some View {
+        if viewModel.isWriteMode {
+            let showDiff = viewModel.viewMode == .diff && !viewModel.isStreaming && viewModel.isDiffAvailable
+            Text(showDiff ? viewModel.diffText : AttributedString(viewModel.streamedText.isEmpty ? " " : viewModel.streamedText))
+                .font(.system(size: 16))
+                .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        } else {
+            Markdown(viewModel.streamedText.isEmpty ? " " : viewModel.streamedText)
+                .markdownTextStyle(textStyle: {
+                    FontFamily(.custom(".AppleSystemUIFont"))
+                    FontSize(16)
+                })
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }
+    }
+
+    private var originalDisclosure: some View {
+        DisclosureGroup(isExpanded: $viewModel.showsOriginal) {
+            ScrollView {
+                Text(viewModel.capturedText.text)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(maxHeight: 160)
+        } label: {
+            Text("Original (\(wordCount) words)")
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
+    }
+
+    private var wordCount: Int {
+        viewModel.capturedText.text.split(whereSeparator: \.isWhitespace).count
     }
 
     private func errorBanner(message: String) -> some View {
@@ -143,6 +191,26 @@ struct SummaryPopupView: View {
                 Label("Regenerate", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut("r", modifiers: .command)
+            .disabled(viewModel.isStreaming)
+
+            if viewModel.isWriteMode {
+                Button {
+                    viewModel.onReplace()
+                } label: {
+                    Label("Replace", systemImage: "arrow.uturn.left.circle.fill")
+                }
+                .keyboardShortcut(.return, modifiers: .command)
+                .buttonStyle(.borderedProminent)
+                .disabled(!viewModel.canReplace)
+                .help("Replace the original selection (⌘↩)")
+            }
+
+            Button {
+                viewModel.onContinueInChat()
+            } label: {
+                Label("Chat", systemImage: "bubble.left.and.bubble.right")
+            }
+            .keyboardShortcut("t", modifiers: .command)
             .disabled(viewModel.isStreaming)
 
             Spacer()
