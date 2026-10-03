@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 00:41 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 00:42 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,7 +12,7 @@ _Generated 2026-10-04 00:41 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 3 | 9 | `###.......` 33% |
+| M2 - Write + Replace | 4 | 9 | `####......` 44% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
@@ -43,7 +43,6 @@ _Generated 2026-10-04 00:41 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #6 Epic 6 — P1 extras
 - #5 Epic 5 — Menu bar status
 - #4 Epic 4 — Chat
-- #3 Epic 2 — Picker v2
 - #1 Epic 3 — Write experience in the result popup
 
 ## Epics
