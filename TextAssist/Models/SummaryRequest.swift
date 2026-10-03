@@ -1,6 +1,6 @@
 import Foundation
 
-/// Everything an LLM provider needs to produce one summary.
+/// Everything an LLM provider needs to produce one single-turn result for a style.
 struct SummaryRequest: Sendable {
     /// The style chosen by the user.
     let style: SummaryStyle
@@ -11,29 +11,35 @@ struct SummaryRequest: Sendable {
     /// Maximum number of tokens the provider should generate.
     let maxTokens: Int
 
-    /// Sampling temperature. Lower values produce more deterministic output.
+    /// Sampling temperature. Falls back to the style's value, then `0.2`.
     let temperature: Double
 
-    /// Creates a request.
-    /// - Parameters:
-    ///   - style: The chosen summary style.
-    ///   - text: The captured selection.
-    ///   - maxTokens: Maximum tokens to generate. Default is `4096`.
-    ///   - temperature: Sampling temperature. Default is `0.2`.
     init(
         style: SummaryStyle,
         text: String,
         maxTokens: Int = 4096,
-        temperature: Double = 0.2
+        temperature: Double? = nil
     ) {
         self.style = style
         self.text = text
         self.maxTokens = maxTokens
-        self.temperature = temperature
+        self.temperature = temperature ?? style.temperature ?? 0.2
     }
 
     /// The fully substituted user message ready to send to the LLM.
     var userMessage: String {
         style.prompt(for: text)
+    }
+
+    /// The same request expressed as a generic multi-turn completion.
+    var completionRequest: ChatCompletionRequest {
+        ChatCompletionRequest(
+            messages: [
+                LLMMessage(role: .system, content: style.systemPrompt ?? SummaryStyle.defaultSystemPrompt),
+                LLMMessage(role: .user, content: userMessage)
+            ],
+            maxTokens: maxTokens,
+            temperature: temperature
+        )
     }
 }
