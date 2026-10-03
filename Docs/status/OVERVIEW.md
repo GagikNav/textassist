@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:31 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:38 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,7 +12,7 @@ _Generated 2026-10-04 01:31 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 6 | 9 | `######....` 66% |
+| M2 - Write + Replace | 7 | 9 | `#######...` 77% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
 | M4 - Menu bar status | 2 | 3 | `######....` 66% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
@@ -49,7 +49,7 @@ _Generated 2026-10-04 01:31 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T3.1 SummaryPopupViewModel additions | #14 | closed |
 | T3.3 PasteboardSnapshot and TextReplacementService | #15 | closed |
 | T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | open |
-| T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | open |
+| T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | closed |
 
 ### #2 Epic 1 — Foundation: models, provider, capture metadata
 
@@ -100,13 +100,13 @@ _Generated 2026-10-04 01:31 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
-- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
 - [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
-- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
+- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
+- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
 - [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
+- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
