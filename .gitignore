@@ -113,3 +113,6 @@ fastlane/test_output
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Agent workflow - ephemeral session scratch
+.agents/state/session.md

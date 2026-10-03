@@ -1,0 +1,91 @@
+{
+  "$comment": "Canonical, harness-agnostic configuration for the Text Assist agent workflow. Scripts read this; humans edit it. Keep it valid JSON (no comments except this key).",
+  "repo": "GagikNav/textassist",
+  "defaultBranch": "main",
+  "maxDepth": 2,
+
+  "project": {
+    "owner": "GagikNav",
+    "autoDetect": true,
+    "statusField": "Status",
+    "statusMap": {
+      "agent:ready": "Todo",
+      "agent:in-progress": "In Progress",
+      "agent:blocked": "Blocked",
+      "agent:review": "In Review",
+      "agent:done": "Done"
+    }
+  },
+
+  "build": {
+    "command": "xcodebuild build -project TextAssist.xcodeproj -scheme \"Text Assist\" -configuration Debug -destination \"platform=macOS\" -derivedDataPath build/DerivedData",
+    "mustPass": true
+  },
+
+  "protectedPaths": [
+    "TextAssist.xcodeproj/project.pbxproj"
+  ],
+
+  "sequentialTasks": ["T3.5", "T4.4", "T6.1", "T6.2"],
+  "sequentialFiles": [
+    "TextAssist/Core/SummarizationOrchestrator.swift"
+  ],
+
+  "labels": {
+    "state": {
+      "ready": "agent:ready",
+      "inProgress": "agent:in-progress",
+      "blocked": "agent:blocked",
+      "review": "agent:review",
+      "done": "agent:done"
+    },
+    "kind": { "epic": "kind:epic", "task": "kind:task" },
+    "size": { "S": "size:S", "M": "size:M", "L": "size:L" },
+    "area": ["models", "providers", "core", "stores", "ui", "utilities", "design"],
+    "epic": { "0": "epic:0", "1": "epic:1", "2": "epic:2", "3": "epic:3", "4": "epic:4", "5": "epic:5", "6": "epic:6" }
+  },
+
+  "milestones": {
+    "M0": "M0 - Design approved",
+    "M1": "M1 - Foundation",
+    "M2": "M2 - Write + Replace",
+    "M3": "M3 - Chat",
+    "M4": "M4 - Menu bar status",
+    "M5": "M5 - Polish (P1)"
+  },
+
+  "epics": {
+    "1":  { "title": "Epic 3", "milestone": "M2", "taskEpic": "3" },
+    "2":  { "title": "Epic 1", "milestone": "M1", "taskEpic": "1" },
+    "3":  { "title": "Epic 2", "milestone": "M2", "taskEpic": "2" },
+    "4":  { "title": "Epic 4", "milestone": "M3", "taskEpic": "4" },
+    "5":  { "title": "Epic 5", "milestone": "M4", "taskEpic": "5" },
+    "6":  { "title": "Epic 6", "milestone": "M5", "taskEpic": "6" },
+    "29": { "title": "Epic 0", "milestone": "M0", "taskEpic": "0" }
+  },
+
+  "issues": {
+    "28": { "task": "T0.1", "kind": "task", "epic": 0, "milestone": "M0", "size": "M", "area": "design", "blockedBy": [] },
+    "9":  { "task": "T1.1", "kind": "task", "epic": 1, "milestone": "M1", "size": "M", "area": "models",   "blockedBy": [] },
+    "12": { "task": "T1.2", "kind": "task", "epic": 1, "milestone": "M1", "size": "M", "area": "providers","blockedBy": [9] },
+    "7":  { "task": "T1.3", "kind": "task", "epic": 1, "milestone": "M1", "size": "S", "area": "utilities","blockedBy": [] },
+    "8":  { "task": "T1.4", "kind": "task", "epic": 1, "milestone": "M1", "size": "S", "area": "core",     "blockedBy": [] },
+    "10": { "task": "T2.1", "kind": "task", "epic": 2, "milestone": "M2", "size": "S", "area": "ui",       "blockedBy": [9] },
+    "11": { "task": "T2.2", "kind": "task", "epic": 2, "milestone": "M2", "size": "S", "area": "ui",       "blockedBy": [10] },
+    "14": { "task": "T3.1", "kind": "task", "epic": 3, "milestone": "M2", "size": "S", "area": "ui",       "blockedBy": [9, 8] },
+    "13": { "task": "T3.2", "kind": "task", "epic": 3, "milestone": "M2", "size": "S", "area": "utilities","blockedBy": [] },
+    "15": { "task": "T3.3", "kind": "task", "epic": 3, "milestone": "M2", "size": "M", "area": "core",     "blockedBy": [8] },
+    "17": { "task": "T3.4", "kind": "task", "epic": 3, "milestone": "M2", "size": "M", "area": "ui",       "blockedBy": [14, 13] },
+    "16": { "task": "T3.5", "kind": "task", "epic": 3, "milestone": "M2", "size": "M", "area": "core",     "blockedBy": [12, 7, 14, 15, 17] },
+    "21": { "task": "T4.1", "kind": "task", "epic": 4, "milestone": "M3", "size": "M", "area": "ui",       "blockedBy": [12] },
+    "20": { "task": "T4.2", "kind": "task", "epic": 4, "milestone": "M3", "size": "M", "area": "ui",       "blockedBy": [21] },
+    "18": { "task": "T4.3", "kind": "task", "epic": 4, "milestone": "M3", "size": "S", "area": "ui",       "blockedBy": [20] },
+    "19": { "task": "T4.4", "kind": "task", "epic": 4, "milestone": "M3", "size": "S", "area": "core",     "blockedBy": [18, 16] },
+    "22": { "task": "T5.1", "kind": "task", "epic": 5, "milestone": "M4", "size": "S", "area": "core",     "blockedBy": [] },
+    "23": { "task": "T5.2", "kind": "task", "epic": 5, "milestone": "M4", "size": "S", "area": "ui",       "blockedBy": [22] },
+    "25": { "task": "T6.1", "kind": "task", "epic": 6, "milestone": "M5", "size": "S", "area": "core",     "blockedBy": [19, 16] },
+    "26": { "task": "T6.2", "kind": "task", "epic": 6, "milestone": "M5", "size": "M", "area": "stores",   "blockedBy": [16, 23] },
+    "24": { "task": "T6.3", "kind": "task", "epic": 6, "milestone": "M5", "size": "S", "area": "ui",       "blockedBy": [25] },
+    "27": { "task": "T6.4", "kind": "task", "epic": 6, "milestone": "M5", "size": "S", "area": "ui",       "blockedBy": [23] }
+  }
+}

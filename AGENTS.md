@@ -24,6 +24,23 @@ the running app".
 4. `Docs/design/v2/text-assist-v2-mockup.html` — the visual mockup for all six v2
    surfaces. Open in a browser; it has a Light/Dark switch in the header.
 
+## Agent workflow
+
+Tasks are GitHub issues. Agents follow `.agents/workflow.md` (the canonical loop:
+INTAKE → CONTEXT → PLAN → DELEGATE → IMPLEMENT → VERIFY → REVIEW → HANDOFF → SYNC).
+
+- **Start** a session with the `resume-session` skill (`/resume`) or the `pickup-task`
+  skill (`/pickup <n>`). The handoff docs in `Docs/handoffs/` are the durable memory, so
+  switching session or model loses nothing.
+- **Delegate** — an issue with open sub-issues is an epic: hand each sub-issue to a child
+  Orchestrator subagent (max depth 2). Never implement a child's work in the parent.
+- **Context and review** use read-only subagents (Explorer, Reviewer).
+- **Finish** with the `write-handoff` skill (`/handoff <n>`): commits the handoff, mirrors
+  it to the issue, and syncs the `agent:*` label and Project status.
+- Deterministic helpers live in `Scripts/agent/*.sh`; config and skills in `.agents/`.
+- The holistic picture is `Docs/status/OVERVIEW.md` (regenerate with
+  `Scripts/agent/overview.sh`).
+
 ## Build check — run after every task
 
 ```bash
