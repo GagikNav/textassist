@@ -48,6 +48,15 @@ INTAKE → CONTEXT → PLAN → DELEGATE → IMPLEMENT → VERIFY → REVIEW →
 - The holistic picture is `Docs/status/OVERVIEW.md` (regenerate with
   `Scripts/agent/overview.sh`).
 
+### GitHub operations — try MCP first
+
+For anything GitHub-facing (issues, sub-issues, comments, labels, milestones, PRs,
+reviews, branches, releases, code search), **look for a GitHub MCP tool first** and use
+it. Only fall back to the `gh` CLI or `Scripts/agent/*.sh` when no MCP tool covers the
+operation, the MCP server is unavailable, or a script is the documented path (e.g. the
+deterministic handoff/label sync). Do not reach for `gh` by reflex.
+
+
 ## Build check — run after every task
 
 ```bash

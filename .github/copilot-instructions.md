@@ -15,6 +15,14 @@ only adds the Copilot-specific wiring.
   `/review`, `/overview`.
 - **Scripts** (`Scripts/agent/*.sh`): the deterministic layer (`gh`-backed).
 
+## GitHub operations — try MCP first
+
+For anything GitHub-facing (issues, sub-issues, comments, labels, milestones, PRs,
+reviews, branches, releases, code search), **look for a GitHub MCP tool first** and use
+it. Only fall back to the `gh` CLI or `Scripts/agent/*.sh` when no MCP tool covers the
+operation, the MCP server is unavailable, or a script is the documented path (e.g. the
+deterministic handoff/label sync). Do not reach for `gh` by reflex.
+
 ## How to work here
 
 1. Start with `/resume` to continue in-progress work, or `/pickup <n>` to start a task.
