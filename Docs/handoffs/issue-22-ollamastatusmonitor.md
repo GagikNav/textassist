@@ -8,7 +8,7 @@
 | Issue | #22 (T5.1) |
 | Epic | #5 (Epic 5 — Menu bar status) |
 | Milestone | M4 - Menu bar status |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-22-ollamastatusmonitor` |
 | Worktree | `build/worktrees/issue-22-ollamastatusmonitor` |
 | Base commit | `559a8aa` |
