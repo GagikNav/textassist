@@ -39,8 +39,8 @@ final class StylePickerPanel {
         )
 
         let hostingController = NSHostingController(rootView: pickerView)
-        // Match the SwiftUI view's intended width; height is determined by the content.
-        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 220, height: 200))
+        // Size the panel to its content rather than hard-coding a fixed size.
+        hostingController.view.frame = CGRect(origin: .zero, size: hostingController.view.fittingSize)
 
         let panel = KeyablePanel(
             contentRect: hostingController.view.bounds,
