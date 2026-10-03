@@ -8,10 +8,13 @@ comment by `Scripts/agent/handoff.sh`.
 ## Rules
 
 1. Start from `.agents/templates/handoff.md`.
-2. The `## 8. Resume here` section is **mandatory** and must name a single **Next action**.
+2. The `## 9. Resume here` section is **mandatory** and must name a single **Next action**.
 3. Record the build-check result and the issue's "Done when" checklist (pass/fail).
-4. Never paste whole files — reference paths and symbols.
-5. `INDEX.md` and `Docs/status/OVERVIEW.md` are generated; do not hand-edit them.
+4. Fill **`## 5. How to test manually`** with copy-pasteable steps and the expected result.
+5. Never paste whole files — reference paths and symbols.
+6. `INDEX.md` and `Docs/status/OVERVIEW.md` are generated; do not hand-edit them.
+7. Run `Scripts/agent/handoff.sh <n>` from the task worktree so the commit lands on the
+   task branch.
 
 ## Lifecycle
 

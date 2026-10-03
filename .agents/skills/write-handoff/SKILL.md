@@ -15,8 +15,10 @@ argument-hint: "<issue-number>"
 1. Fill `.agents/templates/handoff.md` at
    `Docs/handoffs/issue-<n>-<slug>.md`. The **Resume here** section is mandatory and
    must name the single next action.
-2. Include the build-check result and the "Done when" checklist with pass/fail.
-3. Run `Scripts/agent/handoff.sh <n>`. It:
+2. Include the build-check result, the "Done when" checklist with pass/fail, and a
+   complete **How to test manually** section (§5): copy-pasteable steps plus the
+   expected result for each.
+3. Run `Scripts/agent/handoff.sh <n>` **from the task worktree**. It:
    - validates the file has all sections,
    - commits it on the current branch,
    - mirrors it to the issue inside `<!-- handoff:start --> … <!-- handoff:end -->`

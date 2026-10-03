@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Pick up a task: validate Definition of Ready and print a readiness brief.
-# Read-only by design; the caller flips the state label via issue-state.sh.
 #
 # Usage:
-#   pickup.sh            # list agent:ready and agent:in-progress issues
-#   pickup.sh <issue#>   # readiness brief for one issue
+#   pickup.sh                  # list agent:ready and agent:in-progress issues
+#   pickup.sh <issue#>         # readiness brief for one issue (read-only)
+#   pickup.sh <issue#> --start # brief + create worktree + set agent:in-progress
 set -euo pipefail
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/agent-lib.sh"
@@ -29,6 +29,8 @@ if [[ $# -eq 0 ]]; then
 fi
 
 n="$1"
+start=0
+[[ "${2:-}" == "--start" ]] && start=1
 gh issue view "$n" --repo "$REPO" --json number,title,state,labels,milestone,body >/dev/null 2>&1 \
   || die "issue #$n not found in $REPO"
 
@@ -99,7 +101,16 @@ fi
 
 echo
 if [[ "$dor_ok" -eq 1 ]]; then
-  ok "READY — start with: Scripts/agent/issue-state.sh $n in-progress"
+  if [[ "$start" -eq 1 ]]; then
+    wt="$("$AGENT_DIR/worktree.sh" "$n" --path)"
+    "$AGENT_DIR/worktree.sh" "$n" >/dev/null
+    set_state_label "$n" in-progress
+    ok "STARTED — work in an isolated worktree on branch $(basename "$wt")"
+    printf '  cd "%s"\n' "$wt"
+  else
+    ok "READY — start with: Scripts/agent/pickup.sh $n --start"
+    printf '  (creates a worktree under build/worktrees/ and sets agent:in-progress)\n'
+  fi
 else
   warn "NOT READY — resolve the items above (set agent:blocked if a dependency is open)"
   exit 2

@@ -9,6 +9,7 @@ same files. Harness-specific folders (`.github/`, `CLAUDE.md`) are thin adapters
 | Path | Purpose |
 |:--|:--|
 | `config.json` | Repo, labels, milestones, issue→task/dependency map, `maxDepth`. Scripts read this. |
+| `MANUAL.md` | **Human manual:** what every skill, agent, prompt and script does, and how to use them. Start here. |
 | `workflow.md` | The canonical loop, roles, delegation rules, guardrails, DoR/DoD. **Read this first.** |
 | `agents/*.agent.md` | Canonical agent definitions (orchestrator, explorer, implementer, reviewer). Copilot reads them via the `.github/agents` symlink. |
 | `skills/<name>/SKILL.md` | Shared, on-demand skills. VS Code Copilot discovers `.agents/skills/` natively. |
@@ -30,5 +31,11 @@ same files. Harness-specific folders (`.github/`, `CLAUDE.md`) are thin adapters
 
 ## Scripts
 
-`Scripts/agent/*.sh` implement the deterministic parts (pickup, state sync, handoff,
-overview). Prompts and skills call them; they are safe to run by hand.
+`Scripts/agent/*.sh` implement the deterministic parts (worktrees, pickup, state sync,
+handoff, overview). Prompts and skills call them; they are safe to run by hand.
+
+- `worktree.sh <n>` — create/list/remove the per-task worktree (parallel isolation).
+- `pickup.sh <n> --start` — validate readiness, create the worktree, set `agent:in-progress`.
+- `handoff.sh <n> [state]` — commit the handoff, mirror it to the issue, sync the label.
+- `overview.sh` — regenerate `Docs/status/OVERVIEW.md` and `Docs/handoffs/INDEX.md`.
+- `normalize-issues.sh` / `bootstrap.sh` / `issue-state.sh` / `delegate.sh` / `link-agents.sh` — supporting.

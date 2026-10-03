@@ -6,8 +6,10 @@ argument-hint: "<issue-number>"
 Apply the **write-handoff** skill (`.agents/skills/write-handoff/SKILL.md`).
 
 1. Fill `.agents/templates/handoff.md` at `Docs/handoffs/issue-<n>-<slug>.md` for the
-   issue the user gave. The **Resume here → Next action** section is mandatory.
+   issue the user gave. The **Resume here → Next action** section is mandatory, and the
+   **How to test manually** section (§5) must give copy-pasteable steps + expected result.
 2. Include the build-check result and the "Done when" checklist.
-3. Run `Scripts/agent/handoff.sh <n> [state]` — it validates, commits, mirrors the
-   comment on the issue, sets the state label, and regenerates the overview.
+3. Run `Scripts/agent/handoff.sh <n> [state]` **from the task worktree** — it validates,
+   commits, mirrors the comment on the issue, sets the state label, and regenerates the
+   overview.
 4. Never use `done` unless the build passed and every "Done when" item is checked.

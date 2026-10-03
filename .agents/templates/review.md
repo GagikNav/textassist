@@ -13,6 +13,14 @@ Produced by the Reviewer subagent (independent, read-only).
 |:--|:--|:--|
 | … | pass / fail / can't verify | … |
 
+## Manual test check
+| Step (from handoff §5) | Testable? | Would it catch a regression? |
+|:--|:--|:--|
+| … | yes / no | yes / no |
+
+If the manual test steps are missing, incomplete, or don't exercise the change, that is
+a **blocking** finding.
+
 ## Blocking findings
 1. **{{file:line}}** — {{what is wrong}} → {{smallest fix}}
 
