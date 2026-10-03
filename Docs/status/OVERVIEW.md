@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 00:56 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,7 +12,7 @@ _Generated 2026-10-04 00:56 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 4 | 9 | `####......` 44% |
+| M2 - Write + Replace | 5 | 9 | `#####.....` 55% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
@@ -21,7 +21,6 @@ _Generated 2026-10-04 00:56 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 **In progress**
 - #21 T4.1 ChatViewModel
-- #22 T5.1 OllamaStatusMonitor
 
 **Ready**
 - #15 T3.3 PasteboardSnapshot and TextReplacementService
@@ -51,7 +50,7 @@ _Generated 2026-10-04 00:56 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Task | Issue | State |
 |:--|--:|:--|
 | T3.2 TextDiffer | #13 | closed |
-| T3.1 SummaryPopupViewModel additions | #14 | open |
+| T3.1 SummaryPopupViewModel additions | #14 | closed |
 | T3.3 PasteboardSnapshot and TextReplacementService | #15 | open |
 | T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | open |
 | T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | open |
@@ -105,6 +104,7 @@ _Generated 2026-10-04 00:56 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
