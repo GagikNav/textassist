@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 23:13 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -11,7 +11,7 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Milestone | Done | Total | Progress |
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
-| M1 - Foundation | 4 | 5 | `########..` 80% |
+| M1 - Foundation | 5 | 5 | `##########` 100% |
 | M2 - Write + Replace | 0 | 9 | `..........` 0% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
@@ -20,12 +20,14 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #10 T2.1 Grouped StylePickerView
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
 - #21 T4.1 ChatViewModel
+- #15 T3.3 PasteboardSnapshot and TextReplacementService
 - #13 T3.2 TextDiffer
-- #10 T2.1 Grouped StylePickerView
+- #14 T3.1 SummaryPopupViewModel additions
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
@@ -38,8 +40,6 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #18 T4.3 Panel positioning helper and ChatPopup
 - #16 T3.5 Orchestrator: clean, diff, replace, filter styles
 - #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
-- #15 T3.3 PasteboardSnapshot and TextReplacementService
-- #14 T3.1 SummaryPopupViewModel additions
 - #11 T2.2 Size the picker panel to its content
 
 **Epics ready to delegate**
@@ -47,7 +47,6 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #5 Epic 5 — Menu bar status
 - #4 Epic 4 — Chat
 - #3 Epic 2 — Picker v2
-- #2 Epic 1 — Foundation: models, provider, capture metadata
 - #1 Epic 3 — Write experience in the result popup
 
 ## Epics
@@ -111,7 +110,8 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
