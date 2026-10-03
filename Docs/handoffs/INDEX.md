@@ -1,9 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-04 01:04 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
+| #22 | T5.1 | agent:done | 2026-10-04 | [issue-22-ollamastatusmonitor.md](./issue-22-ollamastatusmonitor.md) |
 | #14 | T3.1 | agent:review | 2026-10-04 | [issue-14-summarypopupviewmodel-additions.md](./issue-14-summarypopupviewmodel-additions.md) |
 | #21 | T4.1 | done | 2026-10-04 | [issue-21-chatviewmodel.md](./issue-21-chatviewmodel.md) |
 | #9 | T1.1 | agent:review | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |

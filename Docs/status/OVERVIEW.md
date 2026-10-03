@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -14,7 +14,7 @@ _Generated 2026-10-04 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M1 - Foundation | 5 | 5 | `##########` 100% |
 | M2 - Write + Replace | 5 | 9 | `#####.....` 55% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
-| M4 - Menu bar status | 0 | 3 | `..........` 0% |
+| M4 - Menu bar status | 1 | 3 | `###.......` 33% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
 
 ## Now
@@ -83,7 +83,7 @@ _Generated 2026-10-04 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 | Task | Issue | State |
 |:--|--:|:--|
-| T5.1 OllamaStatusMonitor | #22 | open |
+| T5.1 OllamaStatusMonitor | #22 | closed |
 | T5.2 Menu-bar popover with status | #23 | open |
 
 ### #6 Epic 6 — P1 extras
@@ -103,6 +103,7 @@ _Generated 2026-10-04 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
