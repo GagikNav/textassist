@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:27 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:31 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -14,14 +14,12 @@ _Generated 2026-10-04 01:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M1 - Foundation | 5 | 5 | `##########` 100% |
 | M2 - Write + Replace | 6 | 9 | `######....` 66% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
-| M4 - Menu bar status | 1 | 3 | `###.......` 33% |
+| M4 - Menu bar status | 2 | 3 | `######....` 66% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
 
 ## Now
 
 **In progress**
-- #23 T5.2 Menu-bar popover with status
-- #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
 
 **Ready**
 - #20 T4.2 ChatPopupView
@@ -83,7 +81,7 @@ _Generated 2026-10-04 01:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Task | Issue | State |
 |:--|--:|:--|
 | T5.1 OllamaStatusMonitor | #22 | closed |
-| T5.2 Menu-bar popover with status | #23 | open |
+| T5.2 Menu-bar popover with status | #23 | closed |
 
 ### #6 Epic 6 — P1 extras
 
@@ -102,6 +100,8 @@ _Generated 2026-10-04 01:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
+- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
 - [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
@@ -110,5 +110,3 @@ _Generated 2026-10-04 01:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
 - [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
-- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
