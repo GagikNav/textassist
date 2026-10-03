@@ -18,8 +18,11 @@ index="$REPO_ROOT/Docs/handoffs/INDEX.md"
 
 project_line="Project: _not linked — run \`gh auth refresh -s project\` then re-run_"
 if has_project_scope; then
-  num="$(gh project list --owner "$PROJECT_OWNER" --format json 2>/dev/null \
-    | jq -r '(.projects // .)[0].number // empty' || true)"
+  num="$PROJECT_NUMBER"
+  if [[ -z "$num" ]]; then
+    num="$(gh project list --owner "$PROJECT_OWNER" --format json 2>/dev/null \
+      | jq -r '(.projects // .)[0].number // empty' || true)"
+  fi
   [[ -n "$num" ]] && project_line="Project: [#$num](https://github.com/users/$PROJECT_OWNER/projects/$num)"
 fi
 

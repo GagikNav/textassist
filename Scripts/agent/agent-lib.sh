@@ -16,6 +16,7 @@ DEFAULT_BRANCH="$(jq -r '.defaultBranch' "$CONFIG")"
 BUILD_CMD="$(jq -r '.build.command' "$CONFIG")"
 MAX_DEPTH="$(jq -r '.maxDepth' "$CONFIG")"
 PROJECT_OWNER="$(jq -r '.project.owner' "$CONFIG")"
+PROJECT_NUMBER="$(jq -r '.project.number // empty' "$CONFIG")"
 PROJECT_STATUS_FIELD="$(jq -r '.project.statusField' "$CONFIG")"
 
 # Agent state labels (exactly one applies to an issue at a time).
@@ -103,7 +104,10 @@ sync_project_status() {
   has_project_scope || { warn "Project sync skipped: gh token lacks 'project' scope (run: gh auth refresh -s project)"; return 0; }
 
   local number project_id field_id option_id item_id status_name
-  number="$(gh project list --owner "$PROJECT_OWNER" --format json 2>/dev/null | jq -r '(.projects // .)[0].number // empty' || true)"
+  number="$PROJECT_NUMBER"
+  if [[ -z "$number" ]]; then
+    number="$(gh project list --owner "$PROJECT_OWNER" --format json 2>/dev/null | jq -r '(.projects // .)[0].number // empty' || true)"
+  fi
   [[ -n "$number" ]] || { warn "Project sync skipped: no Project found for $PROJECT_OWNER"; return 0; }
 
   status_name="$(jq -r --arg l "$(state_label_for "$state")" '.project.statusMap[$l] // empty' "$CONFIG")"

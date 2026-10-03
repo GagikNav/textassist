@@ -6,12 +6,13 @@
 
   "project": {
     "owner": "GagikNav",
+    "number": 4,
     "autoDetect": true,
     "statusField": "Status",
     "statusMap": {
-      "agent:ready": "Todo",
+      "agent:ready": "Ready",
       "agent:in-progress": "In Progress",
-      "agent:blocked": "Blocked",
+      "agent:blocked": "Backlog",
       "agent:review": "In Review",
       "agent:done": "Done"
     }
