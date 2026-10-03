@@ -50,9 +50,14 @@ struct TextCaptureService: TextCapturing {
         print("Frontmost app: \(appName)")
 
         // Step 3: Try Accessibility capture first (does not touch clipboard).
-        if let text = tryCaptureViaAccessibility(frontmostApp: frontmostApp) {
+        if let result = tryCaptureViaAccessibility(frontmostApp: frontmostApp) {
             print("Captured via Accessibility")
-            return try makeCapturedText(text: text, sourceAppName: appName)
+            return try makeCapturedText(
+                text: result.text,
+                sourceAppName: appName,
+                pid: frontmostApp.processIdentifier,
+                origin: result.origin
+            )
         }
 
         // Step 4: Fall back to ⌘C + pasteboard if Accessibility returned nothing.
@@ -60,14 +65,19 @@ struct TextCaptureService: TextCapturing {
         // AXSelectedText reliably.
         print("Falling back to clipboard ⌘C")
         let fallbackText = try await captureViaClipboard()
-        return try makeCapturedText(text: fallbackText, sourceAppName: appName)
+        return try makeCapturedText(
+            text: fallbackText,
+            sourceAppName: appName,
+            pid: frontmostApp.processIdentifier,
+            origin: .clipboard
+        )
     }
 
     /// Attempts to read the focused element and its selected text via AX.
     /// Returns `nil` when AX succeeds structurally but there is simply no text,
     /// or when the app does not expose selected text so the caller can fall back.
     @MainActor
-    private func tryCaptureViaAccessibility(frontmostApp: NSRunningApplication) -> String? {
+    private func tryCaptureViaAccessibility(frontmostApp: NSRunningApplication) -> (text: String, origin: CaptureOrigin)? {
         let appElement = AXUIElementCreateApplication(frontmostApp.processIdentifier)
 
         // Get the focused UI element inside that app.
@@ -95,7 +105,7 @@ struct TextCaptureService: TextCapturing {
         if selectedTextResult == .success,
            let text = selectedTextValue as? String,
            !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return text
+            return (text, .selectedText)
         }
 
         // Some apps expose the full value instead of selected text.
@@ -104,7 +114,7 @@ struct TextCaptureService: TextCapturing {
         if valueResult == .success,
            let text = value as? String,
            !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return text
+            return (text, .fieldValue)
         }
 
         return nil
@@ -170,7 +180,7 @@ struct TextCaptureService: TextCapturing {
 
     /// Validates and trims captured text, producing a `CapturedText` value.
     @MainActor
-    private func makeCapturedText(text: String, sourceAppName: String) throws -> CapturedText {
+    private func makeCapturedText(text: String, sourceAppName: String, pid: pid_t, origin: CaptureOrigin) throws -> CapturedText {
         guard text.count <= maxSelectionLength else {
             throw CaptureError.selectionTooLong(limit: maxSelectionLength)
         }
@@ -180,7 +190,7 @@ struct TextCaptureService: TextCapturing {
             throw CaptureError.noSelection
         }
 
-        return CapturedText(text: trimmedText, sourceAppName: sourceAppName)
+        return CapturedText(text: trimmedText, sourceAppName: sourceAppName, sourceAppPID: pid, origin: origin)
     }
 
     /// Checks whether the focused element is a secure text field.
