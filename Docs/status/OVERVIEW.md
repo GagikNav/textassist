@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:06 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -105,10 +105,11 @@ _Generated 2026-10-04 01:06 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
-- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
-- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
-- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
+- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
