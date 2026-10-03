@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -11,7 +11,7 @@ _Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Milestone | Done | Total | Progress |
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
-| M1 - Foundation | 2 | 5 | `####......` 40% |
+| M1 - Foundation | 3 | 5 | `######....` 60% |
 | M2 - Write + Replace | 0 | 9 | `..........` 0% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
@@ -20,12 +20,12 @@ _Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #12 T1.2 Generalize the provider (multi-turn, per-request system prompt)
+- #8 T1.4 Capture metadata: source app PID and capture origin
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
+- #21 T4.1 ChatViewModel
 - #13 T3.2 TextDiffer
-- #8 T1.4 Capture metadata: source app PID and capture origin
 - #10 T2.1 Grouped StylePickerView
 
 **Blocked**
@@ -34,7 +34,6 @@ _Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #26 T6.2 Recent history
 - #24 T6.3 Settings: hotkey recorders and launch at login
 - #23 T5.2 Menu-bar popover with status
-- #21 T4.1 ChatViewModel
 - #19 T4.4 Orchestrator wiring for Chat
 - #20 T4.2 ChatPopupView
 - #18 T4.3 Panel positioning helper and ChatPopup
@@ -71,7 +70,7 @@ _Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T1.3 OutputCleaner for rewrite results | #7 | closed |
 | T1.4 Capture metadata: source app PID and capture origin | #8 | open |
 | T1.1 Extend SummaryStyle and add Write and Chat styles | #9 | closed |
-| T1.2 Generalize the provider (multi-turn, per-request system prompt) | #12 | open |
+| T1.2 Generalize the provider (multi-turn, per-request system prompt) | #12 | closed |
 
 ### #3 Epic 2 — Picker v2
 
@@ -113,6 +112,7 @@ _Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
