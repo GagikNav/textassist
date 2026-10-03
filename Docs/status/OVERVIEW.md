@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:21 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:26 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,7 +12,7 @@ _Generated 2026-10-04 01:21 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 5 | 9 | `#####.....` 55% |
+| M2 - Write + Replace | 6 | 9 | `######....` 66% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
 | M4 - Menu bar status | 1 | 3 | `###.......` 33% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
@@ -22,7 +22,6 @@ _Generated 2026-10-04 01:21 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **In progress**
 - #23 T5.2 Menu-bar popover with status
 - #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
-- #15 T3.3 PasteboardSnapshot and TextReplacementService
 
 **Ready**
 - #20 T4.2 ChatPopupView
@@ -50,7 +49,7 @@ _Generated 2026-10-04 01:21 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|:--|
 | T3.2 TextDiffer | #13 | closed |
 | T3.1 SummaryPopupViewModel additions | #14 | closed |
-| T3.3 PasteboardSnapshot and TextReplacementService | #15 | open |
+| T3.3 PasteboardSnapshot and TextReplacementService | #15 | closed |
 | T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | open |
 | T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | open |
 
@@ -104,12 +103,12 @@ _Generated 2026-10-04 01:21 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Recent handoffs
 
 - [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
-- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
-- [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
+- [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
-- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
 - [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
+- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
+- [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
