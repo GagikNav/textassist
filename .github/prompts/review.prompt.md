@@ -10,7 +10,8 @@ Use the **Reviewer** agent (or apply the **review-change** skill,
 2. Run the build check from `.agents/config.json`.
 3. Verify the `AGENTS.md` hard constraints (no `project.pbxproj` edits, macOS 13 APIs,
    MainActor isolation, sandbox off, non-activating panels, doc comments, no scope creep).
-4. Fill `.agents/templates/review.md`: verdict, build, Done-when checklist, blocking
-   findings, non-blocking notes, scope check.
+4. Fill `.agents/templates/review.md`: verdict, build, Done-when checklist,
+   **manual test check**, blocking findings, non-blocking notes, scope check. Missing or
+   weak manual-test steps are a blocking finding.
 
 Read-only: never edit the change under review.

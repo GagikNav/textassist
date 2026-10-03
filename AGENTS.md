@@ -29,9 +29,16 @@ the running app".
 Tasks are GitHub issues. Agents follow `.agents/workflow.md` (the canonical loop:
 INTAKE → CONTEXT → PLAN → DELEGATE → IMPLEMENT → VERIFY → REVIEW → HANDOFF → SYNC).
 
+- **New here?** Read `.agents/MANUAL.md` — what every skill, agent, prompt and script
+  does, and how to use them.
 - **Start** a session with the `resume-session` skill (`/resume`) or the `pickup-task`
   skill (`/pickup <n>`). The handoff docs in `Docs/handoffs/` are the durable memory, so
   switching session or model loses nothing.
+- **Isolate** — each task runs in its own git worktree (`Scripts/agent/pickup.sh <n> --start`,
+  or `Scripts/agent/worktree.sh <n>`), so parallel agents never collide. Never edit files
+  for a task in the main checkout.
+- **Manual tests** — every step ends with instructions on how to test the result by hand;
+  the handoff collects the final set (§5).
 - **Delegate** — an issue with open sub-issues is an epic: hand each sub-issue to a child
   Orchestrator subagent (max depth 2). Never implement a child's work in the parent.
 - **Context and review** use read-only subagents (Explorer, Reviewer).

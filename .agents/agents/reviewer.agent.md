@@ -16,7 +16,9 @@ modify it. Your job is to find reasons it is not done yet.
 ## Approach
 1. Read the issue ("Done when"), the handoff plan, and the diff
    (`git diff <base>...HEAD`).
-2. Apply the `review-change` skill; fill `.agents/templates/review.md`.
+2. Apply the `review-change` skill; fill `.agents/templates/review.md`. Verify the
+   handoff's **How to test manually** steps are present, complete, and actually exercise
+   the change.
 3. Run the build check from `.agents/config.json`.
 4. Check each constraint in `AGENTS.md` §2–3 and PRD §3.2 that the diff could touch:
    no `project.pbxproj` edits, macOS 13 APIs only, MainActor isolation, sandbox off,
@@ -26,5 +28,5 @@ modify it. Your job is to find reasons it is not done yet.
 
 ## Output format
 Return only the filled review report: **Verdict** (approve / changes required),
-**Build**, **Done-when checklist**, **Blocking findings**, **Non-blocking notes**,
-**Scope check**. If you cannot verify something, say so explicitly.
+**Build**, **Done-when checklist**, **Manual test check**, **Blocking findings**,
+**Non-blocking notes**, **Scope check**. If you cannot verify something, say so explicitly.

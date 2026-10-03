@@ -15,7 +15,7 @@ hfile="$(handoff_path "$n")"
 [[ -n "$hfile" ]] || die "no handoff at Docs/handoffs/issue-$n-*.md (start from .agents/templates/handoff.md)"
 
 missing=0
-for s in "## 2. Plan" "## 4. Verification" "## 8. Resume here"; do
+for s in "## 2. Plan" "## 4. Verification" "## 5. How to test manually" "## 9. Resume here"; do
   grep -qF "$s" "$hfile" || { warn "handoff missing section: $s"; missing=1; }
 done
 grep -qF "Next action" "$hfile" || { warn "handoff missing a 'Next action'"; missing=1; }
@@ -26,7 +26,7 @@ log "Regenerating overview"
 
 branch="$(git -C "$REPO_ROOT" branch --show-current)"
 if [[ "$branch" != issue-"$n"-* ]]; then
-  warn "current branch '$branch' is not issue-$n-* — committing here anyway"
+  warn "current branch '$branch' is not issue-$n-* — are you in the task worktree (build/worktrees/)?"
 fi
 
 git -C "$REPO_ROOT" add "$hfile" 2>/dev/null || true

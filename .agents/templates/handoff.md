@@ -10,6 +10,7 @@
 | Milestone | {{MILESTONE}} |
 | Status | {{STATUS}} |
 | Branch | `{{BRANCH}}` |
+| Worktree | `build/worktrees/{{BRANCH}}` |
 | Base commit | `{{BASE_COMMIT}}` |
 | Last commit | `{{HEAD_COMMIT}}` |
 | Updated | {{DATE}} |
@@ -36,26 +37,39 @@
   - [x] …
   - [ ] … (needs running app / not yet)
 
-## 5. Decisions
+## 5. How to test manually
+
+> Copy-pasteable steps a human can follow to see this feature work. Expected result
+> last. If the step cannot be tested yet (needs a later task), say so explicitly.
+
+1. {{Launch: open `TextAssist.xcodeproj` and Run, or open the built `.app`.}}
+2. {{Do the thing — e.g. select text in TextEdit, press ⌥⇧S, choose …}}
+3. {{Next action the tester takes}}
+4. **Expected:** {{exactly what should appear / happen}}
+
+**Edge cases to try:** {{…}} · **Not testable yet because:** {{… / n/a}}
+
+## 6. Decisions
 
 - {{Decision}} — {{why}}. (Rejected: {{alternative}}.)
 
-## 6. Blockers / open questions
+## 7. Blockers / open questions
 
 - {{None.}} / {{Blocker + who can unblock}}
 
-## 7. Known limitations
+## 8. Known limitations
 
 - {{Anything deliberately not done, and where it is tracked.}}
 
-## 8. Resume here
+## 9. Resume here
 
+- **Worktree:** `build/worktrees/{{BRANCH}}` (branch `{{BRANCH}}`)
 - **Next action:** {{the single next concrete step}}
 - **Files in play:** `…`
 - **Watch out for:** {{gotcha another agent would miss}}
 - **Do not redo:** {{work already finished this session}}
 
-## 9. Review
+## 10. Review
 
 - Reviewer verdict: {{approve / changes required}}
 - Findings: {{blocking items and resolution, or "none"}}

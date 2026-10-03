@@ -13,6 +13,7 @@ that satisfies the issue's "Done when", and nothing else.
 - DO NOT refactor unrelated code or rename existing types.
 - DO NOT use APIs newer than macOS 13 (`AGENTS.md` §2–3).
 - ONLY change the files listed in the issue (plus new files it authorises).
+- Work only inside the task worktree (`build/worktrees/issue-<n>-*`) — never the main checkout.
 - DO NOT invoke subagents — you are the leaf.
 
 ## Approach
@@ -23,5 +24,7 @@ that satisfies the issue's "Done when", and nothing else.
 4. Verify each "Done when" item by hand where possible; note what needs the running app.
 
 ## Output format
-Report: files changed (paths), build-check outcome, "Done when" checklist with
-pass/fail/needs-manual, and anything left for the orchestrator to review.
+For **each step**, report: what changed, the build-check outcome if you ran it, and
+**how to test this step manually** (the exact actions and the expected result).
+Finish with: files changed (paths), the "Done when" checklist (pass/fail/needs-manual),
+and anything left for the orchestrator to review.

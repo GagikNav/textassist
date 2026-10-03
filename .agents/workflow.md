@@ -38,6 +38,12 @@ plus `agent:blocked` whenever an unmet dependency exists.
 | HANDOFF | orchestrator | `write-handoff` | Handoff doc committed, mirrored to the issue, labels synced. |
 | SYNC | orchestrator | `sync-overview` | Overview/index regenerated; PR closed the issue. |
 
+**Manual test instructions are mandatory.** At the end of every step — and every phase —
+the agent reports **how a human can verify the result by hand**: the exact actions to
+take (with the app to use) and the expected outcome. If a result cannot be tested yet,
+say so and say why. The handoff's §5 collects the final, complete set; the reviewer
+checks that it is present and accurate.
+
 ## 3. Roles
 
 - **orchestrator** — owns an issue, plans, delegates, aggregates, syncs state. **Never
@@ -62,18 +68,27 @@ Definitions live in `.agents/agents/*.agent.md`.
 
 ## 5. Parallelism
 
+- **One worktree per task.** Every task runs in its own git worktree
+  (`build/worktrees/issue-<n>-<slug>`) on its own branch, so parallel agents never
+  touch each other's files or checkout. Create it with
+  `Scripts/agent/worktree.sh <n>`, or start in one step with
+  `Scripts/agent/pickup.sh <n> --start`.
 - Read-only subagents (explorer, reviewer) run in parallel and in any order.
-- Writers serialise per file. The `SummarizationOrchestrator.swift` tasks
-  (`T3.5`, `T4.4`, `T6.1`, `T6.2`) run **one at a time, in order**.
-- Independent leaf tasks (different files, deps closed) may run concurrently on
-  separate branches — one branch/PR per leaf task.
+- Writers serialise per file *within* a worktree. Across worktrees they are isolated;
+  only the `SummarizationOrchestrator.swift` tasks (`T3.5`, `T4.4`, `T6.1`, `T6.2`)
+  must still run **one at a time, in order** (they collide at merge otherwise).
+- One branch/PR per leaf task.
 
-## 6. Git policy
+## 6. Git policy and worktrees
 
-- Branch: `issue-<n>-<slug>` off the latest `main`.
+- **Always work in a worktree, never in the main checkout.**
+  `Scripts/agent/worktree.sh <n>` creates `build/worktrees/issue-<n>-<slug>`
+  (gitignored) on a new branch `issue-<n>-<slug>` off the latest `main`, or checks out
+  the existing branch. All edits, builds, commits and handoffs happen there.
 - One task = one reviewable change = one PR. Squash-merge.
 - PR body from `.agents/templates/pr-body.md`; it references the issue and the handoff.
 - The handoff doc is committed on the same branch, so the merged commit carries its own memory.
+- Remove the worktree after merge: `Scripts/agent/worktree.sh <n> --remove`.
 - **Never edit** `TextAssist.xcodeproj/project.pbxproj` (file-system-synchronized group).
 - Run the build check before declaring any task done:
   `xcodebuild build -project TextAssist.xcodeproj -scheme "Text Assist" -configuration Debug -destination "platform=macOS" -derivedDataPath build/DerivedData`
@@ -85,15 +100,18 @@ A task may enter `agent:in-progress` only when:
 2. Every issue in **Depends on** is closed.
 3. It has exactly one `size:`, one `area:`, one `kind:task`, one `epic:` label.
 4. It is a leaf task (no open sub-issues); otherwise it is delegated first.
+5. A worktree exists for it (`Scripts/agent/worktree.sh <n>`), and work happens there.
 
 ## 8. Definition of Done (DoD)
 
 1. Build check passes (paste the command result summary in the handoff).
 2. Every "Done when" item checked by hand in the running app.
-3. Reviewer subagent reports no blocking findings (or findings are resolved).
-4. Handoff doc written, mirrored to the issue, committed on the branch.
-5. Labels set to `agent:done`; Project status synced; overview regenerated.
-6. PR merged (state flips on merge).
+3. The handoff's **How to test manually** section is filled with copy-pasteable steps
+   and expected results.
+4. Reviewer subagent reports no blocking findings (or findings are resolved).
+5. Handoff doc written, mirrored to the issue, committed on the worktree's branch.
+6. Labels set to `agent:done`; Project status synced; overview regenerated.
+7. PR merged (state flips on merge), then the worktree is removed.
 
 ## 9. Resume protocol (any session, any model)
 

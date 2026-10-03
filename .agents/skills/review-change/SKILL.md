@@ -22,7 +22,9 @@ argument-hint: "<issue-number>"
    - `///` doc comments preserved on new public API;
    - no unrelated edits, no renames of existing types.
 4. Check every "Done when" item; mark **pass / fail / can't verify** with evidence.
-5. Fill `.agents/templates/review.md`.
+5. Check the handoff's **How to test manually** steps: present, complete, and actually
+   exercising the change? Missing or weak steps are a **blocking** finding.
+6. Fill `.agents/templates/review.md`.
 
 ## Rules
 - Read-only. Never edit the change under review.

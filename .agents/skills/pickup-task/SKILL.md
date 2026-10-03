@@ -20,11 +20,15 @@ argument-hint: "<issue-number>"
    - comment the unmet condition on the issue, and stop.
 4. If ready and it is an **epic** (has open sub-issues), do not work on it directly —
    go to the `delegate-subissue` skill.
-5. If ready and it is a **leaf**, move to `agent:in-progress`
-   (`Scripts/agent/issue-state.sh <n> in-progress`) and run the `resume-session` skill
-   first if a handoff already exists (continue, do not restart).
+5. If ready and it is a **leaf**, start it with `Scripts/agent/pickup.sh <n> --start`.
+   That creates an **isolated worktree** (`build/worktrees/issue-<n>-<slug>`) and sets
+   `agent:in-progress`. **Do all subsequent work in that worktree** — never the main
+   checkout — so parallel agents never collide. If a handoff already exists, run the
+   `resume-session` skill first and continue (do not restart).
 
 ## Guardrails
 - Never start a task whose dependencies are open.
+- Never work in the main checkout — always `cd` into the task worktree first.
 - Never start a `sequentialTasks` item (`T3.5`, `T4.4`, `T6.1`, `T6.2`) while another
   is in progress — same file (`SummarizationOrchestrator.swift`).
+- Remove the worktree after the PR merges: `Scripts/agent/worktree.sh <n> --remove`.
