@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 23:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -11,8 +11,8 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Milestone | Done | Total | Progress |
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
-| M1 - Foundation | 4 | 5 | `########..` 80% |
-| M2 - Write + Replace | 0 | 9 | `..........` 0% |
+| M1 - Foundation | 5 | 5 | `##########` 100% |
+| M2 - Write + Replace | 1 | 9 | `#.........` 11% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
 | M5 - Polish (P1) | 0 | 5 | `..........` 0% |
@@ -20,12 +20,10 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #13 T3.2 TextDiffer
 
 **Ready**
-- #22 T5.1 OllamaStatusMonitor
-- #21 T4.1 ChatViewModel
-- #13 T3.2 TextDiffer
-- #10 T2.1 Grouped StylePickerView
+- _none_
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
@@ -38,8 +36,6 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #18 T4.3 Panel positioning helper and ChatPopup
 - #16 T3.5 Orchestrator: clean, diff, replace, filter styles
 - #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
-- #15 T3.3 PasteboardSnapshot and TextReplacementService
-- #14 T3.1 SummaryPopupViewModel additions
 - #11 T2.2 Size the picker panel to its content
 
 **Epics ready to delegate**
@@ -47,7 +43,6 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #5 Epic 5 — Menu bar status
 - #4 Epic 4 — Chat
 - #3 Epic 2 — Picker v2
-- #2 Epic 1 — Foundation: models, provider, capture metadata
 - #1 Epic 3 — Write experience in the result popup
 
 ## Epics
@@ -56,11 +51,6 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 | Task | Issue | State |
 |:--|--:|:--|
-| T3.2 TextDiffer | #13 | open |
-| T3.1 SummaryPopupViewModel additions | #14 | open |
-| T3.3 PasteboardSnapshot and TextReplacementService | #15 | open |
-| T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | open |
-| T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | open |
 
 ### #2 Epic 1 — Foundation: models, provider, capture metadata
 
@@ -71,21 +61,17 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T1.1 Extend SummaryStyle and add Write and Chat styles | #9 | closed |
 | T1.2 Generalize the provider (multi-turn, per-request system prompt) | #12 | closed |
 
-### #3 Epic 2 — Picker v2
+### #3 Epic #3
 
 | Task | Issue | State |
 |:--|--:|:--|
-| T2.1 Grouped StylePickerView | #10 | open |
+| T2.1 Grouped StylePickerView | #10 | closed |
 | T2.2 Size the picker panel to its content | #11 | open |
 
 ### #4 Epic 4 — Chat
 
 | Task | Issue | State |
 |:--|--:|:--|
-| T4.4 Orchestrator wiring for Chat | #19 | open |
-| T4.3 Panel positioning helper and ChatPopup | #18 | open |
-| T4.2 ChatPopupView | #20 | open |
-| T4.1 ChatViewModel | #21 | open |
 
 ### #5 Epic 5 — Menu bar status
 
@@ -111,7 +97,8 @@ _Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
