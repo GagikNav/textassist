@@ -15,6 +15,9 @@ struct TextAssistApp: App {
     /// The manager registers its global shortcut as soon as it is created.
     @StateObject private var hotkeyManager: HotkeyManager
 
+    /// Tracks Ollama reachability and available models for the menu bar.
+    @StateObject private var statusMonitor: OllamaStatusMonitor
+
     /// Shared provider instance used by both the orchestrator and settings UI.
     private let provider: any LLMProvider
 
@@ -35,6 +38,7 @@ struct TextAssistApp: App {
         )
 
         self.provider = provider
+        _statusMonitor = StateObject(wrappedValue: OllamaStatusMonitor(provider: provider))
         self.settingsPanel = SettingsPanel(settings: settings, provider: provider)
         _settings = StateObject(wrappedValue: settings)
         _styleStore = StateObject(wrappedValue: store)
@@ -46,13 +50,18 @@ struct TextAssistApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            MenuBarStatusView {
-                Task {
-                    await hotkeyManager.triggerSummarize()
+            MenuBarStatusView(
+                settings: settings,
+                monitor: statusMonitor,
+                onSummarize: {
+                    Task {
+                        await hotkeyManager.triggerSummarize()
+                    }
+                },
+                onSettings: {
+                    settingsPanel.show()
                 }
-            } onSettings: {
-                settingsPanel.show()
-            }
+            )
         } label: {
             Image("MenuBarIcon")
                 .resizable()
