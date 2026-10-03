@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 00:12 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 00:13 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -26,6 +26,7 @@ _Generated 2026-10-04 00:12 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #21 T4.1 ChatViewModel
 - #15 T3.3 PasteboardSnapshot and TextReplacementService
 - #14 T3.1 SummaryPopupViewModel additions
+- #11 T2.2 Size the picker panel to its content
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
@@ -38,7 +39,6 @@ _Generated 2026-10-04 00:12 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #18 T4.3 Panel positioning helper and ChatPopup
 - #16 T3.5 Orchestrator: clean, diff, replace, filter styles
 - #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
-- #11 T2.2 Size the picker panel to its content
 
 **Epics ready to delegate**
 - #6 Epic 6 — P1 extras
