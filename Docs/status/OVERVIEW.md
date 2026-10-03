@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-04 01:12 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -22,19 +22,19 @@ _Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **In progress**
 
 **Ready**
+- #23 T5.2 Menu-bar popover with status
+- #20 T4.2 ChatPopupView
 - #15 T3.3 PasteboardSnapshot and TextReplacementService
+- #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
 
 **Blocked**
 - #27 T6.4 Menu-bar model picker
 - #25 T6.1 Direct-action hotkeys (skip the picker)
 - #26 T6.2 Recent history
 - #24 T6.3 Settings: hotkey recorders and launch at login
-- #23 T5.2 Menu-bar popover with status
 - #19 T4.4 Orchestrator wiring for Chat
-- #20 T4.2 ChatPopupView
 - #18 T4.3 Panel positioning helper and ChatPopup
 - #16 T3.5 Orchestrator: clean, diff, replace, filter styles
-- #17 T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons
 
 **Epics ready to delegate**
 - #6 Epic 6 — P1 extras
@@ -103,13 +103,13 @@ _Generated 2026-10-04 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
-- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
-- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
-- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
 - [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
+- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
 - [issue-10-grouped-stylepickerview.md](../handoffs/issue-10-grouped-stylepickerview.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
