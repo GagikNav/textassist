@@ -1,9 +1,9 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 21:17 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
-- Project: _not linked — run `gh auth refresh -s project` then re-run_
+- Project: [#4](https://github.com/users/GagikNav/projects/4)
 - Total issues: 29
 
 ## Milestones
@@ -11,7 +11,7 @@ _Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Milestone | Done | Total | Progress |
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
-| M1 - Foundation | 0 | 5 | `..........` 0% |
+| M1 - Foundation | 1 | 5 | `##........` 20% |
 | M2 - Write + Replace | 0 | 9 | `..........` 0% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
@@ -20,12 +20,11 @@ _Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #7 T1.3 OutputCleaner for rewrite results
+- #9 T1.1 Extend SummaryStyle and add Write and Chat styles
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
 - #13 T3.2 TextDiffer
-- #9 T1.1 Extend SummaryStyle and add Write and Chat styles
 - #8 T1.4 Capture metadata: source app PID and capture origin
 
 **Blocked**
@@ -70,7 +69,7 @@ _Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 | Task | Issue | State |
 |:--|--:|:--|
-| T1.3 OutputCleaner for rewrite results | #7 | open |
+| T1.3 OutputCleaner for rewrite results | #7 | closed |
 | T1.4 Capture metadata: source app PID and capture origin | #8 | open |
 | T1.1 Extend SummaryStyle and add Write and Chat styles | #9 | open |
 | T1.2 Generalize the provider (multi-turn, per-request system prompt) | #12 | open |
@@ -115,4 +114,5 @@ _Generated 2026-10-03 12:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
