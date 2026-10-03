@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 21:26 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 22:10 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,12 +20,12 @@ _Generated 2026-10-03 21:26 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #12 T1.2 Generalize the provider (multi-turn, per-request system prompt)
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
 - #13 T3.2 TextDiffer
 - #8 T1.4 Capture metadata: source app PID and capture origin
-- #12 T1.2 Generalize the provider (multi-turn, per-request system prompt)
 - #10 T2.1 Grouped StylePickerView
 
 **Blocked**
@@ -113,5 +113,6 @@ _Generated 2026-10-03 21:26 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
