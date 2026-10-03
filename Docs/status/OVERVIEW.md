@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-03 22:46 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -11,7 +11,7 @@ _Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Milestone | Done | Total | Progress |
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
-| M1 - Foundation | 3 | 5 | `######....` 60% |
+| M1 - Foundation | 4 | 5 | `########..` 80% |
 | M2 - Write + Replace | 0 | 9 | `..........` 0% |
 | M3 - Chat | 0 | 5 | `..........` 0% |
 | M4 - Menu bar status | 0 | 3 | `..........` 0% |
@@ -20,7 +20,6 @@ _Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #8 T1.4 Capture metadata: source app PID and capture origin
 
 **Ready**
 - #22 T5.1 OllamaStatusMonitor
@@ -68,7 +67,7 @@ _Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | Task | Issue | State |
 |:--|--:|:--|
 | T1.3 OutputCleaner for rewrite results | #7 | closed |
-| T1.4 Capture metadata: source app PID and capture origin | #8 | open |
+| T1.4 Capture metadata: source app PID and capture origin | #8 | closed |
 | T1.1 Extend SummaryStyle and add Write and Chat styles | #9 | closed |
 | T1.2 Generalize the provider (multi-turn, per-request system prompt) | #12 | closed |
 
@@ -113,6 +112,6 @@ _Generated 2026-10-03 22:38 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Recent handoffs
 
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
-- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)

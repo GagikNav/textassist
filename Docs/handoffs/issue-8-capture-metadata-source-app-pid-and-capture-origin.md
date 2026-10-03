@@ -8,7 +8,7 @@
 | Issue | #8 (T1.4) |
 | Epic | #1 (Epic 1 — Foundation) |
 | Milestone | M1 - Foundation |
-| Status | In Review (`agent:review`) |
+| Status | Done (`agent:done`) |
 | Branch | `issue-8-capture-metadata-source-app-pid-and-capture-origin` |
 | Worktree | `build/worktrees/issue-8-capture-metadata-source-app-pid-and-capture-origin` |
 | Base commit | `87ac743` |
@@ -78,10 +78,10 @@ new fields are inert until later tasks consume them.
 ## 9. Resume here
 
 - **Worktree:** `build/worktrees/issue-8-capture-metadata-source-app-pid-and-capture-origin` (branch `issue-8-capture-metadata-source-app-pid-and-capture-origin`)
-- **Next action:** Open the PR for this branch; on merge, flip the issue to `agent:done` and remove the worktree.
+- **Next action:** Done — PR #34 merged, issue closed (`agent:done`). Remove the worktree if still present.
 - **Files in play:** `TextAssist/Models/CapturedText.swift`, `TextAssist/Core/TextCaptureService.swift`
 - **Watch out for:** `captureSelection()` is the only caller of `tryCaptureViaAccessibility`; the tuple return must be unwrapped (`result.text`, `result.origin`), not the old `if let text`.
-- **Do not redo:** the code changes, build check, and review are finished — only PR + merge + state flip remain.
+- **Do not redo:** the code changes, build check, review, PR, and merge are finished.
 
 ## 10. Review
 
