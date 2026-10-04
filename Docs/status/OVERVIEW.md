@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,7 +20,6 @@ _Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #20 T4.2 ChatPopupView
 
 **Ready**
 
@@ -96,6 +95,7 @@ _Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
 - [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
@@ -105,4 +105,3 @@ _Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
 - [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
-- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)

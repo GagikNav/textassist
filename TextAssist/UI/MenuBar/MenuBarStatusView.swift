@@ -21,6 +21,20 @@ struct MenuBarStatusView: View {
             .padding(.vertical, 8)
             .padding(.horizontal, 12)
 
+            if monitor.status == .online && !monitor.availableModels.isEmpty {
+                Picker("Model", selection: $settings.model) {
+                    if !monitor.availableModels.contains(settings.model) {
+                        Text(settings.model).tag(settings.model)
+                    }
+                    ForEach(monitor.availableModels, id: \.self) { model in
+                        Text(model).tag(model)
+                    }
+                }
+                .pickerStyle(.menu)
+                .padding(.horizontal, 12)
+                .padding(.bottom, 8)
+            }
+
             if monitor.status == .offline {
                 Text("Not running. Start Ollama and try again.")
                     .font(.subheadline)

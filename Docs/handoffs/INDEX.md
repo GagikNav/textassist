@@ -1,9 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
+| #27 | T6.4 | agent:done | 2026-10-05 | [issue-27-menu-bar-model-picker.md](./issue-27-menu-bar-model-picker.md) |
 | #20 | T4.2 | review | 2026-10-05 | [issue-20-chatpopupview.md](./issue-20-chatpopupview.md) |
 | #9 | T1.1 | agent:review | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
