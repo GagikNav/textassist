@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 01:07 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -13,7 +13,7 @@ _Generated 2026-10-05 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
 | M2 - Write + Replace | 9 | 9 | `##########` 100% |
-| M3 - Chat | 1 | 5 | `##........` 20% |
+| M3 - Chat | 2 | 5 | `####......` 40% |
 | M4 - Menu bar status | 3 | 3 | `##########` 100% |
 | M5 - Polish (P1) | 1 | 5 | `##........` 20% |
 
@@ -68,7 +68,7 @@ _Generated 2026-10-05 01:03 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|:--|
 | T4.4 Orchestrator wiring for Chat | #19 | open |
 | T4.3 Panel positioning helper and ChatPopup | #18 | open |
-| T4.2 ChatPopupView | #20 | open |
+| T4.2 ChatPopupView | #20 | closed |
 | T4.1 ChatViewModel | #21 | closed |
 
 ### #5 Epic 5 — Menu bar status
