@@ -1,10 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 00:52 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #16 | T3.5 | agent:in-progress(implementation+build+reviewdone;handoffbeingwritten) | 2026-10-05 | [issue-16-orchestrator-clean-diff-replace-filter-styles.md](./issue-16-orchestrator-clean-diff-replace-filter-styles.md) |
+| #27 | T6.4 | agent:review | 2026-10-05 | [issue-27-menu-bar-model-picker.md](./issue-27-menu-bar-model-picker.md) |
 | #9 | T1.1 | agent:review | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #7 | T1.3 | agent:in-progress | 2026-10-03 | [issue-7-outputcleaner.md](./issue-7-outputcleaner.md) |
@@ -12,6 +12,7 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | #22 | T5.1 | agent:done | 2026-10-04 | [issue-22-ollamastatusmonitor.md](./issue-22-ollamastatusmonitor.md) |
 | #21 | T4.1 | done | 2026-10-04 | [issue-21-chatviewmodel.md](./issue-21-chatviewmodel.md) |
 | #17 | T3.4 | agent:review | 2026-10-04 | [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](./issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md) |
+| #16 | T3.5 | agent:in-progress(implementation+build+reviewdone;handoffbeingwritten) | 2026-10-05 | [issue-16-orchestrator-clean-diff-replace-filter-styles.md](./issue-16-orchestrator-clean-diff-replace-filter-styles.md) |
 | #15 | T3.3 | agent:review | 2026-10-04 | [issue-15-pasteboardsnapshot-and-textreplacementservice.md](./issue-15-pasteboardsnapshot-and-textreplacementservice.md) |
 | #14 | T3.1 | agent:review | 2026-10-04 | [issue-14-summarypopupviewmodel-additions.md](./issue-14-summarypopupviewmodel-additions.md) |
 | #13 | T3.2 | agent:review | 2026-10-03 | [issue-13-textdiffer.md](./issue-13-textdiffer.md) |
