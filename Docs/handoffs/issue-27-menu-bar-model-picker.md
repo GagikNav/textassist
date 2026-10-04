@@ -8,7 +8,7 @@
 | Issue | #27 (T6.4) |
 | Epic | #6 (Epic 6 — Polish (P1)) |
 | Milestone | M5 - Polish (P1) |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-27-menu-bar-model-picker` |
 | Worktree | `build/worktrees/issue-27-menu-bar-model-picker` |
 | Base commit | `574155e` |
@@ -105,10 +105,8 @@ today once Ollama is serving.
 ## 9. Resume here
 
 - **Worktree:** `build/worktrees/issue-27-menu-bar-model-picker` (branch `issue-27-menu-bar-model-picker`)
-- **Next action:** open the PR for `issue-27-menu-bar-model-picker` (body from
-  `.agents/templates/pr-body.md`); after a human confirms the model-switch "Done when" and
-  the PR merges, flip #27 to `agent:done` and remove the worktree
-  (`Scripts/agent/worktree.sh 27 --remove`).
+- **Next action:** none — PR #45 merged, #27 is `agent:done`, and the worktree is
+  removed. This task is complete.
 - **Files in play:** `TextAssist/UI/MenuBar/MenuBarStatusView.swift`,
   `Docs/handoffs/issue-27-menu-bar-model-picker.md`.
 - **Watch out for:** this view is also touched by T6.2; keep the picker gated on

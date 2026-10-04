@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 00:52 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 01:00 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -15,13 +15,11 @@ _Generated 2026-10-05 00:52 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M2 - Write + Replace | 9 | 9 | `##########` 100% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
 | M4 - Menu bar status | 3 | 3 | `##########` 100% |
-| M5 - Polish (P1) | 0 | 5 | `..........` 0% |
+| M5 - Polish (P1) | 1 | 5 | `##........` 20% |
 
 ## Now
 
 **In progress**
-- #27 T6.4 Menu-bar model picker
-- #20 T4.2 ChatPopupView
 
 **Ready**
 
@@ -87,7 +85,7 @@ _Generated 2026-10-05 00:52 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T6.3 Settings: hotkey recorders and launch at login | #24 | open |
 | T6.1 Direct-action hotkeys (skip the picker) | #25 | open |
 | T6.2 Recent history | #26 | open |
-| T6.4 Menu-bar model picker | #27 | open |
+| T6.4 Menu-bar model picker | #27 | closed |
 
 ### #29 Epic 0 — Design and mockup (gate)
 
@@ -98,12 +96,12 @@ _Generated 2026-10-05 00:52 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Recent handoffs
 
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
-- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
+- [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
 - [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
-- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
-- [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
-- [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
 - [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
+- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
+- [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
+- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
+- [issue-13-textdiffer.md](../handoffs/issue-13-textdiffer.md)
