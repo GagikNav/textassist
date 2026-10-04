@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 00:59 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,19 +12,17 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 7 | 9 | `#######...` 77% |
+| M2 - Write + Replace | 9 | 9 | `##########` 100% |
 | M3 - Chat | 1 | 5 | `##........` 20% |
 | M4 - Menu bar status | 3 | 3 | `##########` 100% |
-| M5 - Polish (P1) | 0 | 5 | `..........` 0% |
+| M5 - Polish (P1) | 1 | 5 | `##........` 20% |
 
 ## Now
 
 **In progress**
-- #16 T3.5 Orchestrator: clean, diff, replace, filter styles
+- #20 T4.2 ChatPopupView
 
 **Ready**
-- #27 T6.4 Menu-bar model picker
-- #20 T4.2 ChatPopupView
 
 **Blocked**
 - #25 T6.1 Direct-action hotkeys (skip the picker)
@@ -36,7 +34,6 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **Epics ready to delegate**
 - #6 Epic 6 — P1 extras
 - #4 Epic 4 — Chat
-- #1 Epic 3 — Write experience in the result popup
 
 ## Epics
 
@@ -47,7 +44,7 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T3.2 TextDiffer | #13 | closed |
 | T3.1 SummaryPopupViewModel additions | #14 | closed |
 | T3.3 PasteboardSnapshot and TextReplacementService | #15 | closed |
-| T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | open |
+| T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | closed |
 | T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | closed |
 
 ### #2 Epic 1 — Foundation: models, provider, capture metadata
@@ -89,7 +86,7 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T6.3 Settings: hotkey recorders and launch at login | #24 | open |
 | T6.1 Direct-action hotkeys (skip the picker) | #25 | open |
 | T6.2 Recent history | #26 | open |
-| T6.4 Menu-bar model picker | #27 | open |
+| T6.4 Menu-bar model picker | #27 | closed |
 
 ### #29 Epic 0 — Design and mockup (gate)
 
@@ -99,7 +96,7 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
+- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
@@ -107,5 +104,5 @@ _Generated 2026-10-05 00:39 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
 - [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
+- [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
 - [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
-- [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
