@@ -101,7 +101,9 @@ final class SummarizationOrchestrator: ObservableObject {
         let viewModel = SummaryPopupViewModel(
             capturedText: captured,
             currentStyle: style,
-            availableStyles: styleStore.styles
+            availableStyles: styleStore.styles.filter {
+                $0.category == .transform || $0.category == .write
+            }
         )
 
         configureActions(for: viewModel, captured: captured)
@@ -125,6 +127,23 @@ final class SummarizationOrchestrator: ObservableObject {
             guard let text = viewModel?.streamedText, !text.isEmpty else { return }
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(text, forType: .string)
+        }
+
+        viewModel.onReplace = { [weak self, weak viewModel] in
+            guard let self, let viewModel, viewModel.canReplace else { return }
+            let output = viewModel.streamedText
+            Task { @MainActor in
+                do {
+                    try await TextReplacementService().replaceSelection(
+                        with: output,
+                        inAppWithPID: captured.sourceAppPID
+                    )
+                    self.closePopup()
+                } catch {
+                    viewModel.errorMessage = (error as? LocalizedError)?.errorDescription
+                        ?? error.localizedDescription
+                }
+            }
         }
 
         viewModel.onRegenerate = { [weak self, weak viewModel] in
@@ -174,6 +193,7 @@ final class SummarizationOrchestrator: ObservableObject {
         let request = SummaryRequest(style: style, text: captured.text)
 
         viewModel.streamedText = ""
+        viewModel.viewMode = .clean
         viewModel.isStreaming = true
         viewModel.errorMessage = nil
         viewModel.elapsedTime = nil
@@ -190,7 +210,11 @@ final class SummarizationOrchestrator: ObservableObject {
                 guard !Task.isCancelled else { return }
                 viewModel.streamedText += delta
             }
+            if style.category == .write {
+                viewModel.streamedText = OutputCleaner.cleanRewrite(viewModel.streamedText)
+            }
             viewModel.elapsedTime = Date().timeIntervalSince(startTime)
+            viewModel.recomputeDiff()
         } catch {
             guard !Task.isCancelled else { return }
             viewModel.errorMessage = (error as? LocalizedError)?.localizedDescription
