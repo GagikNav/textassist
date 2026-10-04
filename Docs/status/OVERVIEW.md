@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 01:41 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 01:48 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,6 +20,7 @@ _Generated 2026-10-05 01:41 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #19 T4.4 Orchestrator wiring for Chat
 
 **Ready**
 - #51 Prevent superseded streams from clobbering popup state
