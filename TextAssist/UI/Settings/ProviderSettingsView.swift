@@ -1,11 +1,14 @@
 import SwiftUI
+import KeyboardShortcuts
+import ServiceManagement
 
-/// SwiftUI form for configuring the Ollama provider.
+/// SwiftUI form for the app's settings.
 ///
-/// Lets the user change the Ollama base URL and model. The model list is
-/// fetched from the configured server and shown in a picker. If the server
-/// cannot be reached, a plain text field is shown instead so the user can
-/// still type a model name.
+/// Groups the global keyboard shortcuts and launch-at-login toggle under a
+/// "General" section, and the Ollama base URL and model under "Ollama". The
+/// model list is fetched from the configured server and shown in a picker. If
+/// the server cannot be reached, a plain text field is shown instead so the
+/// user can still type a model name.
 struct ProviderSettingsView: View {
     @ObservedObject var settings: SettingsStore
     let provider: any LLMProvider
@@ -13,9 +16,31 @@ struct ProviderSettingsView: View {
     @State private var models: [String] = []
     @State private var isLoadingModels = false
     @State private var modelLoadError: String?
+    @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
         Form {
+            Section {
+                KeyboardShortcuts.Recorder("Assist:", name: .summarizeSelection)
+                KeyboardShortcuts.Recorder("Chat:", name: .chatWithSelection)
+                KeyboardShortcuts.Recorder("Fix grammar:", name: .fixGrammar)
+
+                Toggle("Launch at login", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { enabled in
+                        do {
+                            if enabled {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
+                            }
+                        } catch {
+                            launchAtLogin = !enabled
+                        }
+                    }
+            } header: {
+                Text("General")
+            }
+
             Section {
                 TextField("Base URL", text: baseURLBinding)
                     .textFieldStyle(.roundedBorder)
@@ -57,7 +82,7 @@ struct ProviderSettingsView: View {
         }
         .formStyle(.grouped)
         .padding()
-        .frame(minWidth: 360, minHeight: 180)
+        .frame(minWidth: 360, minHeight: 400)
         .task {
             await loadModels()
         }
