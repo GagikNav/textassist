@@ -5,6 +5,7 @@ import ApplicationServices
 enum ReplacementError: Error, LocalizedError {
     case accessibilityNotGranted
     case sourceAppUnavailable
+    case eventCreationFailed
 
     var errorDescription: String? {
         switch self {
@@ -12,6 +13,8 @@ enum ReplacementError: Error, LocalizedError {
             return "Text Assist needs Accessibility permission to paste into other apps."
         case .sourceAppUnavailable:
             return "The original app is no longer available. Use Copy instead."
+        case .eventCreationFailed:
+            return "Text Assist couldn't synthesize the paste keystroke. Use Copy instead."
         }
     }
 }
@@ -19,7 +22,8 @@ enum ReplacementError: Error, LocalizedError {
 /// Replaces the user's selection in the source app by pasting with a simulated ⌘V.
 ///
 /// Flow: save clipboard → put result on clipboard → re-activate source app →
-/// post ⌘V → wait → restore the previous clipboard.
+/// post ⌘V directly to the source app's process → wait → restore the previous
+/// clipboard.
 @MainActor
 struct TextReplacementService {
     func replaceSelection(with text: String, inAppWithPID pid: pid_t?) async throws {
@@ -40,15 +44,25 @@ struct TextReplacementService {
         // The panel is non-activating, so the source app is usually still active.
         // Activating again is cheap and covers the case where it is not.
         app.activate(options: [])
-        try await Task.sleep(nanoseconds: 150_000_000)
 
-        let source = CGEventSource(stateID: .combinedSessionState)
-        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(9), keyDown: true) // 'v'
-        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(9), keyDown: false)
-        keyDown?.flags = .maskCommand
-        keyUp?.flags = .maskCommand
-        keyDown?.post(tap: .cghidEventTap)
-        keyUp?.post(tap: .cghidEventTap)
+        // Create the synthetic ⌘V up front so a failure here surfaces as an
+        // error instead of a silent no-op.
+        guard let source = CGEventSource(stateID: .combinedSessionState),
+              let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(9), keyDown: true), // 'v'
+              let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(9), keyDown: false)
+        else {
+            throw ReplacementError.eventCreationFailed
+        }
+        keyDown.flags = .maskCommand
+        keyUp.flags = .maskCommand
+
+        // Post the paste directly to the source app's process. Posting at the
+        // HID event tap would deliver the event to the key window — which is the
+        // floating popup while it is open. The popup has no editable responder,
+        // so the paste is dropped and the system beeps instead of replacing the
+        // selection.
+        keyDown.postToPid(pid)
+        keyUp.postToPid(pid)
 
         // Give the app time to read the pasteboard before `defer` restores it.
         try await Task.sleep(nanoseconds: 400_000_000)
