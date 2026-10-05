@@ -4,9 +4,11 @@ import SwiftUI
 struct MenuBarStatusView: View {
     @ObservedObject var settings: SettingsStore
     @ObservedObject var monitor: OllamaStatusMonitor
+    @ObservedObject var history: HistoryStore
 
     let onSummarize: () -> Void
     let onSettings: () -> Void
+    let onReopen: (HistoryEntry) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -71,6 +73,45 @@ struct MenuBarStatusView: View {
             .padding(.vertical, 6)
             .padding(.horizontal, 12)
 
+            if !history.entries.isEmpty {
+                Divider()
+
+                Text("Recent")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 6)
+                    .padding(.bottom, 2)
+
+                ForEach(history.entries.prefix(5)) { entry in
+                    Button {
+                        onReopen(entry)
+                    } label: {
+                        HStack {
+                            Text(recentTitle(for: entry))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                            Spacer(minLength: 0)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 12)
+                }
+
+                Button {
+                    history.clear()
+                } label: {
+                    HStack {
+                        Text("Clear history")
+                        Spacer(minLength: 0)
+                    }
+                }
+                .buttonStyle(.plain)
+                .padding(.vertical, 4)
+                .padding(.horizontal, 12)
+            }
+
             Divider()
 
             Button {
@@ -104,6 +145,14 @@ struct MenuBarStatusView: View {
         case .unknown: return .gray
         }
     }
+
+    /// Single-line menu title for a recent entry: "Style · first 40 chars of input".
+    private func recentTitle(for entry: HistoryEntry) -> String {
+        let preview = entry.input
+            .prefix(40)
+            .replacingOccurrences(of: "\n", with: " ")
+        return "\(entry.styleName) · \(preview)"
+    }
 }
 
 #if DEBUG
@@ -111,8 +160,10 @@ struct MenuBarStatusView: View {
     MenuBarStatusView(
         settings: SettingsStore(),
         monitor: OllamaStatusMonitor(provider: OllamaProvider(settings: SettingsStore())),
+        history: HistoryStore(),
         onSummarize: {},
-        onSettings: {}
+        onSettings: {},
+        onReopen: { _ in }
     )
 }
 #endif
