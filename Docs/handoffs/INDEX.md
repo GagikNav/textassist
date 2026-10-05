@@ -1,14 +1,15 @@
 # Handoff index
 
-_Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 20:42 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #26 | T6.2 | review | 2026-10-05 | [issue-26-recent-history.md](./issue-26-recent-history.md) |
+| #24 | T6.3 | agent:review(codecommitted;awaitinghumanmanualcheck+PR) | 2026-10-05 | [issue-24-settings-hotkey-recorders-and-launch-at-login.md](./issue-24-settings-hotkey-recorders-and-launch-at-login.md) |
 | #9 | T1.1 | agent:review | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #7 | T1.3 | agent:in-progress | 2026-10-03 | [issue-7-outputcleaner.md](./issue-7-outputcleaner.md) |
 | #27 | T6.4 | agent:done | 2026-10-05 | [issue-27-menu-bar-model-picker.md](./issue-27-menu-bar-model-picker.md) |
+| #26 | T6.2 | review | 2026-10-05 | [issue-26-recent-history.md](./issue-26-recent-history.md) |
 | #25 | T6.1 | agent:done(merged;Done-whenconfirmedbyhand) | 2026-10-05 | [issue-25-direct-action-hotkeys-skip-the-picker.md](./issue-25-direct-action-hotkeys-skip-the-picker.md) |
 | #23 | T5.2 | agent:done | 2026-10-04 | [issue-23-menu-bar-popover-with-status.md](./issue-23-menu-bar-popover-with-status.md) |
 | #22 | T5.1 | agent:done | 2026-10-04 | [issue-22-ollamastatusmonitor.md](./issue-22-ollamastatusmonitor.md) |
