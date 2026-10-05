@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 19:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,12 +20,12 @@ _Generated 2026-10-05 19:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #26 T6.2 Recent history
 
 **Ready**
 - #51 Prevent superseded streams from clobbering popup state
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
-- #26 T6.2 Recent history
 
 **Blocked**
 - #24 T6.3 Settings: hotkey recorders and launch at login
@@ -96,13 +96,13 @@ _Generated 2026-10-05 19:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
-- [issue-19-orchestrator-wiring-for-chat.md](../handoffs/issue-19-orchestrator-wiring-for-chat.md)
-- [issue-18-panel-positioning-helper-and-chatpopup.md](../handoffs/issue-18-panel-positioning-helper-and-chatpopup.md)
-- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
+- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
+- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
+- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
-- [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
-- [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
+- [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
 - [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
-- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
+- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
+- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
