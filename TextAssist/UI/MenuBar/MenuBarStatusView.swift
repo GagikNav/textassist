@@ -6,7 +6,6 @@ struct MenuBarStatusView: View {
     @ObservedObject var monitor: OllamaStatusMonitor
     @ObservedObject var history: HistoryStore
 
-    let onSummarize: () -> Void
     let onSettings: () -> Void
     let onReopen: (HistoryEntry) -> Void
 
@@ -47,14 +46,15 @@ struct MenuBarStatusView: View {
 
             Divider()
 
+            // Placeholder for the upcoming dashboard. Intentionally does
+            // nothing yet — the selection-assist action was canceled (see
+            // tickets/PRD-v2.md §4.5 and T5.2).
             Button {
-                onSummarize()
+                // No-op: dashboard arrives later.
             } label: {
                 HStack {
-                    Text("Assist with Selection")
+                    Text("Open TextAssist")
                     Spacer(minLength: 0)
-                    Text("⌥⇧S")
-                        .foregroundStyle(.secondary)
                 }
             }
             .buttonStyle(.plain)
@@ -161,7 +161,6 @@ struct MenuBarStatusView: View {
         settings: SettingsStore(),
         monitor: OllamaStatusMonitor(provider: OllamaProvider(settings: SettingsStore())),
         history: HistoryStore(),
-        onSummarize: {},
         onSettings: {},
         onReopen: { _ in }
     )

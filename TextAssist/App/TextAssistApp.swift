@@ -24,9 +24,6 @@ struct TextAssistApp: App {
     /// Shared provider instance used by both the orchestrator and settings UI.
     private let provider: any LLMProvider
 
-    /// Remembers the app the user was in before the menu-bar popover opened.
-    private let sourceAppTracker: SourceAppTracker
-
     /// Floating settings panel shown from the menu bar.
     private let settingsPanel: SettingsPanel
 
@@ -47,7 +44,6 @@ struct TextAssistApp: App {
 
         self.provider = provider
         _statusMonitor = StateObject(wrappedValue: OllamaStatusMonitor(provider: provider))
-        self.sourceAppTracker = SourceAppTracker()
         self.settingsPanel = SettingsPanel(settings: settings, provider: provider)
         _settings = StateObject(wrappedValue: settings)
         _styleStore = StateObject(wrappedValue: store)
@@ -64,11 +60,6 @@ struct TextAssistApp: App {
                 settings: settings,
                 monitor: statusMonitor,
                 history: historyStore,
-                onSummarize: {
-                    Task {
-                        await hotkeyManager.triggerSummarize(from: sourceAppTracker.lastNonSelfApp)
-                    }
-                },
                 onSettings: {
                     settingsPanel.show()
                 },

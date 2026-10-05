@@ -48,12 +48,9 @@ final class HotkeyManager: ObservableObject {
     }
 
     /// Triggers a summarization via the orchestrator.
-    /// This is used by both the global hotkey and the menu-bar menu.
-    /// - Parameter sourceApp: The app holding the selection. The menu-bar flow
-    ///   passes the app that was frontmost before the menu opened; the hotkey
-    ///   flow passes `nil` to use the current frontmost app.
-    func triggerSummarize(from sourceApp: NSRunningApplication? = nil) async {
-        await orchestrator.startSummarization(sourceApp: sourceApp)
+    /// This is used by the global hotkey.
+    func triggerSummarize() async {
+        await orchestrator.startSummarization()
     }
 
     /// Runs a style straight away, skipping the style picker.
