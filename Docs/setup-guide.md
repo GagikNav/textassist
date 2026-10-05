@@ -446,6 +446,19 @@ end
 
 You can build and export the `.app` from the command line. This is useful for CI/CD or if you prefer not to open Xcode.
 
+> **One-command script:** `Scripts/build-dmg.sh` runs this whole step (archive → export → DMG) for you:
+>
+> ```bash
+> Scripts/build-dmg.sh          # produces build/Text-Assist.dmg
+> Scripts/build-dmg.sh 1.0.0    # produces build/Text-Assist-1.0.0.dmg
+> ```
+>
+> It writes `build/Export/Text Assist.app` and the DMG under `build/`, and prints
+> the SHA-256 checksum at the end (needed for the Homebrew cask in §10.4).
+> Install `create-dmg` first (`brew install create-dmg`) for the nice installer
+> window; without it the script falls back to a plain DMG via `hdiutil`.
+> The manual commands below explain what the script does, step by step.
+
 ### 11.1 Requirements
 
 - macOS with **Xcode Command Line Tools** installed.
