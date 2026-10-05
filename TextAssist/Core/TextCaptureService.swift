@@ -57,9 +57,11 @@ struct TextCaptureService: TextCapturing {
         // selection is captured from the app the user was actually working in.
         if targetApp.processIdentifier != NSWorkspace.shared.frontmostApplication?.processIdentifier {
             targetApp.activate(options: [.activateIgnoringOtherApps])
-            // Activation is asynchronous; give the app a moment to come to the
-            // front before reading its focused element or sending it ⌘C.
-            try? await Task.sleep(nanoseconds: 50_000_000)
+            // Activation is asynchronous. Wait until the source app is actually
+            // frontmost (closing the popover) before reading its focused
+            // element or sending it ⌘C, so the fallback copy is delivered to
+            // the right app instead of the menu-bar popover.
+            await waitUntilFrontmost(pid: targetApp.processIdentifier)
         }
 
         // Step 3: Try Accessibility capture first (does not touch clipboard).
@@ -74,16 +76,30 @@ struct TextCaptureService: TextCapturing {
         }
 
         // Step 4: Fall back to ⌘C + pasteboard if Accessibility returned nothing.
-        // This is needed for apps like Microsoft Word that do not expose
-        // AXSelectedText reliably.
+        // This is needed for apps like Microsoft Word and VS Code that do not
+        // expose AXSelectedText reliably.
         print("Falling back to clipboard ⌘C")
-        let fallbackText = try await captureViaClipboard(targetPID: targetApp.processIdentifier)
+        let fallbackText = try await captureViaClipboard()
         return try makeCapturedText(
             text: fallbackText,
             sourceAppName: appName,
             pid: targetApp.processIdentifier,
             origin: .clipboard
         )
+    }
+
+    /// Waits until the given process becomes the frontmost application, up to a
+    /// short timeout. Activation is asynchronous, and the ⌘C fallback relies on
+    /// the source app being the key window when the copy event is posted.
+    @MainActor
+    private func waitUntilFrontmost(pid: pid_t, timeout: TimeInterval = 1.5) async {
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            if NSWorkspace.shared.frontmostApplication?.processIdentifier == pid {
+                return
+            }
+            try? await Task.sleep(nanoseconds: 25_000_000)
+        }
     }
 
     /// Attempts to read the focused element and its selected text via AX.
@@ -135,9 +151,8 @@ struct TextCaptureService: TextCapturing {
 
     /// Simulates ⌘C, reads the general pasteboard, and restores the previous
     /// clipboard contents so the user's workflow is not disturbed.
-    /// - Parameter targetPID: The process that should receive the copy event.
     @MainActor
-    private func captureViaClipboard(targetPID: pid_t) async throws -> String {
+    private func captureViaClipboard() async throws -> String {
         let pasteboard = NSPasteboard.general
 
         // Save current clipboard contents.
@@ -154,18 +169,19 @@ struct TextCaptureService: TextCapturing {
         // Clear the pasteboard so we can detect whether ⌘C produced new content.
         pasteboard.clearContents()
 
-        // Simulate ⌘C, delivered directly to the source app's process. Posting
-        // at the HID event tap would deliver the event to the key window —
-        // which is the menu-bar popover while it is open. The popover has no
-        // editable responder, so the copy is dropped and the system beeps
-        // instead of capturing the selection.
+        // Simulate ⌘C through the system HID event tap. This delivers the event
+        // to the key window, so `captureSelection(from:)` must ensure the source
+        // app is frontmost first (activating it closes the menu-bar popover).
+        // A synthetic event posted directly to a PID (`CGEvent.postToPid`) is
+        // unreliable for Electron apps like VS Code, whose copy lives in a
+        // separate renderer process, so the standard HID-tap route is preferred.
         let source = CGEventSource(stateID: .combinedSessionState)
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(8), keyDown: true) // 'c'
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(8), keyDown: false)
         keyDown?.flags = .maskCommand
         keyUp?.flags = .maskCommand
-        keyDown?.postToPid(targetPID)
-        keyUp?.postToPid(targetPID)
+        keyDown?.post(tap: .cghidEventTap)
+        keyUp?.post(tap: .cghidEventTap)
 
         // Give the frontmost app a moment to write to the pasteboard.
         // 300 ms is enough for heavier apps like Microsoft Word.
