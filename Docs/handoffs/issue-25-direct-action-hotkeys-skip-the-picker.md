@@ -8,11 +8,11 @@
 | Issue | #25 (T6.1) |
 | Epic | #6 |
 | Milestone | M5 - Polish (P1) |
-| Status | agent:review |
-| Branch | `issue-25-direct-action-hotkeys-skip-the-picker` |
-| Worktree | `build/worktrees/issue-25-direct-action-hotkeys-skip-the-picker` |
+| Status | agent:done (merged) |
+| Branch | `issue-25-direct-action-hotkeys-skip-the-picker` (squash-merged by #55) |
+| Worktree | removed after merge |
 | Base commit | `f7c1fd44fbf15f2054e00832692e08d193cf96fe` |
-| Last commit | `f7c1fd44fbf15f2054e00832692e08d193cf96fe` (implementation not yet committed) |
+| Last commit | `c945775` on `main` — "T6.1 — Direct-action hotkeys (skip the picker) (#55)" |
 | Updated | 2026-10-05 |
 
 ## 1. What this task is
@@ -57,6 +57,14 @@ file-system-synchronized group anyway).
   (`style.category == .chat` → `showChat(for:seed:)`, otherwise
   `styleStore.recordSelection` + `showSummaryPopup`, which starts the streaming task),
   so both paths reuse the same code that already produces those behaviours.
+
+  **Post-merge note (2026-10-05):** the first test attempt used the *main checkout's*
+  build, which predated T6.1 — the new hotkeys were not registered there, so pressing
+  them typed the Option+Shift character instead (`Ç` / `„`). That is expected for an
+  unregistered `⌥⇧`+letter combination, not a defect. Re-tested against the worktree
+  build, where the app's defaults confirmed all three shortcuts registered
+  (`KeyboardShortcuts_chatWithSelection`, `…fixGrammar`, `…summarizeSelection`).
+  Since #55 is merged, the `main` build now contains T6.1 — test with `Scripts/run.sh`.
 
 ## 5. How to test manually
 
@@ -147,10 +155,9 @@ hotkeys need Accessibility permission plus a live Ollama backend.
 
 ## 9. Resume here
 
-- **Worktree:** `build/worktrees/issue-25-direct-action-hotkeys-skip-the-picker`
-  (branch `issue-25-direct-action-hotkeys-skip-the-picker`)
-- **Next action:** commit the change + this handoff, push, open the PR against `main`,
-  then flip the label to `agent:done` on merge and remove the worktree.
+- **Worktree:** removed after merge — do all further work from the main checkout.
+- **Next action:** run §5 by hand against the `main` build (`Scripts/run.sh`) and note
+  the result here if the Done-when boxes above are still unchecked. No code work remains.
 - **Files in play:** `TextAssist/Core/HotkeyManager.swift`,
   `TextAssist/Core/SummarizationOrchestrator.swift`
 - **Watch out for:** `SummarizationOrchestrator.swift` is a `sequentialTasks` file —
