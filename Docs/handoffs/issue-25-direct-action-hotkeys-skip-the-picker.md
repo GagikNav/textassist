@@ -8,7 +8,7 @@
 | Issue | #25 (T6.1) |
 | Epic | #6 |
 | Milestone | M5 - Polish (P1) |
-| Status | agent:done (merged) |
+| Status | agent:done (merged; Done-when confirmed by hand) |
 | Branch | `issue-25-direct-action-hotkeys-skip-the-picker` (squash-merged by #55) |
 | Worktree | removed after merge |
 | Base commit | `f7c1fd44fbf15f2054e00832692e08d193cf96fe` |
@@ -50,8 +50,8 @@ file-system-synchronized group anyway).
   → **BUILD SUCCEEDED**, no compiler warnings introduced (only the pre-existing
   "Using the first of multiple matching destinations" note from `xcodebuild`).
 - **"Done when" checklist** (from the issue):
-  - [ ] `⌥⇧G` in TextEdit streams a grammar fix immediately — **needs a human in the running app** (see §5).
-  - [ ] `⌥⇧C` opens chat — **needs a human in the running app** (see §5).
+  - [x] `⌥⇧G` in TextEdit streams a grammar fix immediately — **confirmed by hand** on the merged `main` build (2026-10-05).
+  - [x] `⌥⇧C` opens chat — **confirmed by hand** on the merged `main` build (2026-10-05).
 
   Code-level verification: `startDirect(style:)` mirrors the picker's own routing
   (`style.category == .chat` → `showChat(for:seed:)`, otherwise
@@ -65,6 +65,7 @@ file-system-synchronized group anyway).
   build, where the app's defaults confirmed all three shortcuts registered
   (`KeyboardShortcuts_chatWithSelection`, `…fixGrammar`, `…summarizeSelection`).
   Since #55 is merged, the `main` build now contains T6.1 — test with `Scripts/run.sh`.
+  Both Done-when items were then **confirmed working by hand on that build**.
 
 ## 5. How to test manually
 
@@ -156,8 +157,7 @@ hotkeys need Accessibility permission plus a live Ollama backend.
 ## 9. Resume here
 
 - **Worktree:** removed after merge — do all further work from the main checkout.
-- **Next action:** run §5 by hand against the `main` build (`Scripts/run.sh`) and note
-  the result here if the Done-when boxes above are still unchecked. No code work remains.
+- **Next action:** none — task complete and Done-when confirmed. No code work remains.
 - **Files in play:** `TextAssist/Core/HotkeyManager.swift`,
   `TextAssist/Core/SummarizationOrchestrator.swift`
 - **Watch out for:** `SummarizationOrchestrator.swift` is a `sequentialTasks` file —

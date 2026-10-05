@@ -1,10 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-05 19:25 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 19:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #25 | T6.1 | agent:done(merged) | 2026-10-05 | [issue-25-direct-action-hotkeys-skip-the-picker.md](./issue-25-direct-action-hotkeys-skip-the-picker.md) |
+| #25 | T6.1 | agent:done(merged;Done-whenconfirmedbyhand) | 2026-10-05 | [issue-25-direct-action-hotkeys-skip-the-picker.md](./issue-25-direct-action-hotkeys-skip-the-picker.md) |
 | #19 | T4.4 | agent:review(implementation+build+reviewdone;PR/mergepending) | 2026-10-05 | [issue-19-orchestrator-wiring-for-chat.md](./issue-19-orchestrator-wiring-for-chat.md) |
 | #18 | T4.3 | in-progress | 2026-10-05 | [issue-18-panel-positioning-helper-and-chatpopup.md](./issue-18-panel-positioning-helper-and-chatpopup.md) |
 | #20 | T4.2 | review | 2026-10-05 | [issue-20-chatpopupview.md](./issue-20-chatpopupview.md) |
