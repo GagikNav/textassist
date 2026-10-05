@@ -13,6 +13,7 @@ final class SummarizationOrchestrator: ObservableObject {
     private let textCaptureService: any TextCapturing
     private let styleStore: StyleStore
     private let llmProvider: any LLMProvider
+    private let historyStore: HistoryStore
 
     private var pickerPanel: StylePickerPanel?
     private var customPromptPanel: CustomPromptPanel?
@@ -25,14 +26,17 @@ final class SummarizationOrchestrator: ObservableObject {
     ///   - textCaptureService: Reads the current selection.
     ///   - styleStore: Provides styles and remembers the last choice.
     ///   - llmProvider: Streams summaries from the configured backend.
+    ///   - historyStore: Persists the most recent results.
     init(
         textCaptureService: any TextCapturing,
         styleStore: StyleStore,
-        llmProvider: any LLMProvider
+        llmProvider: any LLMProvider,
+        historyStore: HistoryStore
     ) {
         self.textCaptureService = textCaptureService
         self.styleStore = styleStore
         self.llmProvider = llmProvider
+        self.historyStore = historyStore
     }
 
     /// Starts the full summarization flow from the beginning.
@@ -221,6 +225,56 @@ final class SummarizationOrchestrator: ObservableObject {
         summaryPopup = nil
     }
 
+    /// Reopens a past result in the popup without re-streaming.
+    ///
+    /// The popup is pre-filled with the stored output. There is no source PID,
+    /// so Replace stays disabled; Regenerate re-runs the style on the stored
+    /// input normally.
+    func reopen(_ entry: HistoryEntry) {
+        closeChat()
+        streamingTask?.cancel()
+        summaryPopup?.close()
+
+        let style = styleStore.styles.first { $0.id == entry.styleID } ?? .shortSummary
+        let captured = CapturedText(text: entry.input, sourceAppName: entry.sourceAppName)
+
+        let viewModel = SummaryPopupViewModel(
+            capturedText: captured,
+            currentStyle: style,
+            availableStyles: styleStore.styles.filter {
+                $0.category == .transform || $0.category == .write
+            }
+        )
+        viewModel.streamedText = entry.output
+        viewModel.recomputeDiff()
+
+        configureActions(for: viewModel, captured: captured)
+
+        let popup = SummaryPopup(viewModel: viewModel)
+        popup.onClose = { [weak self] in
+            self?.closePopup()
+        }
+
+        summaryPopup = popup
+        popup.show()
+    }
+
+    /// Records a successful, non-empty result in the recent history.
+    private func recordHistory(for captured: CapturedText, style: SummaryStyle, output: String) {
+        guard !output.isEmpty else { return }
+        historyStore.add(
+            HistoryEntry(
+                id: UUID(),
+                date: Date(),
+                styleID: style.id,
+                styleName: style.name,
+                sourceAppName: captured.sourceAppName,
+                input: String(captured.text.prefix(HistoryEntry.maxInputLength)),
+                output: output
+            )
+        )
+    }
+
     // MARK: - Chat popup
 
     private func showChat(for captured: CapturedText, seed: [LLMMessage]) {
@@ -269,11 +323,13 @@ final class SummarizationOrchestrator: ObservableObject {
                 guard !Task.isCancelled else { return }
                 viewModel.streamedText += delta
             }
+            guard !Task.isCancelled else { return }
             if style.category == .write {
                 viewModel.streamedText = OutputCleaner.cleanRewrite(viewModel.streamedText)
             }
             viewModel.elapsedTime = Date().timeIntervalSince(startTime)
             viewModel.recomputeDiff()
+            recordHistory(for: captured, style: style, output: viewModel.streamedText)
         } catch {
             guard !Task.isCancelled else { return }
             viewModel.errorMessage = (error as? LocalizedError)?.localizedDescription

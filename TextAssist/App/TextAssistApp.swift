@@ -8,6 +8,9 @@ struct TextAssistApp: App {
     /// Stores summary styles and remembers the user's last choice.
     @StateObject private var styleStore: StyleStore
 
+    /// Stores and persists the most recent results.
+    @StateObject private var historyStore: HistoryStore
+
     /// Coordinates capture → style picker → provider → popup.
     @StateObject private var orchestrator: SummarizationOrchestrator
 
@@ -29,12 +32,14 @@ struct TextAssistApp: App {
     init() {
         let settings = SettingsStore()
         let store = StyleStore()
+        let history = HistoryStore()
         let captureService = TextCaptureService()
         let provider: any LLMProvider = OllamaProvider(settings: settings)
         let orchestrator = SummarizationOrchestrator(
             textCaptureService: captureService,
             styleStore: store,
-            llmProvider: provider
+            llmProvider: provider,
+            historyStore: history
         )
 
         self.provider = provider
@@ -42,6 +47,7 @@ struct TextAssistApp: App {
         self.settingsPanel = SettingsPanel(settings: settings, provider: provider)
         _settings = StateObject(wrappedValue: settings)
         _styleStore = StateObject(wrappedValue: store)
+        _historyStore = StateObject(wrappedValue: history)
         _orchestrator = StateObject(wrappedValue: orchestrator)
         _hotkeyManager = StateObject(
             wrappedValue: HotkeyManager(orchestrator: orchestrator)
@@ -53,6 +59,7 @@ struct TextAssistApp: App {
             MenuBarStatusView(
                 settings: settings,
                 monitor: statusMonitor,
+                history: historyStore,
                 onSummarize: {
                     Task {
                         await hotkeyManager.triggerSummarize()
@@ -60,6 +67,9 @@ struct TextAssistApp: App {
                 },
                 onSettings: {
                     settingsPanel.show()
+                },
+                onReopen: { entry in
+                    orchestrator.reopen(entry)
                 }
             )
         } label: {
