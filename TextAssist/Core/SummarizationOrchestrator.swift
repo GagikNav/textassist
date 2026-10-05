@@ -42,14 +42,15 @@ final class SummarizationOrchestrator: ObservableObject {
     /// Starts the full summarization flow from the beginning.
     ///
     /// This is called by the global hotkey and the menu-bar menu.
-    func startSummarization() async {
+    /// - Parameter sourceApp: The app holding the selection. The menu-bar flow
+    ///   passes the app that was frontmost before the menu opened; the hotkey
+    ///   flow passes `nil` to use the current frontmost app.
+    func startSummarization(sourceApp: NSRunningApplication? = nil) async {
         do {
-            let captured = try await textCaptureService.captureSelection()
+            let captured = try await textCaptureService.captureSelection(from: sourceApp)
             showStylePicker(for: captured)
         } catch let error as CaptureError {
-            // Capture errors still go to the console for Increment C.
-            // A dedicated error UI will be added if needed in later increments.
-            print("Capture failed: \(error.localizedDescription)")
+            presentCaptureError(error)
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
         }
@@ -59,19 +60,52 @@ final class SummarizationOrchestrator: ObservableObject {
     ///
     /// Chat styles open the chat popup; every other style records itself as the
     /// last-used style and opens the summary popup, which streams immediately.
-    /// - Parameter style: The style to apply to the captured selection.
-    func startDirect(style: SummaryStyle) async {
+    /// - Parameters:
+    ///   - style: The style to apply to the captured selection.
+    ///   - sourceApp: The app holding the selection; `nil` uses the frontmost app.
+    func startDirect(style: SummaryStyle, sourceApp: NSRunningApplication? = nil) async {
         do {
-            let captured = try await textCaptureService.captureSelection()
+            let captured = try await textCaptureService.captureSelection(from: sourceApp)
             if style.category == .chat {
                 showChat(for: captured, seed: [])
             } else {
                 styleStore.recordSelection(style)
                 showSummaryPopup(for: captured, style: style)
             }
+        } catch let error as CaptureError {
+            presentCaptureError(error)
         } catch {
             print("Capture failed: \(error.localizedDescription)")
         }
+    }
+
+    /// Presents capture failures to the user as an actionable alert instead of
+    /// only logging them to the console.
+    private func presentCaptureError(_ error: CaptureError) {
+        print("Capture failed: \(error.localizedDescription)")
+
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Text Assist couldn't capture your selection"
+        alert.informativeText = error.errorDescription ?? error.localizedDescription
+        alert.addButton(withTitle: "OK")
+
+        if case .accessibilityNotGranted = error {
+            alert.addButton(withTitle: "Open System Settings")
+        }
+
+        let response = alert.runModal()
+        if case .accessibilityNotGranted = error, response == .alertSecondButtonReturn {
+            openAccessibilitySettings()
+        }
+    }
+
+    /// Opens System Settings at the Accessibility permission pane.
+    private func openAccessibilitySettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") else {
+            return
+        }
+        NSWorkspace.shared.open(url)
     }
 
     // MARK: - Style picker
