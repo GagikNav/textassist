@@ -1,13 +1,14 @@
 # Handoff index
 
-_Generated 2026-10-05 21:49 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #59 | ? | InReview | 2026-10-05 | [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](./issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md) |
+| #60 | ? | InReview | 2026-10-05 | [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](./issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md) |
 | #9 | T1.1 | agent:done | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #7 | T1.3 | agent:done | 2026-10-03 | [issue-7-outputcleaner.md](./issue-7-outputcleaner.md) |
+| #59 | ? | InReview | 2026-10-05 | [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](./issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md) |
 | #27 | T6.4 | agent:done | 2026-10-05 | [issue-27-menu-bar-model-picker.md](./issue-27-menu-bar-model-picker.md) |
 | #26 | T6.2 | agent:done | 2026-10-05 | [issue-26-recent-history.md](./issue-26-recent-history.md) |
 | #25 | T6.1 | agent:done(merged;Done-whenconfirmedbyhand) | 2026-10-05 | [issue-25-direct-action-hotkeys-skip-the-picker.md](./issue-25-direct-action-hotkeys-skip-the-picker.md) |

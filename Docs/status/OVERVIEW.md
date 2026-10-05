@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 21:49 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -12,18 +12,17 @@ _Generated 2026-10-05 21:49 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|--:|:--|
 | M0 - Design approved | 2 | 2 | `##########` 100% |
 | M1 - Foundation | 5 | 5 | `##########` 100% |
-| M2 - Write + Replace | 9 | 10 | `#########.` 90% |
-| M3 - Chat | 5 | 6 | `########..` 83% |
-| M4 - Menu bar status | 3 | 3 | `##########` 100% |
+| M2 - Write + Replace | 10 | 10 | `##########` 100% |
+| M3 - Chat | 5 | 5 | `##########` 100% |
+| M4 - Menu bar status | 3 | 4 | `#######...` 75% |
 | M5 - Polish (P1) | 5 | 5 | `##########` 100% |
 
 ## Now
 
 **In progress**
-- #59 Replace-in-place fails or beeps instead of replacing selection
+- #60 Menu-bar Assist with Selection beeps and does not start capture
 
 **Ready**
-- #60 Menu-bar Assist with Selection beeps and does not start capture
 - #51 Prevent superseded streams from clobbering popup state
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
@@ -45,7 +44,7 @@ _Generated 2026-10-05 21:49 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | T3.3 PasteboardSnapshot and TextReplacementService | #15 | closed |
 | T3.5 Orchestrator: clean, diff, replace, filter styles | #16 | closed |
 | T3.4 Result popup UI: plain-text rendering, Diff toggle, original disclosure, Replace and Chat buttons | #17 | closed |
-| Replace-in-place fails or beeps instead of replacing selection | #59 | open |
+| Replace-in-place fails or beeps instead of replacing selection | #59 | closed |
 
 ### #2 Epic 1 — Foundation: models, provider, capture metadata
 
@@ -97,13 +96,13 @@ _Generated 2026-10-05 21:49 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](../handoffs/issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md)
+- [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](../handoffs/issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](../handoffs/issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
 - [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
 - [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
 - [issue-24-settings-hotkey-recorders-and-launch-at-login.md](../handoffs/issue-24-settings-hotkey-recorders-and-launch-at-login.md)
 - [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
-- [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
