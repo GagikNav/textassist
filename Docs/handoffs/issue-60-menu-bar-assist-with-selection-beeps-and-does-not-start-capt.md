@@ -1,5 +1,10 @@
 # Handoff — issue #60 — Menu-bar Assist with Selection beeps and does not start capture
 
+> **CANCELED (2026-10-05):** the menu-bar "Assist with Selection" action was removed
+> entirely and replaced with an inert "Open TextAssist" placeholder (a dashboard will be
+> added there later). The global `⌥⇧S` hotkey remains the selection-assist entry point.
+> See `tickets/PRD-v2.md` §4.5 and T5.2. The fix described below is superseded.
+
 > Committed on the task branch and mirrored to the GitHub issue. This is the durable
 > memory for the task: any model or session resumes from **Resume here**.
 

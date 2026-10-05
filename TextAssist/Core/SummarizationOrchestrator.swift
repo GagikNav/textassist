@@ -41,13 +41,10 @@ final class SummarizationOrchestrator: ObservableObject {
 
     /// Starts the full summarization flow from the beginning.
     ///
-    /// This is called by the global hotkey and the menu-bar menu.
-    /// - Parameter sourceApp: The app holding the selection. The menu-bar flow
-    ///   passes the app that was frontmost before the menu opened; the hotkey
-    ///   flow passes `nil` to use the current frontmost app.
-    func startSummarization(sourceApp: NSRunningApplication? = nil) async {
+    /// This is called by the global hotkey.
+    func startSummarization() async {
         do {
-            let captured = try await textCaptureService.captureSelection(from: sourceApp)
+            let captured = try await textCaptureService.captureSelection()
             showStylePicker(for: captured)
         } catch let error as CaptureError {
             presentCaptureError(error)
@@ -60,12 +57,10 @@ final class SummarizationOrchestrator: ObservableObject {
     ///
     /// Chat styles open the chat popup; every other style records itself as the
     /// last-used style and opens the summary popup, which streams immediately.
-    /// - Parameters:
-    ///   - style: The style to apply to the captured selection.
-    ///   - sourceApp: The app holding the selection; `nil` uses the frontmost app.
-    func startDirect(style: SummaryStyle, sourceApp: NSRunningApplication? = nil) async {
+    /// - Parameter style: The style to apply to the captured selection.
+    func startDirect(style: SummaryStyle) async {
         do {
-            let captured = try await textCaptureService.captureSelection(from: sourceApp)
+            let captured = try await textCaptureService.captureSelection()
             if style.category == .chat {
                 showChat(for: captured, seed: [])
             } else {

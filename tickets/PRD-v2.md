@@ -183,12 +183,17 @@ Transform styles keep the current look (Markdown, no Diff toggle, no Replace) pl
 ```
  ● Ollama · phi3:instruct
  ─────────────────────────
- Assist with Selection   ⌥⇧S
+ Open TextAssist
  Settings…
  ─────────────────────────
  Quit                    ⌘Q
 ```
 (P1 adds a model picker and a "Recent" list.)
+
+> **Canceled:** the "Assist with Selection" menu-bar action was removed. It is
+> replaced by a placeholder "Open TextAssist" row that does nothing for now; a
+> dashboard will be added there later. The global `⌥⇧S` hotkey remains the
+> selection-assist entry point.
 
 ---
 
@@ -1705,14 +1710,18 @@ final class OllamaStatusMonitor: ObservableObject {
 - **Depends on:** T5.1 · **Size:** S
 - **Files:** `UI/MenuBar/MenuBarStatusView.swift` (replace), `App/TextAssistApp.swift` (edit)
 
-`MenuBarStatusView` new signature: `init(settings: SettingsStore, monitor: OllamaStatusMonitor, onSummarize: @escaping () -> Void, onSettings: @escaping () -> Void)` with `@ObservedObject` for the first two. Layout, in order:
+`MenuBarStatusView` new signature: `init(settings: SettingsStore, monitor: OllamaStatusMonitor, onSettings: @escaping () -> Void)` with `@ObservedObject` for the first two. Layout, in order:
 1. Status row: `Circle()` 8 pt filled green (`.online`), red (`.offline`), gray (`.unknown`) + `Text("Ollama · \(settings.model)")` (`.font(.subheadline)`); if offline, a secondary caption "Not running. Start Ollama and try again." Padding 12 × 8.
 2. `Divider()`.
-3. Button "Assist with Selection" with a trailing secondary `Text("⌥⇧S")`.
+3. Button "Open TextAssist" — **placeholder, does nothing** (dashboard added later).
 4. Button "Settings…".
 5. `Divider()`, then "Quit" with `.keyboardShortcut("Q")` (keep the current behavior).
 6. `.onAppear { Task { await monitor.refresh() } }` on the root `VStack`.
 7. Update the `#Preview`.
+
+> **Canceled:** the original step-3 "Assist with Selection" button (which
+> captured the selection via the menu bar, reusing the `⌥⇧S` flow) was removed
+> in favor of the inert "Open TextAssist" placeholder. See §4.5.
 
 `TextAssistApp` changes: add `@StateObject private var statusMonitor: OllamaStatusMonitor`; in `init()` create it from the shared `provider` and assign via `_statusMonitor = StateObject(wrappedValue:)`; pass `settings` and `statusMonitor` into `MenuBarStatusView`.
 
