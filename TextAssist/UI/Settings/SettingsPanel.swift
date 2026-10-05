@@ -30,7 +30,7 @@ final class SettingsPanel {
 
         let settingsView = SettingsView(settings: settings, provider: provider)
         let hostingController = NSHostingController(rootView: settingsView)
-        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 420, height: 220))
+        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 420, height: 400))
 
         let panel = KeyablePanel(
             contentRect: hostingController.view.bounds,

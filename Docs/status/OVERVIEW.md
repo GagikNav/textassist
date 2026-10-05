@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 20:42 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -15,12 +15,12 @@ _Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M2 - Write + Replace | 9 | 9 | `##########` 100% |
 | M3 - Chat | 5 | 5 | `##########` 100% |
 | M4 - Menu bar status | 3 | 3 | `##########` 100% |
-| M5 - Polish (P1) | 2 | 5 | `####......` 40% |
+| M5 - Polish (P1) | 3 | 5 | `######....` 60% |
 
 ## Now
 
 **In progress**
-- #26 T6.2 Recent history
+- #24 T6.3 Settings: hotkey recorders and launch at login
 
 **Ready**
 - #51 Prevent superseded streams from clobbering popup state
@@ -28,7 +28,6 @@ _Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
 **Blocked**
-- #24 T6.3 Settings: hotkey recorders and launch at login
 
 **Epics ready to delegate**
 - #52 Epic: Fix Ollama prompt repetition on style change
@@ -85,7 +84,7 @@ _Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|:--|
 | T6.3 Settings: hotkey recorders and launch at login | #24 | open |
 | T6.1 Direct-action hotkeys (skip the picker) | #25 | closed |
-| T6.2 Recent history | #26 | open |
+| T6.2 Recent history | #26 | closed |
 | T6.4 Menu-bar model picker | #27 | closed |
 
 ### #29 Epic 0 — Design and mockup (gate)
@@ -96,13 +95,13 @@ _Generated 2026-10-05 20:17 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
+- [issue-24-settings-hotkey-recorders-and-launch-at-login.md](../handoffs/issue-24-settings-hotkey-recorders-and-launch-at-login.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
+- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
 - [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
 - [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
 - [issue-22-ollamastatusmonitor.md](../handoffs/issue-22-ollamastatusmonitor.md)
 - [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)
-- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
