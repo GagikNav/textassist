@@ -183,7 +183,7 @@ struct SummaryPopupView: View {
                 Label("Copy", systemImage: "doc.on.doc")
             }
             .keyboardShortcut("c", modifiers: .command)
-            .disabled(viewModel.streamedText.isEmpty || viewModel.errorMessage != nil)
+            .disabled(viewModel.streamedText.isEmpty)
 
             Button {
                 viewModel.regenerate()
