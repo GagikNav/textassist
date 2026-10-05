@@ -4,10 +4,11 @@ import Foundation
 
 /// Abstraction for capturing the user's current text selection.
 protocol TextCapturing: Sendable {
-    /// Reads the selected text from the frontmost application.
+    /// Reads the selected text from the given source application, or from the
+    /// frontmost application when `sourceApp` is `nil`.
     /// Must run on the main actor because it uses `NSWorkspace`.
     @MainActor
-    func captureSelection() async throws -> CapturedText
+    func captureSelection(from sourceApp: NSRunningApplication?) async throws -> CapturedText
 }
 
 /// Captures selected text using the macOS Accessibility API, with a ⌘C
@@ -30,7 +31,7 @@ struct TextCaptureService: TextCapturing {
     }
 
     @MainActor
-    func captureSelection() async throws -> CapturedText {
+    func captureSelection(from sourceApp: NSRunningApplication?) async throws -> CapturedText {
         // Step 1: Make sure the user has granted Accessibility permission.
         // We use the literal string key to avoid import-version differences.
         let trustedOptions = ["AXTrustedCheckOptionPrompt": true] as CFDictionary
@@ -41,21 +42,33 @@ struct TextCaptureService: TextCapturing {
             throw CaptureError.accessibilityNotGranted
         }
 
-        // Step 2: Identify the frontmost application.
-        guard let frontmostApp = NSWorkspace.shared.frontmostApplication else {
+        // Step 2: Identify the app holding the selection. The menu-bar
+        // popover activates Text Assist when it opens, so prefer the source
+        // app remembered before the menu opened; fall back to the frontmost
+        // app for the global-hotkey flow.
+        guard let targetApp = sourceApp ?? NSWorkspace.shared.frontmostApplication else {
             throw CaptureError.noSelection
         }
 
-        let appName = frontmostApp.localizedName ?? "Unknown App"
+        let appName = targetApp.localizedName ?? "Unknown App"
         print("Frontmost app: \(appName)")
 
+        // Bring the source app to the front so the popover closes and the
+        // selection is captured from the app the user was actually working in.
+        if targetApp.processIdentifier != NSWorkspace.shared.frontmostApplication?.processIdentifier {
+            targetApp.activate(options: [.activateIgnoringOtherApps])
+            // Activation is asynchronous; give the app a moment to come to the
+            // front before reading its focused element or sending it ⌘C.
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+
         // Step 3: Try Accessibility capture first (does not touch clipboard).
-        if let result = tryCaptureViaAccessibility(frontmostApp: frontmostApp) {
+        if let result = tryCaptureViaAccessibility(targetApp: targetApp) {
             print("Captured via Accessibility")
             return try makeCapturedText(
                 text: result.text,
                 sourceAppName: appName,
-                pid: frontmostApp.processIdentifier,
+                pid: targetApp.processIdentifier,
                 origin: result.origin
             )
         }
@@ -64,11 +77,11 @@ struct TextCaptureService: TextCapturing {
         // This is needed for apps like Microsoft Word that do not expose
         // AXSelectedText reliably.
         print("Falling back to clipboard ⌘C")
-        let fallbackText = try await captureViaClipboard()
+        let fallbackText = try await captureViaClipboard(targetPID: targetApp.processIdentifier)
         return try makeCapturedText(
             text: fallbackText,
             sourceAppName: appName,
-            pid: frontmostApp.processIdentifier,
+            pid: targetApp.processIdentifier,
             origin: .clipboard
         )
     }
@@ -77,8 +90,8 @@ struct TextCaptureService: TextCapturing {
     /// Returns `nil` when AX succeeds structurally but there is simply no text,
     /// or when the app does not expose selected text so the caller can fall back.
     @MainActor
-    private func tryCaptureViaAccessibility(frontmostApp: NSRunningApplication) -> (text: String, origin: CaptureOrigin)? {
-        let appElement = AXUIElementCreateApplication(frontmostApp.processIdentifier)
+    private func tryCaptureViaAccessibility(targetApp: NSRunningApplication) -> (text: String, origin: CaptureOrigin)? {
+        let appElement = AXUIElementCreateApplication(targetApp.processIdentifier)
 
         // Get the focused UI element inside that app.
         var focusedValue: CFTypeRef?
@@ -122,8 +135,9 @@ struct TextCaptureService: TextCapturing {
 
     /// Simulates ⌘C, reads the general pasteboard, and restores the previous
     /// clipboard contents so the user's workflow is not disturbed.
+    /// - Parameter targetPID: The process that should receive the copy event.
     @MainActor
-    private func captureViaClipboard() async throws -> String {
+    private func captureViaClipboard(targetPID: pid_t) async throws -> String {
         let pasteboard = NSPasteboard.general
 
         // Save current clipboard contents.
@@ -140,14 +154,18 @@ struct TextCaptureService: TextCapturing {
         // Clear the pasteboard so we can detect whether ⌘C produced new content.
         pasteboard.clearContents()
 
-        // Simulate ⌘C.
+        // Simulate ⌘C, delivered directly to the source app's process. Posting
+        // at the HID event tap would deliver the event to the key window —
+        // which is the menu-bar popover while it is open. The popover has no
+        // editable responder, so the copy is dropped and the system beeps
+        // instead of capturing the selection.
         let source = CGEventSource(stateID: .combinedSessionState)
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(8), keyDown: true) // 'c'
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(8), keyDown: false)
         keyDown?.flags = .maskCommand
         keyUp?.flags = .maskCommand
-        keyDown?.post(tap: .cghidEventTap)
-        keyUp?.post(tap: .cghidEventTap)
+        keyDown?.postToPid(targetPID)
+        keyUp?.postToPid(targetPID)
 
         // Give the frontmost app a moment to write to the pasteboard.
         // 300 ms is enough for heavier apps like Microsoft Word.
