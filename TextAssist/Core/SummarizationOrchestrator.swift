@@ -6,8 +6,8 @@ import Combine
 /// capture → style picker → provider stream → popup.
 ///
 /// This class is owned by `TextAssistApp` and lives for the lifetime of
-/// the app. It keeps at most one style picker and one summary popup open at
-/// a time.
+/// the app. It keeps at most one style picker and one popup (summary or chat)
+/// open at a time.
 @MainActor
 final class SummarizationOrchestrator: ObservableObject {
     private let textCaptureService: any TextCapturing
@@ -17,6 +17,7 @@ final class SummarizationOrchestrator: ObservableObject {
     private var pickerPanel: StylePickerPanel?
     private var customPromptPanel: CustomPromptPanel?
     private var summaryPopup: SummaryPopup?
+    private var chatPopup: ChatPopup?
     private var streamingTask: Task<Void, Never>?
 
     /// Creates the orchestrator with the app's shared services.
@@ -59,9 +60,12 @@ final class SummarizationOrchestrator: ObservableObject {
 
         pickerPanel = StylePickerPanel(styleStore: styleStore) { [weak self] style in
             self?.pickerPanel = nil
+            guard let self else { return }
 
             if style.id == SummaryStyle.customPrompt.id {
-                self?.showCustomPromptPanel(for: captured)
+                self.showCustomPromptPanel(for: captured)
+            } else if style.category == .chat {
+                self.showChat(for: captured, seed: [])
             } else {
                 Task { [weak self] in
                     await self?.showSummaryPopup(for: captured, style: style)
@@ -75,6 +79,7 @@ final class SummarizationOrchestrator: ObservableObject {
     // MARK: - Custom prompt panel
 
     private func showCustomPromptPanel(for captured: CapturedText) {
+        closeChat()
         customPromptPanel?.close()
 
         customPromptPanel = CustomPromptPanel(
@@ -95,6 +100,7 @@ final class SummarizationOrchestrator: ObservableObject {
     // MARK: - Summary popup
 
     private func showSummaryPopup(for captured: CapturedText, style: SummaryStyle) {
+        closeChat()
         streamingTask?.cancel()
         summaryPopup?.close()
 
@@ -174,6 +180,19 @@ final class SummarizationOrchestrator: ObservableObject {
         viewModel.onClose = { [weak self] in
             self?.closePopup()
         }
+
+        viewModel.onContinueInChat = { [weak self, weak viewModel] in
+            guard let self, let viewModel else { return }
+            var seed: [LLMMessage] = []
+            if !viewModel.streamedText.isEmpty {
+                seed = [
+                    LLMMessage(role: .user, content: "Apply: \(viewModel.currentStyle.name)"),
+                    LLMMessage(role: .assistant, content: viewModel.streamedText)
+                ]
+            }
+            self.closePopup()
+            self.showChat(for: captured, seed: seed)
+        }
     }
 
     private func closePopup() {
@@ -181,6 +200,27 @@ final class SummarizationOrchestrator: ObservableObject {
         streamingTask = nil
         summaryPopup?.close()
         summaryPopup = nil
+    }
+
+    // MARK: - Chat popup
+
+    private func showChat(for captured: CapturedText, seed: [LLMMessage]) {
+        chatPopup?.viewModel.stop()
+        chatPopup?.close()
+
+        let viewModel = ChatViewModel(capturedText: captured, provider: llmProvider, seed: seed)
+        viewModel.onClose = { [weak self] in self?.closeChat() }
+
+        let popup = ChatPopup(viewModel: viewModel)
+        popup.onClose = { [weak self] in self?.closeChat() }
+        chatPopup = popup
+        popup.show()
+    }
+
+    private func closeChat() {
+        chatPopup?.viewModel.stop()
+        chatPopup?.close()
+        chatPopup = nil
     }
 
     // MARK: - Streaming
