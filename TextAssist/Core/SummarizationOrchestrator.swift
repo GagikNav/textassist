@@ -68,7 +68,7 @@ final class SummarizationOrchestrator: ObservableObject {
                 self.showChat(for: captured, seed: [])
             } else {
                 Task { [weak self] in
-                    await self?.showSummaryPopup(for: captured, style: style)
+                    self?.showSummaryPopup(for: captured, style: style)
                 }
             }
         }
@@ -86,7 +86,7 @@ final class SummarizationOrchestrator: ObservableObject {
             onConfirm: { [weak self] style in
                 self?.customPromptPanel = nil
                 Task { [weak self] in
-                    await self?.showSummaryPopup(for: captured, style: style)
+                    self?.showSummaryPopup(for: captured, style: style)
                 }
             },
             onCancel: { [weak self] in
