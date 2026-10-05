@@ -8,7 +8,7 @@
 | Issue | #19 (T4.4) |
 | Epic | #4 (Epic 4 — Chat) |
 | Milestone | M3 - Chat |
-| Status | agent:review (implementation + build + review done; PR/merge pending) |
+| Status | agent:done |
 | Branch | `issue-19-orchestrator-wiring-for-chat` |
 | Worktree | `build/worktrees/issue-19-orchestrator-wiring-for-chat` |
 | Base commit | `65a7526f1c5b6f268a90108f317e0b8f574f3161` |

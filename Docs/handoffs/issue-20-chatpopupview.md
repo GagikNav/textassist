@@ -8,7 +8,7 @@
 | Issue | #20 (T4.2) |
 | Epic | #4 |
 | Milestone | M3 - Chat |
-| Status | review |
+| Status | agent:done |
 | Branch | `issue-20-chatpopupview` |
 | Worktree | `build/worktrees/issue-20-chatpopupview` |
 | Base commit | `574155e` |

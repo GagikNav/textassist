@@ -8,7 +8,7 @@
 | Issue | #14 (T3.1) |
 | Epic | #1 (Epic 3 — Write experience in the result popup) |
 | Milestone | M2 - Write + Replace |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-14-summarypopupviewmodel-additions` |
 | Worktree | `build/worktrees/issue-14-summarypopupviewmodel-additions` |
 | Base commit | `559a8aa` |

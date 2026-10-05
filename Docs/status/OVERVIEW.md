@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 20:48 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-05 20:53 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -15,7 +15,7 @@ _Generated 2026-10-05 20:48 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M2 - Write + Replace | 9 | 9 | `##########` 100% |
 | M3 - Chat | 5 | 5 | `##########` 100% |
 | M4 - Menu bar status | 3 | 3 | `##########` 100% |
-| M5 - Polish (P1) | 4 | 5 | `########..` 80% |
+| M5 - Polish (P1) | 5 | 5 | `##########` 100% |
 
 ## Now
 
@@ -31,7 +31,6 @@ _Generated 2026-10-05 20:48 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **Epics ready to delegate**
 - #52 Epic: Fix Ollama prompt repetition on style change
 - #47 Epic: Fix Ollama prompt repetition on style change
-- #6 Epic 6 — P1 extras
 
 ## Epics
 
@@ -94,13 +93,13 @@ _Generated 2026-10-05 20:48 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-24-settings-hotkey-recorders-and-launch-at-login.md](../handoffs/issue-24-settings-hotkey-recorders-and-launch-at-login.md)
-- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
-- [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
-- [issue-19-orchestrator-wiring-for-chat.md](../handoffs/issue-19-orchestrator-wiring-for-chat.md)
-- [issue-18-panel-positioning-helper-and-chatpopup.md](../handoffs/issue-18-panel-positioning-helper-and-chatpopup.md)
-- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
-- [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
 - [issue-16-orchestrator-clean-diff-replace-filter-styles.md](../handoffs/issue-16-orchestrator-clean-diff-replace-filter-styles.md)
-- [issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md](../handoffs/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di.md)
-- [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)
+- [issue-19-orchestrator-wiring-for-chat.md](../handoffs/issue-19-orchestrator-wiring-for-chat.md)
+- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
+- [issue-14-summarypopupviewmodel-additions.md](../handoffs/issue-14-summarypopupviewmodel-additions.md)
+- [issue-11-size-the-picker-panel-to-its-content.md](../handoffs/issue-11-size-the-picker-panel-to-its-content.md)
+- [issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md](../handoffs/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt.md)
+- [issue-20-chatpopupview.md](../handoffs/issue-20-chatpopupview.md)
+- [issue-15-pasteboardsnapshot-and-textreplacementservice.md](../handoffs/issue-15-pasteboardsnapshot-and-textreplacementservice.md)
+- [issue-21-chatviewmodel.md](../handoffs/issue-21-chatviewmodel.md)

@@ -8,7 +8,7 @@
 | Issue | #17 (T3.4) |
 | Epic | #1 (Epic 3 — Write experience in the result popup) |
 | Milestone | M2 - Write + Replace |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di` |
 | Worktree | `build/worktrees/issue-17-result-popup-ui-plain-text-rendering-diff-toggle-original-di` |
 | Base commit | `b00f21f` |

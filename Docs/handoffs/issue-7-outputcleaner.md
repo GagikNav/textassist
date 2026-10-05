@@ -8,7 +8,7 @@
 | Issue | #7 (T1.3) |
 | Epic | #2 |
 | Milestone | M1 - Foundation |
-| Status | agent:in-progress |
+| Status | agent:done |
 | Branch | `issue-7-outputcleaner` |
 | Base commit | `43292ad` |
 | Last commit | `843859a` |

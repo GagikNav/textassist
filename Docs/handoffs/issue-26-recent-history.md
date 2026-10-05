@@ -8,7 +8,7 @@
 | Issue | #26 (T6.2) |
 | Epic | #6 |
 | Milestone | M5 |
-| Status | review |
+| Status | agent:done |
 | Branch | `issue-26-recent-history` |
 | Worktree | `build/worktrees/issue-26-recent-history` |
 | Base commit | `4af430b` |

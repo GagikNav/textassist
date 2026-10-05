@@ -8,7 +8,7 @@
 | Issue | #11 (T2.2) |
 | Epic | #3 (Epic 2 — Picker v2) |
 | Milestone | M2 - Write + Replace |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-11-size-the-picker-panel-to-its-content` |
 | Worktree | `build/worktrees/issue-11-size-the-picker-panel-to-its-content` |
 | Base commit | `4c2e024` |

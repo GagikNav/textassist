@@ -8,7 +8,7 @@
 | Issue | #21 (T4.1) |
 | Epic | #4 |
 | Milestone | M3 - Chat |
-| Status | done |
+| Status | agent:done |
 | Branch | `issue-21-chatviewmodel` |
 | Worktree | `build/worktrees/issue-21-chatviewmodel` |
 | Base commit | `559a8aa` |

@@ -8,7 +8,7 @@
 | Issue | #12 (T1.2) |
 | Epic | #1 |
 | Milestone | M1 - Foundation |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-12-generalize-the-provider-multi-turn-per-request-system-prompt` |
 | Worktree | `build/worktrees/issue-12-generalize-the-provider-multi-turn-per-request-system-prompt` |
 | Base commit | `c3a4d9b` |

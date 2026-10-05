@@ -8,7 +8,7 @@
 | Issue | #18 (T4.3) |
 | Epic | #4 |
 | Milestone | M3 - Chat |
-| Status | in-progress |
+| Status | agent:done |
 | Branch | `issue-18-panel-positioning-helper-and-chatpopup` |
 | Worktree | `build/worktrees/issue-18-panel-positioning-helper-and-chatpopup` |
 | Base commit | `0776a1a` |

@@ -8,7 +8,7 @@
 | Issue | #16 (T3.5) |
 | Epic | #1 (Epic 3 — Write experience in the result popup) |
 | Milestone | M2 - Write + Replace |
-| Status | agent:in-progress (implementation + build + review done; handoff being written) |
+| Status | agent:done |
 | Branch | `issue-16-orchestrator-clean-diff-replace-filter-styles` |
 | Worktree | `build/worktrees/issue-16-orchestrator-clean-diff-replace-filter-styles` |
 | Base commit | `621d7276e3c588efcab399bcebbcbbde963df332` |

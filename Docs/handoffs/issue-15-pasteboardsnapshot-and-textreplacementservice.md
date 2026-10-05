@@ -8,7 +8,7 @@
 | Issue | #15 (T3.3) |
 | Epic | #1 (Epic 3 — Write experience in the result popup) |
 | Milestone | M2 - Write + Replace |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-15-pasteboardsnapshot-and-textreplacementservice` |
 | Worktree | `build/worktrees/issue-15-pasteboardsnapshot-and-textreplacementservice` |
 | Base commit | `b00f21f` |

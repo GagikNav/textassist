@@ -8,7 +8,7 @@
 | Issue | #24 (T6.3) |
 | Epic | #6 |
 | Milestone | M5 - Polish (P1) |
-| Status | agent:review (code committed; awaiting human manual check + PR) |
+| Status | agent:done (merged via #58) |
 | Branch | `issue-24-settings-hotkey-recorders-and-launch-at-login` |
 | Worktree | `build/worktrees/issue-24-settings-hotkey-recorders-and-launch-at-login` |
 | Base commit | `dd14cfe` |

@@ -8,7 +8,7 @@
 | Issue | #9 (T1.1) |
 | Epic | #2 |
 | Milestone | M1 - Foundation |
-| Status | agent:review |
+| Status | agent:done |
 | Branch | `issue-9-extend-summarystyle-and-add-write-and-chat-styles` |
 | Worktree | `build/worktrees/issue-9-extend-summarystyle-and-add-write-and-chat-styles` |
 | Base commit | `b0d355c` |
