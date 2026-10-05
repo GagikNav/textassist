@@ -51,6 +51,25 @@ final class SummarizationOrchestrator: ObservableObject {
         }
     }
 
+    /// Captures the selection and jumps straight to a style, skipping the picker.
+    ///
+    /// Chat styles open the chat popup; every other style records itself as the
+    /// last-used style and opens the summary popup, which streams immediately.
+    /// - Parameter style: The style to apply to the captured selection.
+    func startDirect(style: SummaryStyle) async {
+        do {
+            let captured = try await textCaptureService.captureSelection()
+            if style.category == .chat {
+                showChat(for: captured, seed: [])
+            } else {
+                styleStore.recordSelection(style)
+                showSummaryPopup(for: captured, style: style)
+            }
+        } catch {
+            print("Capture failed: \(error.localizedDescription)")
+        }
+    }
+
     // MARK: - Style picker
 
     private func showStylePicker(for captured: CapturedText) {
