@@ -3,9 +3,11 @@ import Foundation
 import AppKit
 import Combine
 
-/// Name used by KeyboardShortcuts to store the global "summarize selection" shortcut.
+/// Names used by KeyboardShortcuts to store the global shortcuts.
 extension KeyboardShortcuts.Name {
     static let summarizeSelection = Self("summarizeSelection", initial: .init(.s, modifiers: [.option, .shift]))
+    static let chatWithSelection = Self("chatWithSelection", initial: .init(.c, modifiers: [.option, .shift]))
+    static let fixGrammar = Self("fixGrammar", initial: .init(.g, modifiers: [.option, .shift]))
 }
 
 /// Registers the global hotkey and forwards triggers to the orchestrator.
@@ -24,11 +26,23 @@ final class HotkeyManager: ObservableObject {
         registerShortcuts()
     }
 
-    /// Registers the global shortcut. Called automatically during initialization.
+    /// Registers the global shortcuts. Called automatically during initialization.
     func registerShortcuts() {
         KeyboardShortcuts.onKeyUp(for: .summarizeSelection) { [weak self] in
             Task { [weak self] in
                 await self?.triggerSummarize()
+            }
+        }
+
+        KeyboardShortcuts.onKeyUp(for: .chatWithSelection) { [weak self] in
+            Task { [weak self] in
+                await self?.triggerDirect(SummaryStyle.chatWithSelection)
+            }
+        }
+
+        KeyboardShortcuts.onKeyUp(for: .fixGrammar) { [weak self] in
+            Task { [weak self] in
+                await self?.triggerDirect(SummaryStyle.fixGrammar)
             }
         }
     }
@@ -37,5 +51,11 @@ final class HotkeyManager: ObservableObject {
     /// This is used by both the global hotkey and the menu-bar menu.
     func triggerSummarize() async {
         await orchestrator.startSummarization()
+    }
+
+    /// Runs a style straight away, skipping the style picker.
+    /// - Parameter style: The style to apply to the current selection.
+    func triggerDirect(_ style: SummaryStyle) async {
+        await orchestrator.startDirect(style: style)
     }
 }
