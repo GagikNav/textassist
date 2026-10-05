@@ -60,26 +60,39 @@ file-system-synchronized group anyway).
 
 ## 5. How to test manually
 
-1. Grant Accessibility permission if macOS asks for it (the first capture silently
-   prints `Capture failed: …` without it — check with `log`/Console if unsure). Make
-   sure Ollama is running (`ollama serve`) and a model is pulled, then launch the app:
-   open `TextAssist.xcodeproj` in Xcode and Run, or double-click
-   `build/DerivedData/Build/Products/Debug/Text Assist.app`.
-2. Open TextEdit (`/System/Applications/TextEdit.app`) and type a sentence with a
+1. **Run the worktree's build, not the main checkout's.** `main` does not contain T6.1,
+   so in the main build `⌥⇧C` / `⌥⇧G` are not registered at all: instead of doing
+   anything they type the Option+Shift character (`Ç` / `„` on a US layout) into
+   whatever text field has focus — e.g. the chat input. `⌥⇧S` still works there, which
+   makes the leak look like a regression in the new hotkeys when it is not.
+
+   ```bash
+   # quit the running instance first — same bundle id, so `open` would just re-activate it
+   osascript -e 'tell application "Text Assist" to quit'   # or ⌥-click the menu-bar icon → Quit
+   cd build/worktrees/issue-25-direct-action-hotkeys-skip-the-picker
+   open "build/DerivedData/Build/Products/Debug/Text Assist.app"   # built by the build check
+   ```
+
+   Or open this worktree's `TextAssist.xcodeproj` in Xcode and Run. (Only *after* this
+   branch is merged does `Scripts/run.sh` from the main checkout contain T6.1.)
+2. Grant Accessibility permission if macOS asks for it (the first capture silently
+   prints `Capture failed: …` without it — check the Console if unsure), and make sure
+   Ollama is running (`ollama serve`) with a model pulled.
+3. Open TextEdit (`/System/Applications/TextEdit.app`) and type a sentence with a
    deliberate error, e.g. `Their going to the store tomorow`.
-3. Select the sentence and press **`⌥⇧G`**.
-4. **Expected:** no style picker appears. The floating result popup opens immediately
+4. Select the sentence and press **`⌥⇧G`**.
+5. **Expected:** no style picker appears. The floating result popup opens immediately
    with "Fix Grammar" as its style and the correction streaming in
    (`They're going to the store tomorrow.`). The elapsed-time readout appears when the
    stream finishes.
-5. Select text again and press **`⌥⇧C`**.
-6. **Expected:** the chat popup opens directly, pinned to the selection (the selection
+6. Select text again and press **`⌥⇧C`**.
+7. **Expected:** the chat popup opens directly, pinned to the selection (the selection
    is shown in the popup header / available to the conversation) — again with no style
    picker in between.
-7. Regression check: select text and press **`⌥⇧S`**.
+8. Regression check: select text and press **`⌥⇧S`**.
 
 **Expected:** the style picker still opens exactly as before, and picking "Fix Grammar"
-from it behaves identically to step 4.
+from it behaves identically to step 5.
 
 **Edge cases to try:**
 
@@ -142,7 +155,8 @@ hotkeys need Accessibility permission plus a live Ollama backend.
   `TextAssist/Core/SummarizationOrchestrator.swift`
 - **Watch out for:** `SummarizationOrchestrator.swift` is a `sequentialTasks` file —
   T3.5, T4.4, T6.1, T6.2 must not be merged concurrently; T6.2 (issue #26) is the next
-  one to touch it, so rebase it on this branch's merge.
+  one to touch it, so rebase it on this branch's merge. Manual testing must use **this
+  worktree's build** (§5 step 1) — the main checkout's app does not contain T6.1.
 - **Do not redo:** the implementation and the build check are done and green.
 
 ## 10. Review
