@@ -59,8 +59,10 @@ struct StylePickerView: View {
             } label: {
                 HStack(spacing: 8) {
                     Text("esc")
-                        .font(.system(.body, design: .monospaced))
+                        .font(.system(size: 12, design: .monospaced))
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                         .frame(width: 20, alignment: .center)
                     Text("Cancel").foregroundStyle(.secondary)
                     Spacer()
