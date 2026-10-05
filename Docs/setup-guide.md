@@ -420,6 +420,20 @@ Homebrew casks can distribute signed or unsigned binaries, but signed and notari
 3. Attach the `.dmg` or `.zip` to the release.
 4. Include a checksum (SHA-256) for the file.
 
+> **Automated release.** The whole flow — universal Release archive, ad-hoc signing,
+> DMG packaging, SHA-256 checksum, and the GitHub Release with install notes — is
+> automated by [`Scripts/release.sh`](../Scripts/release.sh). From the main checkout
+> on `main`, run:
+>
+> ```bash
+> Scripts/release.sh 1.0.0            # tag v1.0.0 + GitHub release with the DMG
+> Scripts/release.sh 1.0.0 --draft    # same, but as a draft release to review first
+> Scripts/release.sh 1.0.0 --skip-upload   # build the DMG only, no release
+> ```
+>
+> The script refuses to run from a task worktree or off `main`, and never edits
+> `project.pbxproj` (the version is stamped via `xcodebuild` overrides).
+
 ### 10.4 Homebrew Cask File
 
 A Homebrew cask file looks like this:
@@ -549,6 +563,10 @@ If you want to export an **unsigned** `.app` for local testing only, use this mi
 ### 11.5 Package for Distribution
 
 Create a `.zip` or `.dmg` from the exported `.app`:
+
+> **Prefer [`Scripts/release.sh`](../Scripts/release.sh)** — it performs the archive,
+> export, ad-hoc signing, DMG packaging, checksum, and GitHub Release in one step
+> (see §10.3). The manual commands below are what it automates.
 
 ```bash
 # Zip
