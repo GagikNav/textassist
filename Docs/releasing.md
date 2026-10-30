@@ -279,5 +279,28 @@ after each; the lines must be identical.
 **If the certificate is lost.** A new certificate has a different requirement, so every
 user re-grants Accessibility once. Keep the `.p12` backup safe.
 
+### First updater release: verified results
+
+Verified on 2026-10-30 (#75) with real public releases, signed with the `Text Assist Release`
+certificate:
+
+- `v0.2.0`: first release with the updater; DMG, SHA-256, ZIP and `appcast.xml` published.
+- `v0.2.1`: adds a visible change (the menu-bar version line starts with "Text Assist ·").
+- An installed `0.2.0` used "Check for Updates…" and updated to `0.2.1` from inside the app,
+  with no manual download. The version line showed `0.2.1 (build 132)` afterwards.
+- The maintainer reported that everything kept working after the update, including
+  Replace, so the Accessibility permission survived (same certificate requirement
+  for every version).
+- Not recorded (not measured): whether a Gatekeeper prompt appeared, whether the app
+  relaunched by itself, the update duration, and whether the automatic check (as opposed
+  to the manual one) finds updates.
+
+Known limits: the first install is still manual (right-click, Open; not notarized).
+Installs older than `0.2.0` have no updater and need one manual install.
+
+**Release script lessons.** Run `release.sh` from a terminal with a UTF-8 locale or from a
+current `main` (the `${TAG}…` fix, #99); `security find-identity -v` hides a self-signed
+certificate, so the script does not use `-v` (#96).
+
 ### Homebrew
 _To be written in #76 (installing and upgrading with `brew install --cask`)._

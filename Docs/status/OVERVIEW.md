@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 19:53 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,7 +20,7 @@ _Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #83 Sign releases with a stable self-signed certificate
+- #75 Cut the first updater-enabled release and verify updating end to end
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
@@ -37,7 +37,6 @@ _Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #86 Tune the prompt-refinement system prompt and add a sample set
 - #81 Document picker keys and verify the keyboard flow end to end
 - #80 Highlight the selected picker row and add a key hint
-- #75 Cut the first updater-enabled release and verify updating end to end
 - #67 Make Esc work while a text input has focus
 - #51 Prevent superseded streams from clobbering popup state
 
@@ -110,8 +109,9 @@ _Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
+- [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](../handoffs/issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
+- [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
 - [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
@@ -119,4 +119,3 @@ _Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](../handoffs/issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md)
 - [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
 - [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
-- [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
