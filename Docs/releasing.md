@@ -96,7 +96,7 @@ Always publish a fixed, higher version afterwards; never reuse the number.
 ## 5. How users install today
 
 Download the DMG from the latest release, drag **Text Assist** to **Applications**, then
-open it with right-click, Open (the app is ad-hoc signed and not notarized, so macOS blocks
+open it with right-click, Open (the app is signed with a self-signed certificate, not notarized, so macOS blocks
 a double-click the first time). In-app updates and Homebrew are tracked in epic #69.
 
 ## 6. Planned sections (filled in by their tasks)
@@ -173,7 +173,7 @@ address. Each release carries its own `appcast.xml` with a single item (the newe
 version is all the app needs): version, build number, the ZIP's address and size, and its
 signature.
 
-What `release.sh` does for the update, after building and ad-hoc signing the app:
+What `release.sh` does for the update, after building and signing the app:
 
 1. Zips the app (`ditto -c -k --sequesterRsrc --keepParent`) as `Text-Assist-<version>.zip`.
 2. Signs the ZIP with Sparkle's `sign_update`, reading the private key from the login
@@ -227,8 +227,8 @@ confirm by hand" below.
 | Self-signed certificate, same one for every release | Free; one certificate to create and back up | Kept | Blocks; right-click, Open |
 | Apple Developer ID plus notarization | Paid yearly; `notarytool` step in `release.sh` | Kept | No block; also allows the official Homebrew cask repository |
 
-**Recommendation:** use a self-signed certificate now, and switch at the first release
-that contains the updater (tracked in #83). That release already needs a manual install,
+**Decision:** use a self-signed certificate, and switch at the first release that
+contains the updater (#83; the steps are below). That release already needs a manual install,
 so users re-grant Accessibility once there and not again. Revisit a Developer ID if the
 app reaches people who cannot get past the Gatekeeper step. Keep ad-hoc signing for
 local builds.
@@ -240,9 +240,43 @@ Replace again. With ad-hoc signing expect it to stop working (the System Setting
 may still look enabled; toggle it off and on, or remove and re-add the app). With the
 certificate expect it to keep working.
 
+**Create the certificate (once, by the maintainer).** An agent must never generate or
+handle the private key.
+
+1. Open Keychain Access → menu **Keychain Access** → **Certificate Assistant** →
+   **Create a Certificate…**.
+2. Name: `Text Assist Release`. Identity Type: **Self Signed Root**. Certificate Type:
+   **Code Signing**. Tick **Let me override defaults** and set the validity to about 3650
+   days (10 years). Create it in the **login** keychain.
+3. Check it: `security find-identity -v -p codesigning` lists `Text Assist Release`. (Some
+   macOS versions show a self-signed root as not trusted; signing still works. If
+   `codesign` complains, open the certificate, Trust → Code Signing → Always Trust.)
+
+**Back it up.** In Keychain Access, open **My Certificates**, select `Text Assist Release`
+(with its private key below it), and choose **File → Export Items…** as a `.p12` with a
+strong password. Store the file and its password in the same password manager as the update
+signing key. Never commit it.
+
+**Restore on a new machine.** Copy the `.p12` over, double-click it (or
+`security import Text-Assist-Release.p12 -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign`)
+and enter the password. `security find-identity -v -p codesigning` must list it again.
+
+**Use it.** Set the identity before running the release script:
+
+```sh
+export RELEASE_SIGN_IDENTITY="Text Assist Release"   # certificate name or SHA-1
+Scripts/release.sh --bump patch --skip-upload
+```
+
+`release.sh` signs the archive and the final app with that identity, prints the
+designated requirement (`codesign -dr -`), and stops if it has no `certificate leaf`, so a
+release cannot silently go out ad-hoc. It also stops if the identity is not in the
+Keychain. With `RELEASE_SIGN_IDENTITY` unset it signs ad-hoc as before, which is fine for
+local builds. To compare two builds: run `codesign -dr - "build/release/Export/Text Assist.app"`
+after each; the lines must be identical.
+
 **If the certificate is lost.** A new certificate has a different requirement, so every
-user re-grants Accessibility once. Back up the exported certificate next to the update
-signing key.
+user re-grants Accessibility once. Keep the `.p12` backup safe.
 
 ### Homebrew
 _To be written in #76 (installing and upgrading with `brew install --cask`)._
