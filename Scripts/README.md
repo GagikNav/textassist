@@ -1,7 +1,8 @@
 # Release Script
 
 `release.sh` builds a universal macOS release of Text Assist, packages it as a
-DMG, calculates a SHA-256 checksum, and can publish both files as a GitHub
+DMG, calculates a SHA-256 checksum, creates the signed update ZIP and
+`appcast.xml` used by in-app updates, and can publish them as a GitHub
 Release. It is intended to be run manually by a maintainer from the main
 checkout; it is not a CI script.
 
@@ -13,6 +14,10 @@ checkout; it is not a CI script.
 - [`gh`](https://cli.github.com/) and [`jq`](https://jqlang.github.io/jq/)
   installed; `gh` must be authenticated unless using `--skip-upload`
 - A configured `origin` remote for the GitHub repository
+- Sparkle's `sign_update` and the update-signing key in your login Keychain (see
+  [Docs/releasing.md](../Docs/releasing.md), "Update signing key"). The script looks
+  in `$SPARKLE_BIN`, `~/sparkle-tools/bin`, then the Sparkle package artifacts. Not
+  needed with `--no-sign`.
 
 The release contains a universal app for Apple Silicon (`arm64`) and Intel
 (`x86_64`), targeting macOS 13 and later. It is ad-hoc signed and is not
@@ -50,8 +55,8 @@ your changes before continuing.
 | Option | Effect |
 | --- | --- |
 | `--bump LEVEL` | Next version from the highest `v*` tag (`patch`, `minor` or `major`). |
-| `--skip-upload` | Build the DMG and checksum without creating a GitHub Release. |
-| `--no-sign` | Skip ad-hoc signing. Intended for local testing only. |
+| `--skip-upload` | Build the DMG, ZIP and appcast without creating a GitHub Release. |
+| `--no-sign` | Skip ad-hoc signing and the update ZIP/appcast. Intended for local testing only. |
 | `--draft` | Create the GitHub Release as a draft. |
 | `-h`, `--help` | Print the command usage. |
 
@@ -61,11 +66,14 @@ Build artifacts are written under `build/release/`:
 
 - `Text-Assist-<version>.dmg`
 - `Text-Assist-<version>.dmg.sha256`
+- `Text-Assist-<version>.zip` (the update archive, signed with `sign_update`)
+- `appcast.xml` (the update feed, one item for this version)
 - The archived and exported app, plus Xcode logs
 
 Without `--skip-upload`, the script creates a GitHub Release named
-`Text Assist v<version>` targeting `main`, and uploads the DMG. The generated
-release notes include installation guidance and the DMG checksum.
+`Text Assist v<version>` targeting `main`, and uploads the DMG, its checksum, the
+ZIP and `appcast.xml`. The generated release notes include installation guidance
+and the DMG checksum.
 
 ## Other Scripts
 

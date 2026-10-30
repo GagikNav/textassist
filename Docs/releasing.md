@@ -53,14 +53,22 @@ Prerequisites: Xcode command line tools, `brew install create-dmg gh jq`, and
    `--draft` the release is public immediately.
 5. Do the checks in section 3.
 
-What the script publishes today: a GitHub release `v<version>` targeting `main` with
-`Text-Assist-<version>.dmg`, `Text-Assist-<version>.dmg.sha256` and generated notes
-(install steps and the checksum). The ZIP and `appcast.xml` used for in-app updates are
-added by the update-feed task and documented in section 6.
+What the script publishes: a GitHub release `v<version>` targeting `main` with four
+files and generated notes (install steps and the checksum):
+
+| File | Used for |
+|:--|:--|
+| `Text-Assist-<version>.dmg` | First install by hand. |
+| `Text-Assist-<version>.dmg.sha256` | Checksum of the DMG. |
+| `Text-Assist-<version>.zip` | What the in-app updater downloads. |
+| `appcast.xml` | The update feed: tells installed apps the newest version and where to get it. |
+
+The ZIP and `appcast.xml` need Sparkle's `sign_update` and the private key from section 6
+("Update signing key"); see "Appcast" there.
 
 ## 3. Verify a release
 
-- The release page lists the DMG and the checksum file, and shows as **Latest**.
+- The release page lists the DMG, the checksum file, the ZIP and `appcast.xml`, and shows as **Latest**.
 - `gh release view v<version>` shows the right tag; `git fetch --tags` then
   `git tag --list 'v*'` shows it locally.
 - Download the DMG, check it: `shasum -a 256 -c Text-Assist-<version>.dmg.sha256`.
@@ -152,8 +160,39 @@ which reads the key from the Keychain (task #74), so releases are cut from the M
 holds it.
 
 ### Appcast
-_To be written in #74 (the ZIP and `appcast.xml` that the release script uploads, and how
-the app finds the newest release)._
+
+The app checks one fixed address:
+
+```
+https://github.com/GagikNav/textassist/releases/latest/download/appcast.xml
+```
+
+GitHub sends `releases/latest` to the newest **published** release. Draft and
+pre-release versions are not served, so a draft release cannot be tested through this
+address. Each release carries its own `appcast.xml` with a single item (the newest
+version is all the app needs): version, build number, the ZIP's address and size, and its
+signature.
+
+What `release.sh` does for the update, after building and ad-hoc signing the app:
+
+1. Zips the app (`ditto -c -k --sequesterRsrc --keepParent`) as `Text-Assist-<version>.zip`.
+2. Signs the ZIP with Sparkle's `sign_update`, reading the private key from the login
+   Keychain, then checks that the signature verifies.
+3. Compares the app's `SUPublicEDKey` with the signing key. If they differ it stops,
+   because installed copies would reject the update. If the app has no `SUPublicEDKey`
+   yet (before the updater is built in), it only warns.
+4. Writes `build/release/appcast.xml` (and checks it is well-formed XML with `xmllint`),
+   then uploads DMG, checksum, ZIP and `appcast.xml` together.
+
+`sign_update` is looked up in `$SPARKLE_BIN`, then `~/sparkle-tools/bin`, then the Sparkle
+package folder under `build/DerivedData`. Set `SPARKLE_ED_KEY_FILE` to sign with a key file
+instead of the Keychain (used for tests with a throwaway key; the guard in step 3 is skipped
+then). `--no-sign` skips the ZIP and appcast.
+
+Check a release: `gh release view v<version>` lists the four files, and
+`curl -sL https://github.com/GagikNav/textassist/releases/latest/download/appcast.xml`
+returns the new version. Withdrawing a release (section 4) as a pre-release makes `latest`,
+and therefore the feed, go back to the previous release.
 
 ### Signing and permissions
 
