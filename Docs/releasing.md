@@ -97,8 +97,59 @@ These headings are placeholders so the guide keeps one shape; each task replaces
 section with the real steps.
 
 ### Update signing key
-_To be written in #71 (Sparkle key: where the public and private keys live, backup, and
-what happens if the private key is lost)._
+
+Every update the app downloads is checked against a public key built into the app. Only
+the matching private key can sign an update the app will accept.
+
+| | |
+|:--|:--|
+| Public key (`SUPublicEDKey`) | `mz2T+2yu4+J62XHpDoH7OqL1K0age+o6HxVENvWPvzc=` |
+| Created | 2026-10-30, with Sparkle 2.10.1 `generate_keys` |
+| Private key | In the maintainer's login Keychain (created by `generate_keys`). It is never in this repository. |
+| Backup | A copy of the exported private key in the maintainer's password manager or other offline storage. |
+
+The public key is not secret. It goes into `TextAssist/Info.plist` as `SUPublicEDKey`
+(task #72).
+
+**If the private key is lost, installed copies of the app can never be updated again, and
+every user must reinstall by hand.** Do not generate a replacement key to "fix" this: a
+new key cannot sign updates that old installs accept.
+
+**Get the Sparkle tools** (once per machine; `generate_keys` and, later, `sign_update`
+live in the release's `bin/` folder):
+
+```sh
+mkdir -p ~/sparkle-tools && cd ~/sparkle-tools
+curl -L -o Sparkle-2.10.1.tar.xz https://github.com/sparkle-project/Sparkle/releases/download/2.10.1/Sparkle-2.10.1.tar.xz
+tar -xf Sparkle-2.10.1.tar.xz
+```
+
+**Check the key is there** (prints only the public key and must match the table above;
+it never creates a new key when one exists):
+
+```sh
+~/sparkle-tools/bin/generate_keys -p
+```
+
+**Back up the private key** (once, and again if the Keychain item ever changes). Put the
+file in a password manager or other offline storage, then delete the local copy:
+
+```sh
+~/sparkle-tools/bin/generate_keys -x ~/sparkle-private-key
+rm ~/sparkle-private-key
+```
+
+**Restore it on a new machine** (needs the same file from the backup):
+
+```sh
+~/sparkle-tools/bin/generate_keys -f /path/to/sparkle-private-key
+~/sparkle-tools/bin/generate_keys -p   # must print the public key from the table
+```
+
+Rules: never commit the private key or paste it into an issue, chat or log; agents never
+generate, read or handle it. `Scripts/release.sh` signs updates through `sign_update`,
+which reads the key from the Keychain (task #74), so releases are cut from the Mac that
+holds it.
 
 ### Appcast
 _To be written in #74 (the ZIP and `appcast.xml` that the release script uploads, and how
