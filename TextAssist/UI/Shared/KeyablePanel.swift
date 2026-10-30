@@ -13,6 +13,11 @@ final class KeyablePanel: NSPanel {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
 
+    /// Closes the panel on Esc, going through `close()` so owners clean up via `onClose`.
+    override func cancelOperation(_ sender: Any?) {
+        close()
+    }
+
     override func close() {
         super.close()
         onClose?()
