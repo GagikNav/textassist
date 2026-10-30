@@ -21,6 +21,9 @@ struct TextAssistApp: App {
     /// Tracks Ollama reachability and available models for the menu bar.
     @StateObject private var statusMonitor: OllamaStatusMonitor
 
+    /// Checks GitHub for new releases and installs them. Kept alive for the whole app run.
+    @StateObject private var updater: UpdaterService
+
     /// Shared provider instance used by both the orchestrator and settings UI.
     private let provider: any LLMProvider
 
@@ -49,6 +52,7 @@ struct TextAssistApp: App {
         _styleStore = StateObject(wrappedValue: store)
         _historyStore = StateObject(wrappedValue: history)
         _orchestrator = StateObject(wrappedValue: orchestrator)
+        _updater = StateObject(wrappedValue: UpdaterService())
         _hotkeyManager = StateObject(
             wrappedValue: HotkeyManager(orchestrator: orchestrator)
         )
