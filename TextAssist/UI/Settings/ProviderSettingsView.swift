@@ -11,6 +11,7 @@ import ServiceManagement
 /// user can still type a model name.
 struct ProviderSettingsView: View {
     @ObservedObject var settings: SettingsStore
+    @ObservedObject var updater: UpdaterService
     let provider: any LLMProvider
 
     @State private var models: [String] = []
@@ -79,6 +80,15 @@ struct ProviderSettingsView: View {
                 Text("Changes take effect on the next summary.")
                     .font(.caption)
             }
+
+            Section {
+                Toggle("Check for updates automatically", isOn: automaticChecksBinding)
+            } header: {
+                Text("Updates")
+            } footer: {
+                Text("Checks GitHub for a new release about once a day.")
+                    .font(.caption)
+            }
         }
         .formStyle(.grouped)
         .padding()
@@ -91,6 +101,14 @@ struct ProviderSettingsView: View {
     /// Shows the picker only when we have a model list and no load error.
     private var shouldShowPicker: Bool {
         !models.isEmpty && modelLoadError == nil
+    }
+
+    /// Binds the automatic-update toggle to Sparkle's setting.
+    private var automaticChecksBinding: Binding<Bool> {
+        Binding(
+            get: { updater.automaticallyChecksForUpdates },
+            set: { updater.automaticallyChecksForUpdates = $0 }
+        )
     }
 
     /// Binds the `URL` base URL to a string text field, validating the input.
@@ -123,6 +141,10 @@ struct ProviderSettingsView: View {
 
 #if DEBUG
 #Preview {
-    ProviderSettingsView(settings: SettingsStore(), provider: OllamaProvider(settings: SettingsStore()))
+    ProviderSettingsView(
+        settings: SettingsStore(),
+        updater: UpdaterService(),
+        provider: OllamaProvider(settings: SettingsStore())
+    )
 }
 #endif

@@ -1,4 +1,5 @@
 import Foundation
+import AppKit
 import Combine
 import Sparkle
 
@@ -52,7 +53,16 @@ final class UpdaterService: ObservableObject {
     }
 
     /// Starts a check now and shows Sparkle's window with the result.
+    ///
+    /// The app is menu-bar only, so Sparkle's window would open behind other apps. Bring the
+    /// app forward here, for this explicit user request only; the floating panels stay
+    /// non-activating.
     func checkForUpdates() {
+        if #available(macOS 14.0, *) {
+            NSApplication.shared.activate()
+        } else {
+            NSApplication.shared.activate(ignoringOtherApps: true)
+        }
         if !hasStarted {
             hasStarted = true
             controller.startUpdater()
