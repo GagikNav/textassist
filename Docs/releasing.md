@@ -248,9 +248,10 @@ handle the private key.
 2. Name: `Text Assist Release`. Identity Type: **Self Signed Root**. Certificate Type:
    **Code Signing**. Tick **Let me override defaults** and set the validity to about 3650
    days (10 years). Create it in the **login** keychain.
-3. Check it: `security find-identity -v -p codesigning` lists `Text Assist Release`. (Some
-   macOS versions show a self-signed root as not trusted; signing still works. If
-   `codesign` complains, open the certificate, Trust → Code Signing → Always Trust.)
+3. Check it: `security find-identity -p codesigning` lists `Text Assist Release`. Do not
+   add `-v`: a self-signed root shows as `CSSMERR_TP_NOT_TRUSTED` and `-v` hides it, yet
+   signing works. If `codesign` itself complains, open the certificate, Trust → Code
+   Signing → Always Trust.
 
 **Back it up.** In Keychain Access, open **My Certificates**, select `Text Assist Release`
 (with its private key below it), and choose **File → Export Items…** as a `.p12` with a
@@ -259,7 +260,7 @@ signing key. Never commit it.
 
 **Restore on a new machine.** Copy the `.p12` over, double-click it (or
 `security import Text-Assist-Release.p12 -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign`)
-and enter the password. `security find-identity -v -p codesigning` must list it again.
+and enter the password. `security find-identity -p codesigning` must list it again.
 
 **Use it.** Set the identity before running the release script:
 

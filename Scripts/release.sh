@@ -163,10 +163,11 @@ if [[ "$NO_SIGN" -eq 0 ]]; then
     || die "Sparkle's sign_update not found. Download Sparkle (Docs/releasing.md, \"Update signing key\") or set SPARKLE_BIN to its bin folder."
 fi
 
-# Signing identity: "-" is ad-hoc. A named identity must exist in the Keychain.
+# Signing identity: "-" is ad-hoc. A named identity must exist in the Keychain. Not
+# "-v": a self-signed certificate is listed as not trusted, yet codesign signs with it.
 SIGN_IDENTITY="${RELEASE_SIGN_IDENTITY:--}"
 if [[ "$SIGN_IDENTITY" != "-" && "$NO_SIGN" -eq 0 ]]; then
-  security find-identity -v -p codesigning | grep -qF -- "$SIGN_IDENTITY" \
+  security find-identity -p codesigning | grep -qF -- "$SIGN_IDENTITY" \
     || die "signing identity '$SIGN_IDENTITY' not found in the Keychain (Docs/releasing.md, \"Signing and permissions\")."
 fi
 
