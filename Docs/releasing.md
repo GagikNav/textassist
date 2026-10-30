@@ -54,7 +54,7 @@ Prerequisites: Xcode command line tools, `brew install create-dmg gh jq`, and
 5. Do the checks in section 3.
 
 What the script publishes: a GitHub release `v<version>` targeting `main` with four
-files and generated notes (install steps and the checksum):
+files and generated notes (a "What's new" list, install steps and the checksum):
 
 | File | Used for |
 |:--|:--|
@@ -62,6 +62,14 @@ files and generated notes (install steps and the checksum):
 | `Text-Assist-<version>.dmg.sha256` | Checksum of the DMG. |
 | `Text-Assist-<version>.zip` | What the in-app updater downloads. |
 | `appcast.xml` | The update feed: tells installed apps the newest version and where to get it. |
+
+**Where the "What's new" list comes from.** The script runs
+`git log --first-parent --format=%s <previous tag>..HEAD` and writes each subject as a
+bullet under `### What's new`. The previous tag is the highest existing `v*` tag below
+the new version; tags are refreshed from `origin` first, for `--bump` and for an explicit
+version. Squash-merged PRs show as one commit each, so the list is the PR titles merged
+since the last release. With no earlier tag, or no new commits, one fallback line
+appears instead of the list. Subjects are used verbatim (`#NN` links to the PR). To fix wording, edit the notes on the draft release (step 4).
 
 The ZIP and `appcast.xml` need Sparkle's `sign_update` and the private key from section 6
 ("Update signing key"); see "Appcast" there.

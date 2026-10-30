@@ -60,6 +60,45 @@ latest_tag_version() {
     | tail -1
 }
 
+# previous_tag_below X.Y.Z -> name of the highest existing v* tag that is lower than
+# X.Y.Z (empty when there is none). Tags like v0.2 count as 0.2.0.
+previous_tag_below() {
+  git -C "$REPO_ROOT" tag --list 'v[0-9]*' \
+    | awk -v new="$1" '
+        BEGIN { split(new, n, "."); limit = n[1] * 1000000 + n[2] * 1000 + n[3] }
+        /^v[0-9]+\.[0-9]+(\.[0-9]+)?$/ {
+          v = substr($0, 2); split(v, p, ".")
+          key = p[1] * 1000000 + p[2] * 1000 + p[3]
+          if (key < limit && key >= best) { best = key; name = $0 }
+        }
+        END { if (name != "") print name }'
+}
+
+# whats_new_section PREVIOUS_TAG -> the What's new block (heading, blank line,
+# bullets, trailing blank line) for the first-parent commit subjects on HEAD since
+# PREVIOUS_TAG. Prints a one-line fallback instead when there is nothing to list.
+whats_new_section() {
+  local previous="$1" subjects="" subject
+  if [[ -n "$previous" ]]; then
+    subjects="$(git -C "$REPO_ROOT" log --first-parent --format=%s "$previous..HEAD" 2>/dev/null || true)"
+  fi
+  if [[ -z "$subjects" ]]; then
+    if [[ -z "$previous" ]]; then
+      echo "See the commit history for what changed in this release."
+    else
+      echo "No changes since $previous."
+    fi
+    echo
+    return 0
+  fi
+  echo "### What's new"
+  echo
+  while IFS= read -r subject; do
+    [[ -n "$subject" ]] && printf -- '- %s\n' "$subject"
+  done <<<"$subjects"
+  echo
+}
+
 # Prints the path of Sparkle's sign_update, or returns 1 when it cannot be found.
 find_sign_update() {
   local dir candidates=()
@@ -193,6 +232,13 @@ fi
 printf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$' \
   || die "invalid version '$VERSION' (expected X.Y.Z, e.g. 0.9.0)."
 TAG="v$VERSION"
+
+# Release notes list the changes since the previous tag, so tags must be current even
+# for an explicit version (--bump already fetched them above).
+if [[ -z "$BUMP" ]]; then
+  git -C "$REPO_ROOT" fetch --tags --quiet origin \
+    || warn "could not fetch tags from origin; the release notes use local tags only."
+fi
 
 # Tag/release must not already exist.
 if git -C "$REPO_ROOT" rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
@@ -424,6 +470,7 @@ fi
 log "creating GitHub release ${TAG}…"
 
 NOTES_FILE="$BUILD_DIR/release-notes.md"
+PREVIOUS_TAG="$(previous_tag_below "$VERSION")"
 SIGNED_DESC="ad-hoc signed"
 [[ "$SIGN_IDENTITY" == "-" ]] || SIGNED_DESC="signed with a self-signed certificate"
 
@@ -432,6 +479,7 @@ SIGNED_DESC="ad-hoc signed"
   echo
   echo "Universal (Apple Silicon + Intel) build for macOS 13+."
   echo
+  whats_new_section "$PREVIOUS_TAG"
   echo "### Install"
   echo
   echo "1. Open the DMG and drag **Text Assist** to **Applications**."
