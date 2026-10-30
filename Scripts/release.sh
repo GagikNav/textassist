@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Build a universal (arm64 + x86_64), ad-hoc-signed DMG of Text Assist, plus the signed
+# Build a universal (arm64 + x86_64) DMG of Text Assist, signed with RELEASE_SIGN_IDENTITY
+# (ad-hoc when unset), plus the signed
 # ZIP and appcast.xml that Sparkle updates use, and publish them as a GitHub Release.
 # Local-only (no CI); notarization is out of scope (PRD-v2 §2).
 #
@@ -14,7 +15,7 @@
 #
 #   Options:
 #     --skip-upload   Build the DMG, ZIP and appcast but do not create the GitHub release.
-#     --no-sign       Skip the ad-hoc codesign step and the update ZIP/appcast
+#     --no-sign       Skip the codesign step and the update ZIP/appcast
 #                     (local testing only).
 #     --draft         Pass --draft to gh release create (eyeball before public).
 #     -h, --help      Print this help.
@@ -23,6 +24,10 @@
 #     SPARKLE_BIN           Folder with Sparkle's sign_update. Default: ~/sparkle-tools/bin,
 #                           then the Sparkle package artifacts under build/DerivedData.
 #     SPARKLE_ED_KEY_FILE   Private key file for sign_update. Default: the login Keychain.
+#     RELEASE_SIGN_IDENTITY Code-signing identity for the app (certificate name or SHA-1),
+#                           e.g. "Text Assist Release". Keeps the Accessibility permission
+#                           across updates (Docs/releasing.md, "Signing and permissions").
+#                           When unset the app is signed ad-hoc, as for local builds.
 #
 # Requirements: xcodebuild, create-dmg (brew install create-dmg), gh (authenticated),
 # Sparkle's sign_update (see Docs/releasing.md, "Update signing key").
@@ -158,6 +163,13 @@ if [[ "$NO_SIGN" -eq 0 ]]; then
     || die "Sparkle's sign_update not found. Download Sparkle (Docs/releasing.md, \"Update signing key\") or set SPARKLE_BIN to its bin folder."
 fi
 
+# Signing identity: "-" is ad-hoc. A named identity must exist in the Keychain.
+SIGN_IDENTITY="${RELEASE_SIGN_IDENTITY:--}"
+if [[ "$SIGN_IDENTITY" != "-" && "$NO_SIGN" -eq 0 ]]; then
+  security find-identity -v -p codesigning | grep -qF -- "$SIGN_IDENTITY" \
+    || die "signing identity '$SIGN_IDENTITY' not found in the Keychain (Docs/releasing.md, \"Signing and permissions\")."
+fi
+
 # Version: exactly one of an explicit X.Y.Z or --bump. MARKETING_VERSION in the
 # project file is stale (1.0) and must never be used as a default.
 [[ -z "$VERSION" || -z "$BUMP" ]] || die "pass either a version or --bump, not both."
@@ -193,7 +205,7 @@ fi
 
 ok "preflight passed (branch: $BRANCH, version: $VERSION, tag: $TAG)"
 
-# --- 1. archive (deterministic ad-hoc signing) ---------------------------------
+# --- 1. archive (signed with the identity; re-signed in step 4) -------------------
 
 log "archiving $SCHEME ($CONFIGURATION, universal)…"
 
@@ -214,7 +226,7 @@ if ! xcodebuild archive \
   -archivePath "$ARCHIVE_PATH" \
   MARKETING_VERSION="$VERSION" \
   CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
-  CODE_SIGN_IDENTITY="-" \
+  CODE_SIGN_IDENTITY="$SIGN_IDENTITY" \
   CODE_SIGN_STYLE=Manual \
   > "$XCODEBUILD_LOG" 2>&1; then
   tail -40 "$XCODEBUILD_LOG" >&2
@@ -267,17 +279,32 @@ BUILT_BUILD="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_PLIST" 
   || die "built app reports build '${BUILT_BUILD:-none}', expected '$BUILD_NUMBER'."
 ok "app version: $BUILT_VERSION (build $BUILT_BUILD)"
 
-# --- 4. ad-hoc codesign ----------------------------------------------------------
+# --- 4. codesign -------------------------------------------------------------------
 
 if [[ "$NO_SIGN" -eq 1 ]]; then
   warn "skipping codesign (--no-sign)."
 else
-  log "ad-hoc codesigning…"
-  codesign --force --deep --sign - "$APP_PATH" >/dev/null 2>&1 \
+  if [[ "$SIGN_IDENTITY" == "-" ]]; then
+    log "ad-hoc codesigning (RELEASE_SIGN_IDENTITY is not set)…"
+  else
+    log "codesigning with '$SIGN_IDENTITY'…"
+  fi
+  codesign --force --deep --sign "$SIGN_IDENTITY" "$APP_PATH" >/dev/null 2>&1 \
     || die "codesign failed."
   codesign --verify --deep --strict "$APP_PATH" >/dev/null 2>&1 \
     || die "codesign --verify failed."
-  ok "ad-hoc signature verified."
+
+  # The designated requirement is what macOS compares for the Accessibility permission.
+  # With a certificate it must name the certificate, not the build's own hash.
+  DESIGNATED_REQ="$(codesign -dr - "$APP_PATH" 2>&1 | sed -n 's/^# *designated => //p')"
+  log "designated requirement: $DESIGNATED_REQ"
+  if [[ "$SIGN_IDENTITY" != "-" ]]; then
+    printf '%s' "$DESIGNATED_REQ" | grep -q 'certificate leaf' \
+      || die "the signature has no 'certificate leaf' requirement; refusing to release it as if it were certificate-signed."
+    ok "signature verified (certificate)."
+  else
+    ok "ad-hoc signature verified."
+  fi
 fi
 
 # --- 5. package the DMG ----------------------------------------------------------
@@ -396,6 +423,8 @@ fi
 log "creating GitHub release $TAG…"
 
 NOTES_FILE="$BUILD_DIR/release-notes.md"
+SIGNED_DESC="ad-hoc signed"
+[[ "$SIGN_IDENTITY" == "-" ]] || SIGNED_DESC="signed with a self-signed certificate"
 
 {
   echo "## Text Assist v$VERSION"
@@ -405,7 +434,7 @@ NOTES_FILE="$BUILD_DIR/release-notes.md"
   echo "### Install"
   echo
   echo "1. Open the DMG and drag **Text Assist** to **Applications**."
-  echo "2. The app is ad-hoc signed (not notarized). The first time you open it, macOS will block it:"
+  echo "2. The app is $SIGNED_DESC (not notarized). The first time you open it, macOS will block it:"
   echo "   - Right-click **Text Assist** in Applications → **Open** → **Open**, or"
   echo "   - System Settings → **Privacy & Security** → **Open Anyway**, or"
   echo "   - In Terminal: \`xattr -dr com.apple.quarantine \"/Applications/Text Assist.app\"\`"

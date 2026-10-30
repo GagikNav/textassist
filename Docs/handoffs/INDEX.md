@@ -1,10 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #69 | ? | InProgress | 2026-10-30 | [issue-69-epic-in-app-updates-and-versioned-releases.md](./issue-69-epic-in-app-updates-and-versioned-releases.md) |
+| #83 | ? | InReview | 2026-10-30 | [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](./issue-83-sign-releases-with-a-stable-self-signed-certificate.md) |
 | #9 | T1.1 | agent:done | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #77 | ? | InReview | 2026-10-30 | [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](./issue-77-spike-stable-signing-so-accessibility-survives-updates.md) |
@@ -14,6 +14,7 @@ _Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | #71 | ? | InReview | 2026-10-30 | [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](./issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md) |
 | #70 | ? | InReview | 2026-10-30 | [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](./issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md) |
 | #7 | T1.3 | agent:done | 2026-10-03 | [issue-7-outputcleaner.md](./issue-7-outputcleaner.md) |
+| #69 | ? | InProgress | 2026-10-30 | [issue-69-epic-in-app-updates-and-versioned-releases.md](./issue-69-epic-in-app-updates-and-versioned-releases.md) |
 | #60 | ? | InReview | 2026-10-05 | [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](./issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md) |
 | #59 | ? | InReview | 2026-10-05 | [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](./issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md) |
 | #27 | T6.4 | agent:done | 2026-10-05 | [issue-27-menu-bar-model-picker.md](./issue-27-menu-bar-model-picker.md) |

@@ -56,9 +56,23 @@ your changes before continuing.
 | --- | --- |
 | `--bump LEVEL` | Next version from the highest `v*` tag (`patch`, `minor` or `major`). |
 | `--skip-upload` | Build the DMG, ZIP and appcast without creating a GitHub Release. |
-| `--no-sign` | Skip ad-hoc signing and the update ZIP/appcast. Intended for local testing only. |
+| `--no-sign` | Skip codesigning and the update ZIP/appcast. Intended for local testing only. |
 | `--draft` | Create the GitHub Release as a draft. |
 | `-h`, `--help` | Print the command usage. |
+
+## Signing
+
+By default the app is signed ad-hoc, which is fine for local builds but makes the
+Accessibility permission reset after every update. For a release, set
+`RELEASE_SIGN_IDENTITY` to the name (or SHA-1) of the release certificate:
+
+```sh
+RELEASE_SIGN_IDENTITY="Text Assist Release" Scripts/release.sh --bump patch --skip-upload
+```
+
+The script signs with it, prints the designated requirement and stops unless it
+contains `certificate leaf`. See "Signing and permissions" in
+[Docs/releasing.md](../Docs/releasing.md) for creating and backing up the certificate.
 
 ## Outputs
 

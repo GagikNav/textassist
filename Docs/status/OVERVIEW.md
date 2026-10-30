@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 18:55 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,10 +20,10 @@ _Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #83 Sign releases with a stable self-signed certificate
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
-- #83 Sign releases with a stable self-signed certificate
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
 - #66 Make Esc dismiss the menu-bar window
@@ -44,7 +44,6 @@ _Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **Epics ready to delegate**
 - #89 Epic: Refine as Prompt — turn selected text into a better LLM prompt
 - #82 Epic: Keyboard navigation in the style picker menu
-- #69 Epic: In-app updates and versioned releases
 - #68 Epic: Esc dismisses every Text Assist window
 - #52 Epic: Fix Ollama prompt repetition on style change
 
@@ -111,7 +110,7 @@ _Generated 2026-10-30 18:46 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-69-epic-in-app-updates-and-versioned-releases.md](../handoffs/issue-69-epic-in-app-updates-and-versioned-releases.md)
+- [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
