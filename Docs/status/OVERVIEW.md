@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 21:16 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 21:24 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,13 +20,12 @@ _Generated 2026-10-30 21:16 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #103 Release notes: list what changed since the previous release
+- #67 Make Esc work while a text input has focus
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
-- #67 Make Esc work while a text input has focus
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
@@ -107,7 +106,7 @@ _Generated 2026-10-30 21:16 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-103-release-notes-list-what-changed-since-the-previous-release.md](../handoffs/issue-103-release-notes-list-what-changed-since-the-previous-release.md)
+- [issue-67-make-esc-work-while-a-text-input-has-focus.md](../handoffs/issue-67-make-esc-work-while-a-text-input-has-focus.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
