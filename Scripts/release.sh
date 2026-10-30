@@ -297,7 +297,7 @@ else
 
   # The designated requirement is what macOS compares for the Accessibility permission.
   # With a certificate it must name the certificate, not the build's own hash.
-  DESIGNATED_REQ="$(codesign -dr - "$APP_PATH" 2>&1 | sed -n 's/^# *designated => //p')"
+  DESIGNATED_REQ="$(codesign -dr - "$APP_PATH" 2>&1 | sed -n 's/^#\{0,1\} *designated => //p')"
   log "designated requirement: $DESIGNATED_REQ"
   if [[ "$SIGN_IDENTITY" != "-" ]]; then
     printf '%s' "$DESIGNATED_REQ" | grep -q 'certificate leaf' \
