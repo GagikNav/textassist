@@ -1,10 +1,10 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 16:58 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
-- Total issues: 36
+- Total issues: 49
 
 ## Milestones
 
@@ -14,24 +14,35 @@ _Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 | M1 - Foundation | 5 | 5 | `##########` 100% |
 | M2 - Write + Replace | 10 | 10 | `##########` 100% |
 | M3 - Chat | 5 | 5 | `##########` 100% |
-| M4 - Menu bar status | 3 | 4 | `#######...` 75% |
+| M4 - Menu bar status | 4 | 4 | `##########` 100% |
 | M5 - Polish (P1) | 5 | 5 | `##########` 100% |
 
 ## Now
 
 **In progress**
-- #60 Menu-bar Assist with Selection beeps and does not start capture
+- #70 Versioning policy, release guide and a reliable release version
 
 **Ready**
-- #51 Prevent superseded streams from clobbering popup state
+- #77 Spike: stable signing so Accessibility survives updates
+- #66 Make Esc dismiss the menu-bar window
+- #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
 **Blocked**
+- #76 Homebrew tap and cask (optional second channel)
+- #75 Cut the first updater-enabled release and verify updating end to end
+- #74 Release script: build ZIP, sign it and publish appcast.xml
+- #73 Update UI: version label, Check for Updates… and auto-check setting
+- #72 Integrate Sparkle: updater service and Info.plist keys
+- #71 Generate and document the Sparkle update-signing key (maintainer action)
+- #67 Make Esc work while a text input has focus
+- #51 Prevent superseded streams from clobbering popup state
 
 **Epics ready to delegate**
+- #69 Epic: In-app updates and versioned releases
+- #68 Epic: Esc dismisses every Text Assist window
 - #52 Epic: Fix Ollama prompt repetition on style change
-- #47 Epic: Fix Ollama prompt repetition on style change
 
 ## Epics
 
@@ -77,7 +88,7 @@ _Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|:--|
 | T5.1 OllamaStatusMonitor | #22 | closed |
 | T5.2 Menu-bar popover with status | #23 | closed |
-| Menu-bar Assist with Selection beeps and does not start capture | #60 | open |
+| Menu-bar Assist with Selection beeps and does not start capture | #60 | closed |
 
 ### #6 Epic 6 — P1 extras
 
@@ -96,13 +107,13 @@ _Generated 2026-10-05 22:27 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](../handoffs/issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md)
+- [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
+- [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](../handoffs/issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md)
 - [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](../handoffs/issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
 - [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
 - [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
 - [issue-24-settings-hotkey-recorders-and-launch-at-login.md](../handoffs/issue-24-settings-hotkey-recorders-and-launch-at-login.md)
-- [issue-23-menu-bar-popover-with-status.md](../handoffs/issue-23-menu-bar-popover-with-status.md)

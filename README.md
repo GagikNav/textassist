@@ -86,10 +86,13 @@ To build a universal DMG, generate its SHA-256 checksum, and publish a GitHub
 Release:
 
 ```sh
-Scripts/release.sh [version] [--draft]
+Scripts/release.sh <version> [--draft]
+Scripts/release.sh --bump patch|minor|major [--draft]
 ```
 
-The release script must run from the main checkout on `main`; it requires
+The versioning scheme and the full release steps are in
+[Docs/releasing.md](Docs/releasing.md). The release script must run from the main
+checkout on `main`; it requires
 `xcodebuild`, `create-dmg`, `gh`, and `jq`. Releases are ad-hoc signed and not
 notarized, so macOS may block the first launch. See the
 [release script guide](Scripts/README.md) for prerequisites, options, and
@@ -104,3 +107,4 @@ manually checking the affected flow in a running macOS app.
 - [Approved design system](Docs/design/v2/README.md)
 - [Agent and repository constraints](AGENTS.md)
 - [Release script guide](Scripts/README.md)
+- [Versioning and releasing](Docs/releasing.md)
