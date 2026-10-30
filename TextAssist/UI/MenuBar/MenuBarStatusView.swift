@@ -10,6 +10,9 @@ struct MenuBarStatusView: View {
     let onSettings: () -> Void
     let onReopen: (HistoryEntry) -> Void
 
+    /// The `MenuBarExtra` window hosting this view, captured so Esc can close it.
+    @State private var hostWindow: NSWindow?
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 9) {
@@ -151,6 +154,12 @@ struct MenuBarStatusView: View {
                 .padding(.bottom, 4)
         }
         .padding(.vertical, 4)
+        .background(HostWindowReader { if hostWindow !== $0 { hostWindow = $0 } })
+        // Esc dismisses the window. An open Picker menu consumes its own Esc first,
+        // so only a second Esc reaches this handler.
+        .onExitCommand {
+            hostWindow?.close()
+        }
         .onAppear {
             Task {
                 await monitor.refresh()
@@ -181,6 +190,24 @@ struct MenuBarStatusView: View {
             .prefix(40)
             .replacingOccurrences(of: "\n", with: " ")
         return "\(entry.styleName) · \(preview)"
+    }
+}
+
+/// Reports the `NSWindow` that hosts the view it is attached to.
+///
+/// SwiftUI's `dismiss` does nothing for a `MenuBarExtra` window on macOS 13, so the
+/// window is reached through AppKit instead.
+private struct HostWindowReader: NSViewRepresentable {
+    let onChange: (NSWindow?) -> Void
+
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async { [weak view] in onChange(view?.window) }
+        return view
+    }
+
+    func updateNSView(_ view: NSView, context: Context) {
+        DispatchQueue.main.async { [weak view] in onChange(view?.window) }
     }
 }
 
