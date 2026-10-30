@@ -5,6 +5,7 @@ struct MenuBarStatusView: View {
     @ObservedObject var settings: SettingsStore
     @ObservedObject var monitor: OllamaStatusMonitor
     @ObservedObject var history: HistoryStore
+    @ObservedObject var updater: UpdaterService
 
     let onSettings: () -> Void
     let onReopen: (HistoryEntry) -> Void
@@ -73,6 +74,19 @@ struct MenuBarStatusView: View {
             .padding(.vertical, 6)
             .padding(.horizontal, 12)
 
+            Button {
+                updater.checkForUpdates()
+            } label: {
+                HStack {
+                    Text("Check for Updates…")
+                    Spacer(minLength: 0)
+                }
+            }
+            .buttonStyle(.plain)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
+            .disabled(!updater.canCheckForUpdates)
+
             if !history.entries.isEmpty {
                 Divider()
 
@@ -128,6 +142,13 @@ struct MenuBarStatusView: View {
             .padding(.vertical, 6)
             .padding(.horizontal, 12)
             .keyboardShortcut("Q")
+
+            Text(versionDescription)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 12)
+                .padding(.top, 2)
+                .padding(.bottom, 4)
         }
         .padding(.vertical, 4)
         .onAppear {
@@ -146,6 +167,14 @@ struct MenuBarStatusView: View {
         }
     }
 
+    /// "Version 0.1.1 (build 120)", read from the app bundle.
+    private var versionDescription: String {
+        let info = Bundle.main.infoDictionary
+        let version = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return "Version \(version) (build \(build))"
+    }
+
     /// Single-line menu title for a recent entry: "Style · first 40 chars of input".
     private func recentTitle(for entry: HistoryEntry) -> String {
         let preview = entry.input
@@ -161,6 +190,7 @@ struct MenuBarStatusView: View {
         settings: SettingsStore(),
         monitor: OllamaStatusMonitor(provider: OllamaProvider(settings: SettingsStore())),
         history: HistoryStore(),
+        updater: UpdaterService(),
         onSettings: {},
         onReopen: { _ in }
     )

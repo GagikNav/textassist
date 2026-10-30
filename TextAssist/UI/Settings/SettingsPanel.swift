@@ -9,15 +9,18 @@ import AppKit
 final class SettingsPanel {
     private let settings: SettingsStore
     private let provider: any LLMProvider
+    private let updater: UpdaterService
     private var panel: KeyablePanel?
 
     /// Creates the settings panel.
     /// - Parameters:
     ///   - settings: The store that holds user-configurable values.
     ///   - provider: The LLM provider used to fetch available models.
-    init(settings: SettingsStore, provider: any LLMProvider) {
+    ///   - updater: The update checker whose automatic-check setting is shown.
+    init(settings: SettingsStore, provider: any LLMProvider, updater: UpdaterService) {
         self.settings = settings
         self.provider = provider
+        self.updater = updater
     }
 
     /// Shows the settings panel near the center of the main screen.
@@ -28,9 +31,9 @@ final class SettingsPanel {
             return
         }
 
-        let settingsView = SettingsView(settings: settings, provider: provider)
+        let settingsView = SettingsView(settings: settings, updater: updater, provider: provider)
         let hostingController = NSHostingController(rootView: settingsView)
-        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 420, height: 400))
+        hostingController.view.frame = CGRect(origin: .zero, size: CGSize(width: 420, height: 500))
 
         let panel = KeyablePanel(
             contentRect: hostingController.view.bounds,

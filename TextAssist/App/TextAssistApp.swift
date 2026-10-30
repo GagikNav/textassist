@@ -47,12 +47,13 @@ struct TextAssistApp: App {
 
         self.provider = provider
         _statusMonitor = StateObject(wrappedValue: OllamaStatusMonitor(provider: provider))
-        self.settingsPanel = SettingsPanel(settings: settings, provider: provider)
+        let updater = UpdaterService()
+        self.settingsPanel = SettingsPanel(settings: settings, provider: provider, updater: updater)
         _settings = StateObject(wrappedValue: settings)
         _styleStore = StateObject(wrappedValue: store)
         _historyStore = StateObject(wrappedValue: history)
         _orchestrator = StateObject(wrappedValue: orchestrator)
-        _updater = StateObject(wrappedValue: UpdaterService())
+        _updater = StateObject(wrappedValue: updater)
         _hotkeyManager = StateObject(
             wrappedValue: HotkeyManager(orchestrator: orchestrator)
         )
@@ -64,6 +65,7 @@ struct TextAssistApp: App {
                 settings: settings,
                 monitor: statusMonitor,
                 history: historyStore,
+                updater: updater,
                 onSettings: {
                     settingsPanel.show()
                 },
