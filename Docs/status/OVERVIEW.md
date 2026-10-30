@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 19:53 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,14 +20,13 @@ _Generated 2026-10-30 19:53 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #75 Cut the first updater-enabled release and verify updating end to end
+- #66 Make Esc dismiss the menu-bar window
+- #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
-- #66 Make Esc dismiss the menu-bar window
-- #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
@@ -109,13 +108,13 @@ _Generated 2026-10-30 19:53 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](../handoffs/issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md)
+- [issue-65-close-keyablepanel-on-esc.md](../handoffs/issue-65-close-keyablepanel-on-esc.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
+- [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](../handoffs/issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md)
 - [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
 - [issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md](../handoffs/issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md)
 - [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](../handoffs/issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md)
 - [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
-- [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
