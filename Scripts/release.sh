@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Build a universal (arm64 + x86_64), ad-hoc-signed DMG of Text Assist and publish
-# it as a GitHub Release. Local-only (no CI); notarization is out of scope (PRD-v2 §2).
+# Build a universal (arm64 + x86_64), ad-hoc-signed DMG of Text Assist, plus the signed
+# ZIP and appcast.xml that Sparkle updates use, and publish them as a GitHub Release.
+# Local-only (no CI); notarization is out of scope (PRD-v2 §2).
 #
 # Usage:
 #   Scripts/release.sh <version> [options]
@@ -12,12 +13,19 @@
 #                  MARKETING_VERSION in project.pbxproj is stale and is not used.
 #
 #   Options:
-#     --skip-upload   Build the DMG but do not create the GitHub release.
-#     --no-sign       Skip the ad-hoc codesign step (local testing only).
+#     --skip-upload   Build the DMG, ZIP and appcast but do not create the GitHub release.
+#     --no-sign       Skip the ad-hoc codesign step and the update ZIP/appcast
+#                     (local testing only).
 #     --draft         Pass --draft to gh release create (eyeball before public).
 #     -h, --help      Print this help.
 #
-# Requirements: xcodebuild, create-dmg (brew install create-dmg), gh (authenticated).
+#   Environment:
+#     SPARKLE_BIN           Folder with Sparkle's sign_update. Default: ~/sparkle-tools/bin,
+#                           then the Sparkle package artifacts under build/DerivedData.
+#     SPARKLE_ED_KEY_FILE   Private key file for sign_update. Default: the login Keychain.
+#
+# Requirements: xcodebuild, create-dmg (brew install create-dmg), gh (authenticated),
+# Sparkle's sign_update (see Docs/releasing.md, "Update signing key").
 #
 # The script must run from the MAIN checkout on the main branch — never from a
 # task worktree under build/worktrees/ (releases are cut from main only).
@@ -47,6 +55,21 @@ latest_tag_version() {
     | tail -1
 }
 
+# Prints the path of Sparkle's sign_update, or returns 1 when it cannot be found.
+find_sign_update() {
+  local dir candidates=()
+  if [[ -n "${SPARKLE_BIN:-}" ]]; then candidates+=("$SPARKLE_BIN"); fi
+  candidates+=("$HOME/sparkle-tools/bin"
+               "$REPO_ROOT/build/DerivedData/SourcePackages/artifacts/sparkle/Sparkle/bin")
+  for dir in "${candidates[@]}"; do
+    if [[ -x "$dir/sign_update" ]]; then
+      printf '%s\n' "$dir/sign_update"
+      return 0
+    fi
+  done
+  return 1
+}
+
 # bump_version X.Y.Z patch|minor|major -> next version.
 bump_version() {
   local major minor patch
@@ -70,6 +93,7 @@ BUILD_DIR="$REPO_ROOT/build/release"
 APP_NAME="Text Assist"
 DMG_PREFIX="Text-Assist"
 DEFAULT_BRANCH="main"
+REPO_SLUG="$(git -C "$REPO_ROOT" remote get-url origin 2>/dev/null | sed -E 's#.*github.com[:/]##; s#\.git$##' || true)"
 
 # --- parse args ---------------------------------------------------------------
 
@@ -124,6 +148,14 @@ command -v gh >/dev/null 2>&1 || die "gh not found (brew install gh)."
 command -v jq >/dev/null 2>&1 || die "jq not found (brew install jq)."
 if [[ "$SKIP_UPLOAD" -eq 0 ]]; then
   gh auth status >/dev/null 2>&1 || die "gh is not authenticated (run: gh auth login)."
+fi
+
+# Sparkle's sign_update signs the update ZIP. Find it now so a missing tool does not
+# fail the release after the long build.
+SIGN_UPDATE=""
+if [[ "$NO_SIGN" -eq 0 ]]; then
+  SIGN_UPDATE="$(find_sign_update)" \
+    || die "Sparkle's sign_update not found. Download Sparkle (Docs/releasing.md, \"Update signing key\") or set SPARKLE_BIN to its bin folder."
 fi
 
 # Version: exactly one of an explicit X.Y.Z or --bump. MARKETING_VERSION in the
@@ -277,6 +309,83 @@ SHA256="$(shasum -a 256 "$DMG_PATH" | awk '{print $1}')"
 printf '%s  %s\n' "$SHA256" "$DMG_PREFIX-$VERSION.dmg" > "$DMG_PATH.sha256"
 ok "SHA-256: $SHA256"
 
+# --- 6b. update archive and appcast (Sparkle) ---------------------------------------
+#
+# The app reads releases/latest/download/appcast.xml, which GitHub serves from the
+# newest published (non-draft, non-pre-release) release. One item is enough: the app
+# only needs the newest version.
+
+ZIP_PATH="$BUILD_DIR/$DMG_PREFIX-$VERSION.zip"
+APPCAST_PATH="$BUILD_DIR/appcast.xml"
+EXTRA_ASSETS=()
+HAS_UPDATER=0
+[[ -d "$APP_PATH/Contents/Frameworks/Sparkle.framework" ]] && HAS_UPDATER=1
+
+if [[ "$NO_SIGN" -eq 1 ]]; then
+  warn "skipping the update ZIP and appcast (--no-sign)."
+else
+  log "creating $DMG_PREFIX-$VERSION.zip…"
+  ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_PATH" \
+    || die "ditto could not create $ZIP_PATH."
+  [[ -f "$ZIP_PATH" ]] || die "ditto did not produce $ZIP_PATH."
+  ZIP_LENGTH="$(stat -f%z "$ZIP_PATH")"
+  ok "ZIP created: $ZIP_PATH ($ZIP_LENGTH bytes)"
+
+  log "signing the update ZIP with sign_update…"
+  SIGN_ARGS=()
+  if [[ -n "${SPARKLE_ED_KEY_FILE:-}" ]]; then SIGN_ARGS+=(--ed-key-file "$SPARKLE_ED_KEY_FILE"); fi
+  ED_SIGNATURE="$("$SIGN_UPDATE" ${SIGN_ARGS[@]+"${SIGN_ARGS[@]}"} -p "$ZIP_PATH")" \
+    || die "sign_update failed (is the private key in the Keychain? see Docs/releasing.md)."
+  [[ -n "$ED_SIGNATURE" ]] || die "sign_update returned an empty signature."
+  "$SIGN_UPDATE" ${SIGN_ARGS[@]+"${SIGN_ARGS[@]}"} --verify "$ZIP_PATH" "$ED_SIGNATURE" >/dev/null 2>&1 \
+    || die "the new signature does not verify against the signing key."
+  ok "update ZIP signed and verified"
+
+  # The app only accepts updates signed with the key it was built with. Catch a
+  # mismatch now, before it ships a release that nobody can update from.
+  APP_PUBLIC_KEY="$(/usr/libexec/PlistBuddy -c 'Print :SUPublicEDKey' "$APP_PLIST" 2>/dev/null || true)"
+  if [[ -z "$APP_PUBLIC_KEY" ]]; then
+    warn "the built app has no SUPublicEDKey, so it cannot verify or install updates yet."
+  elif [[ -z "${SPARKLE_ED_KEY_FILE:-}" && -x "$(dirname "$SIGN_UPDATE")/generate_keys" ]]; then
+    KEYCHAIN_PUBLIC_KEY="$("$(dirname "$SIGN_UPDATE")/generate_keys" -p 2>/dev/null || true)"
+    [[ "$KEYCHAIN_PUBLIC_KEY" == "$APP_PUBLIC_KEY" ]] \
+      || die "the app's SUPublicEDKey does not match the signing key in the Keychain; installed copies would reject this update."
+    ok "app public key matches the signing key"
+  else
+    warn "could not compare the app's SUPublicEDKey with the signing key (key file in use, or generate_keys not next to sign_update)."
+  fi
+
+  RELEASE_URL="https://github.com/$REPO_SLUG/releases/tag/$TAG"
+  ZIP_URL="https://github.com/$REPO_SLUG/releases/download/$TAG/$DMG_PREFIX-$VERSION.zip"
+  PUB_DATE="$(LC_ALL=C date -u '+%a, %d %b %Y %H:%M:%S +0000')"
+
+  cat > "$APPCAST_PATH" <<APPCAST
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Text Assist</title>
+    <link>https://github.com/$REPO_SLUG</link>
+    <description>Text Assist updates</description>
+    <language>en</language>
+    <item>
+      <title>Version $VERSION</title>
+      <pubDate>$PUB_DATE</pubDate>
+      <sparkle:version>$BUILD_NUMBER</sparkle:version>
+      <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>$RELEASE_URL</sparkle:releaseNotesLink>
+      <enclosure url="$ZIP_URL" length="$ZIP_LENGTH" type="application/octet-stream" sparkle:edSignature="$ED_SIGNATURE"/>
+    </item>
+  </channel>
+</rss>
+APPCAST
+  if command -v xmllint >/dev/null 2>&1; then
+    xmllint --noout "$APPCAST_PATH" || die "appcast.xml is not well-formed XML."
+  fi
+  ok "appcast written: $APPCAST_PATH"
+  EXTRA_ASSETS+=("$ZIP_PATH" "$APPCAST_PATH")
+fi
+
 # --- 7. publish ------------------------------------------------------------------
 
 if [[ "$SKIP_UPLOAD" -eq 1 ]]; then
@@ -286,7 +395,6 @@ fi
 
 log "creating GitHub release $TAG…"
 
-REPO_SLUG="$(git -C "$REPO_ROOT" remote get-url origin | sed -E 's#.*github.com[:/]##; s#\.git$##')"
 NOTES_FILE="$BUILD_DIR/release-notes.md"
 
 {
@@ -301,6 +409,12 @@ NOTES_FILE="$BUILD_DIR/release-notes.md"
   echo "   - Right-click **Text Assist** in Applications → **Open** → **Open**, or"
   echo "   - System Settings → **Privacy & Security** → **Open Anyway**, or"
   echo "   - In Terminal: \`xattr -dr com.apple.quarantine \"/Applications/Text Assist.app\"\`"
+  if [[ "$HAS_UPDATER" -eq 1 ]]; then
+    echo
+    echo "### Updates"
+    echo
+    echo "Once installed, Text Assist updates itself from inside the app."
+  fi
   echo
   echo "### SHA-256"
   echo
@@ -314,11 +428,13 @@ if [[ "$DRAFT" -eq 1 ]]; then DRAFT_ARGS+=(--draft); fi
 
 gh release create "$TAG" \
   "$DMG_PATH" \
+  "$DMG_PATH.sha256" \
+  ${EXTRA_ASSETS[@]+"${EXTRA_ASSETS[@]}"} \
   --repo "$REPO_SLUG" \
   --title "Text Assist $TAG" \
   --notes-file "$NOTES_FILE" \
   --target "$DEFAULT_BRANCH" \
-  "${DRAFT_ARGS[@]}"
+  ${DRAFT_ARGS[@]+"${DRAFT_ARGS[@]}"}
 
 ok "release created: https://github.com/$REPO_SLUG/releases/tag/$TAG"
 ok "done: $DMG_PATH"

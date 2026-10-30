@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 17:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 18:21 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,13 +20,14 @@ _Generated 2026-10-30 17:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #71 Generate and document the Sparkle update-signing key (maintainer action)
+- #74 Release script: build ZIP, sign it and publish appcast.xml
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
 - #83 Sign releases with a stable self-signed certificate
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
+- #72 Integrate Sparkle: updater service and Info.plist keys
 - #66 Make Esc dismiss the menu-bar window
 - #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 - #50 Cancel the in-flight Ollama stream immediately on style change
@@ -39,9 +40,7 @@ _Generated 2026-10-30 17:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #81 Document picker keys and verify the keyboard flow end to end
 - #80 Highlight the selected picker row and add a key hint
 - #75 Cut the first updater-enabled release and verify updating end to end
-- #74 Release script: build ZIP, sign it and publish appcast.xml
 - #73 Update UI: version label, Check for Updates… and auto-check setting
-- #72 Integrate Sparkle: updater service and Info.plist keys
 - #67 Make Esc work while a text input has focus
 - #51 Prevent superseded streams from clobbering popup state
 
@@ -115,13 +114,13 @@ _Generated 2026-10-30 17:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
+- [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
 - [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
+- [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
 - [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
 - [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](../handoffs/issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md)
 - [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](../handoffs/issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
-- [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
