@@ -167,12 +167,12 @@ struct MenuBarStatusView: View {
         }
     }
 
-    /// "Version 0.1.1 (build 120)", read from the app bundle.
+    /// "Text Assist · Version 0.2.1 (build 120)", read from the app bundle.
     private var versionDescription: String {
         let info = Bundle.main.infoDictionary
         let version = info?["CFBundleShortVersionString"] as? String ?? "?"
         let build = info?["CFBundleVersion"] as? String ?? "?"
-        return "Version \(version) (build \(build))"
+        return "Text Assist · Version \(version) (build \(build))"
     }
 
     /// Single-line menu title for a recent entry: "Style · first 40 chars of input".
