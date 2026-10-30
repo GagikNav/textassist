@@ -14,7 +14,14 @@ final class KeyablePanel: NSPanel {
     override var canBecomeMain: Bool { false }
 
     /// Closes the panel on Esc, going through `close()` so owners clean up via `onClose`.
+    ///
+    /// A focused text view or field editor forwards Esc up the responder chain to here.
+    /// While an input method is composing (marked text) Esc only cancels the composition,
+    /// so the panel stays open.
     override func cancelOperation(_ sender: Any?) {
+        if let client = firstResponder as? NSTextInputClient, client.hasMarkedText() {
+            return
+        }
         close()
     }
 
