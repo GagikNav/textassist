@@ -1,14 +1,15 @@
 # Handoff index
 
-_Generated 2026-10-30 19:54 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
-| #75 | ? | InReview | 2026-10-30 | [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](./issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md) |
+| #66 | ? | review(fiximplemented,NOTverifiedintherunningapp) | 2026-10-30 | [issue-66-make-esc-dismiss-the-menu-bar-window.md](./issue-66-make-esc-dismiss-the-menu-bar-window.md) |
 | #9 | T1.1 | agent:done | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #83 | ? | InReview | 2026-10-30 | [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](./issue-83-sign-releases-with-a-stable-self-signed-certificate.md) |
 | #8 | T1.4 | Done(`agent:done`) | 2026-10-03 | [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](./issue-8-capture-metadata-source-app-pid-and-capture-origin.md) |
 | #77 | ? | InReview | 2026-10-30 | [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](./issue-77-spike-stable-signing-so-accessibility-survives-updates.md) |
+| #75 | ? | InReview | 2026-10-30 | [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](./issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md) |
 | #74 | ? | InReview | 2026-10-30 | [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](./issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md) |
 | #73 | ? | InReview | 2026-10-30 | [issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md](./issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md) |
 | #72 | ? | InReview | 2026-10-30 | [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](./issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md) |
