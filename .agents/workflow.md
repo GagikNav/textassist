@@ -98,7 +98,9 @@ Definitions live in `.agents/agents/*.agent.md`.
 A task may enter `agent:in-progress` only when:
 1. It has **Depends on**, **Files**, and **Done when** in the issue body.
 2. Every issue in **Depends on** is closed.
-3. It has exactly one `size:`, one `area:`, one `kind:task`, one `epic:` label.
+3. It has exactly one `size:`, one `area:` and one `kind:task` label, and it belongs to an
+   epic: an `epic:N` label (the v2 plan, epics 0–6) or, for all later work, a native parent
+   issue (`pickup.sh` reads the parent; no `epic:` label is needed).
 4. It is a leaf task (no open sub-issues); otherwise it is delegated first.
 5. A worktree exists for it (`Scripts/agent/worktree.sh <n>`), and work happens there.
 
@@ -128,7 +130,7 @@ so switching models or harnesses loses nothing.
 ## 10. Hard constraints (do not violate)
 
 Inherited from `AGENTS.md` and PRD §3.2 — restated for agents:
-1. Never edit `project.pbxproj`.
+1. Never edit `project.pbxproj` (sole exception path: §11).
 2. `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, Swift 5 language mode; cross isolation
    like `OllamaProvider` (`await MainActor.run { … }`); mark pure helpers `nonisolated`.
 3. Deployment target **macOS 13.0**: no `@Observable`, `onKeyPress`, two-parameter
@@ -136,3 +138,26 @@ Inherited from `AGENTS.md` and PRD §3.2 — restated for agents:
 4. App Sandbox stays **off**; panels stay **non-activating**.
 5. Preserve `///` doc-comment style on new public types and methods.
 6. One task = one reviewable change. No unrelated refactors. Do not rename existing types.
+
+## 11. Exceptions, secrets and publishing
+
+- **Project file.** `project.pbxproj` stays off limits. The only way around it is an
+  explicit instruction from the maintainer in chat for a named task (for example adding a
+  Swift package). The agent then makes the smallest edit by copying an existing entry,
+  runs the build check, and records the exception in the handoff and the PR. Precedent:
+  the Sparkle package, #72.
+- **Secrets.** Agents never generate, read, print, commit or paste private keys, signing
+  certificates or tokens (for example the Sparkle update-signing key). Tasks that need one
+  are marked **Maintainer action**: the maintainer runs the commands and shares only public
+  values. Tests use throwaway keys.
+- **Release script.** `Scripts/release.sh` refuses task worktrees and any branch except
+  `main`. To test it from a worktree, run a temporary copy with those two guards removed;
+  delete the copy afterwards and never commit it. Releases themselves are cut by the
+  maintainer from the main checkout (`Docs/releasing.md`).
+- **Publishing.** Pushing a task branch and opening its PR belong to the loop. Merging is the
+  maintainer's call, or the agent squash-merges when asked in chat. After a merge: update
+  the main checkout, remove the worktree, set `agent:done`, and set dependents that were
+  waiting on it to `agent:ready`.
+- **Running the app.** The Debug app shares its bundle id, preferences and global hotkey
+  with an installed copy. Agents do not launch it; the maintainer runs `Scripts/run.sh`
+  from the worktree and reports back.

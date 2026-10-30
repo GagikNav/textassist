@@ -36,11 +36,15 @@ gh issue view "$n" --repo "$REPO" --json number,title,state,labels,milestone,bod
 
 task="$(task_of "$n")"; [[ -n "$task" ]] || task="(unmapped)"
 epic="$(epic_of "$n")"
+# Work filed after the v2 plan has no epic:N label; its epic is the native parent issue.
+parent="$(gh api "repos/$REPO/issues/$n/parent" --jq .number 2>/dev/null || true)"
+[[ "$parent" =~ ^[0-9]+$ ]] || parent=""   # a 404 prints an error body, not a number
+epic_display="${epic:-${parent:+#$parent}}"
 ms="$(issue_milestone "$n")"
 printf '%b\n' "${c_bold}#$n  $task${c_reset}"
 printf 'state      : %s\n' "$(gh issue view "$n" --repo "$REPO" --json state --jq '.state')"
 printf 'title      : %s\n' "$(gh issue view "$n" --repo "$REPO" --json title --jq '.title')"
-printf 'epic       : %s\n' "${epic:-—}"
+printf 'epic       : %s\n' "${epic_display:-—}"
 printf 'milestone  : %s\n' "${ms:-—}"
 printf 'labels     : %s\n' "$(gh issue view "$n" --repo "$REPO" --json labels --jq '[.labels[].name] | join(", ")')"
 
@@ -78,6 +82,8 @@ dor_ok=1
 [[ "$unmet" -eq 0 ]] || { warn "unmet dependencies ($unmet)"; dor_ok=0; }
 labels="$(gh issue view "$n" --repo "$REPO" --json labels --jq '[.labels[].name] | join(" ")')"
 for need in "kind:" "size:" "area:" "epic:"; do
+  # A native parent epic stands in for the epic:N label (those exist only for the v2 plan).
+  if [[ "$need" == "epic:" && -n "$parent" ]]; then continue; fi
   printf '%s' "$labels" | grep -q "$need" || { warn "missing a $need label"; dor_ok=0; }
 done
 if printf '%s' "$labels" | grep -qE 'agent:(ready|in-progress|blocked|review|done)'; then

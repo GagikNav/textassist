@@ -24,6 +24,11 @@ the running app".
 4. `Docs/design/v2/text-assist-v2-mockup.html` — the visual mockup for all six v2
    surfaces. Open in a browser; it has a Light/Dark switch in the header.
 
+Later plans, newest first: `tickets/PRD-v5-draft-text.md`, `tickets/PRD-v4-providers.md`,
+`tickets/PRD-v3-visual-parity.md`. Releases, versioning and in-app updates:
+`Docs/releasing.md`. Where the work stands: `Docs/status/OVERVIEW.md` and the epic
+handoffs in `Docs/handoffs/`.
+
 ## Agent workflow
 
 Tasks are GitHub issues. Agents follow `.agents/workflow.md` (the canonical loop:
@@ -66,7 +71,8 @@ xcodebuild build -project TextAssist.xcodeproj -scheme "Text Assist" \
 
 ## Hard constraints — do not violate
 
-1. **Never edit `TextAssist.xcodeproj/project.pbxproj`.** The target uses a
+1. **Never edit `TextAssist.xcodeproj/project.pbxproj`** (one approved exception path:
+   `.agents/workflow.md` §11). The target uses a
    file-system-synchronized group: any `.swift` file created under `TextAssist/` is
    compiled automatically. New folders are fine.
 2. **`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, Swift 5 language mode.** Types are
