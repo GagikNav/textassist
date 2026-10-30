@@ -8,5 +8,13 @@
 	<string>public.app-category.productivity</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/GagikNav/textassist/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>mz2T+2yu4+J62XHpDoH7OqL1K0age+o6HxVENvWPvzc=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 </dict>
 </plist>

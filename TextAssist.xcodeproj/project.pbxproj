@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BA4D753930533C13008D9442 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = BA4D753830533C13008D9442 /* MarkdownUI */; };
 		BA4D753C30533C1B008D9442 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = BA4D753B30533C1B008D9442 /* KeyboardShortcuts */; };
+		5C0A7E10A1B2C3D4E5F60003 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 5C0A7E10A1B2C3D4E5F60002 /* Sparkle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			files = (
 				BA4D753930533C13008D9442 /* MarkdownUI in Frameworks */,
 				BA4D753C30533C1B008D9442 /* KeyboardShortcuts in Frameworks */,
+				5C0A7E10A1B2C3D4E5F60003 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +177,7 @@
 			packageProductDependencies = (
 				BA4D753830533C13008D9442 /* MarkdownUI */,
 				BA4D753B30533C1B008D9442 /* KeyboardShortcuts */,
+				5C0A7E10A1B2C3D4E5F60002 /* Sparkle */,
 			);
 			productName = "Text Assist";
 			productReference = BA4D752730533B4B008D9442 /* Text Assist.app */;
@@ -207,6 +210,7 @@
 			packageReferences = (
 				BA4D753730533C13008D9442 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				BA4D753A30533C1B008D9442 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				5C0A7E10A1B2C3D4E5F60001 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BA4D752830533B4B008D9442 /* Products */;
@@ -461,6 +465,14 @@
 				minimumVersion = 3.0.1;
 			};
 		};
+		5C0A7E10A1B2C3D4E5F60001 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -473,6 +485,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA4D753A30533C1B008D9442 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		5C0A7E10A1B2C3D4E5F60002 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C0A7E10A1B2C3D4E5F60001 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
