@@ -24,16 +24,23 @@ ways to open the app.
 Run the script from a clean-enough main checkout on the `main` branch:
 
 ```sh
-Scripts/release.sh [version] [options]
+Scripts/release.sh <version> [options]
+Scripts/release.sh --bump patch|minor|major [options]
 ```
 
-If `version` is omitted, the script reads `MARKETING_VERSION` from the Xcode
-project. Versions must be `X.Y` or `X.Y.Z`; the corresponding Git tag is
-`v<version>`. For example:
+Exactly one of `<version>` or `--bump` is required. A version must be `X.Y.Z`; the
+corresponding Git tag is `v<version>`. `--bump` raises the highest existing `v*` tag
+(refreshed from `origin`) by one patch, minor or major step. `MARKETING_VERSION` in the
+Xcode project is stale and is no longer used as a default. For example:
 
 ```sh
 Scripts/release.sh 1.2.0 --draft
+Scripts/release.sh --bump patch --draft
 ```
+
+After building, the script checks that the app reports the requested version and
+build number. See [Docs/releasing.md](../Docs/releasing.md) for the versioning
+scheme and the full release steps.
 
 The script refuses to run from a task worktree or a branch other than `main`,
 and stops if the version tag or GitHub Release already exists. A dirty working
@@ -42,6 +49,7 @@ your changes before continuing.
 
 | Option | Effect |
 | --- | --- |
+| `--bump LEVEL` | Next version from the highest `v*` tag (`patch`, `minor` or `major`). |
 | `--skip-upload` | Build the DMG and checksum without creating a GitHub Release. |
 | `--no-sign` | Skip ad-hoc signing. Intended for local testing only. |
 | `--draft` | Create the GitHub Release as a draft. |
