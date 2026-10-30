@@ -421,7 +421,7 @@ if [[ "$SKIP_UPLOAD" -eq 1 ]]; then
   exit 0
 fi
 
-log "creating GitHub release $TAG…"
+log "creating GitHub release ${TAG}…"
 
 NOTES_FILE="$BUILD_DIR/release-notes.md"
 SIGNED_DESC="ad-hoc signed"
