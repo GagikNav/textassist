@@ -105,8 +105,54 @@ _To be written in #74 (the ZIP and `appcast.xml` that the release script uploads
 the app finds the newest release)._
 
 ### Signing and permissions
-_To be written in #77 (whether the Accessibility permission survives an update, and the
-recommended signing setup)._
+
+Text Assist needs the Accessibility permission to read the selection and to Replace.
+macOS records that permission against the app's **code requirement** and checks it again
+every time the app runs. If a new version no longer satisfies the requirement that was
+recorded, macOS treats it as a different app and the permission stops working.
+
+**What was measured (spike #77, macOS 27.0.1).** Two versions of the app (9.0.1 and 9.0.2,
+same source, different version and build number) were built and signed in each way, and
+`codesign -v --test-requirement` checked whether the second satisfied the requirement of
+the first:
+
+| Signing | Requirement (`codesign -dr -`) | Version 2 satisfies version 1's? |
+|:--|:--|:--|
+| Ad-hoc (`release.sh` today) | `cdhash H"f7f3…"`, the build's own hash, different for every version | **No** |
+| Stable self-signed certificate | `identifier "com.gagik.TextAssist" and certificate leaf = H"<certificate hash>"` | **Yes** |
+| Certificate version 1 vs ad-hoc version 2 (switching once) | certificate requirement against an ad-hoc build | No (one-time reset) |
+
+The controls (each build against its own requirement) passed.
+
+**What was not measured.** The check shows the requirement macOS compares; it did not
+change the Accessibility setting, because granting it is a system security setting that
+only the person at the machine may change. To confirm on a real machine, see "How to
+confirm by hand" below.
+
+**Options**
+
+| Option | Cost | Accessibility after an update | Gatekeeper on first manual install |
+|:--|:--|:--|:--|
+| Keep ad-hoc signing | Free | Expected to be lost after every update; users re-grant each time | Blocks; right-click, Open |
+| Self-signed certificate, same one for every release | Free; one certificate to create and back up | Kept | Blocks; right-click, Open |
+| Apple Developer ID plus notarization | Paid yearly; `notarytool` step in `release.sh` | Kept | No block; also allows the official Homebrew cask repository |
+
+**Recommendation:** use a self-signed certificate now, and switch at the first release
+that contains the updater (tracked in #83). That release already needs a manual install,
+so users re-grant Accessibility once there and not again. Revisit a Developer ID if the
+app reaches people who cannot get past the Gatekeeper step. Keep ad-hoc signing for
+local builds.
+
+**How to confirm by hand (optional, about five minutes).** Build two versions with each
+signing (`release.sh --skip-upload` twice), install the first in `/Applications`, grant
+Accessibility, check Replace in TextEdit, quit, copy the second over it, relaunch and try
+Replace again. With ad-hoc signing expect it to stop working (the System Settings entry
+may still look enabled; toggle it off and on, or remove and re-add the app). With the
+certificate expect it to keep working.
+
+**If the certificate is lost.** A new certificate has a different requirement, so every
+user re-grants Accessibility once. Back up the exported certificate next to the update
+signing key.
 
 ### Homebrew
 _To be written in #76 (installing and upgrading with `brew install --cask`)._
