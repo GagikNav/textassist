@@ -1,6 +1,6 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
@@ -20,8 +20,6 @@ _Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #66 Make Esc dismiss the menu-bar window
-- #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
@@ -108,6 +106,7 @@ _Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
+- [issue-65-close-keyablepanel-on-esc.md](../handoffs/issue-65-close-keyablepanel-on-esc.md)
 - [issue-66-make-esc-dismiss-the-menu-bar-window.md](../handoffs/issue-66-make-esc-dismiss-the-menu-bar-window.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
@@ -117,4 +116,3 @@ _Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
 - [issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md](../handoffs/issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md)
 - [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](../handoffs/issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md)
-- [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)

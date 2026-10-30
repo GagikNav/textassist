@@ -1,9 +1,10 @@
 # Handoff index
 
-_Generated 2026-10-30 20:30 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 20:56 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 | Issue | Task | Status | Updated | File |
 |--:|:--|:--|:--|:--|
+| #65 | ? | agent:review | 2026-10-30 | [issue-65-close-keyablepanel-on-esc.md](./issue-65-close-keyablepanel-on-esc.md) |
 | #66 | ? | review(fiximplemented,NOTverifiedintherunningapp) | 2026-10-30 | [issue-66-make-esc-dismiss-the-menu-bar-window.md](./issue-66-make-esc-dismiss-the-menu-bar-window.md) |
 | #9 | T1.1 | agent:done | 2026-10-03 | [issue-9-summarystyle.md](./issue-9-summarystyle.md) |
 | #83 | ? | InReview | 2026-10-30 | [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](./issue-83-sign-releases-with-a-stable-self-signed-certificate.md) |
