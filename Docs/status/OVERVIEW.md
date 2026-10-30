@@ -1,10 +1,10 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 21:16 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
-- Total issues: 59
+- Total issues: 60
 
 ## Milestones
 
@@ -20,11 +20,13 @@ _Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
+- #103 Release notes: list what changed since the previous release
 
 **Ready**
 - #85 Add the Refine as Prompt style to the Write group
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
+- #67 Make Esc work while a text input has focus
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
@@ -34,7 +36,6 @@ _Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - #86 Tune the prompt-refinement system prompt and add a sample set
 - #81 Document picker keys and verify the keyboard flow end to end
 - #80 Highlight the selected picker row and add a key hint
-- #67 Make Esc work while a text input has focus
 - #51 Prevent superseded streams from clobbering popup state
 
 **Epics ready to delegate**
@@ -106,8 +107,7 @@ _Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-65-close-keyablepanel-on-esc.md](../handoffs/issue-65-close-keyablepanel-on-esc.md)
-- [issue-66-make-esc-dismiss-the-menu-bar-window.md](../handoffs/issue-66-make-esc-dismiss-the-menu-bar-window.md)
+- [issue-103-release-notes-list-what-changed-since-the-previous-release.md](../handoffs/issue-103-release-notes-list-what-changed-since-the-previous-release.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
@@ -116,3 +116,4 @@ _Generated 2026-10-30 20:55 by `Scripts/agent/overview.sh`. Do not edit by hand.
 - [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
 - [issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md](../handoffs/issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md)
 - [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](../handoffs/issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md)
+- [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
