@@ -1,10 +1,10 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 16:58 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-10-30 17:09 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
-- Total issues: 49
+- Total issues: 54
 
 ## Milestones
 
@@ -20,26 +20,30 @@ _Generated 2026-10-30 16:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #70 Versioning policy, release guide and a reliable release version
+- #77 Spike: stable signing so Accessibility survives updates
 
 **Ready**
-- #77 Spike: stable signing so Accessibility survives updates
+- #79 Add ↑/↓/Return keyboard navigation to the style picker
+- #76 Homebrew tap and cask (optional second channel)
+- #71 Generate and document the Sparkle update-signing key (maintainer action)
 - #66 Make Esc dismiss the menu-bar window
 - #65 Close KeyablePanel windows on Esc (result popup, chat popup, settings)
 - #50 Cancel the in-flight Ollama stream immediately on style change
 - #49 Add repeat_penalty/top_p/stop to Ollama chat options
 
 **Blocked**
-- #76 Homebrew tap and cask (optional second channel)
+- #83 Sign releases with a stable self-signed certificate
+- #81 Document picker keys and verify the keyboard flow end to end
+- #80 Highlight the selected picker row and add a key hint
 - #75 Cut the first updater-enabled release and verify updating end to end
 - #74 Release script: build ZIP, sign it and publish appcast.xml
 - #73 Update UI: version label, Check for Updates… and auto-check setting
 - #72 Integrate Sparkle: updater service and Info.plist keys
-- #71 Generate and document the Sparkle update-signing key (maintainer action)
 - #67 Make Esc work while a text input has focus
 - #51 Prevent superseded streams from clobbering popup state
 
 **Epics ready to delegate**
+- #82 Epic: Keyboard navigation in the style picker menu
 - #69 Epic: In-app updates and versioned releases
 - #68 Epic: Esc dismisses every Text Assist window
 - #52 Epic: Fix Ollama prompt repetition on style change
@@ -107,13 +111,13 @@ _Generated 2026-10-30 16:58 by `Scripts/agent/overview.sh`. Do not edit by hand.
 
 ## Recent handoffs
 
-- [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
+- [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
 - [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
 - [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
+- [issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md](../handoffs/issue-70-versioning-policy-release-guide-and-a-reliable-release-versi.md)
 - [issue-7-outputcleaner.md](../handoffs/issue-7-outputcleaner.md)
 - [issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md](../handoffs/issue-60-menu-bar-assist-with-selection-beeps-and-does-not-start-capt.md)
 - [issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md](../handoffs/issue-59-replace-in-place-fails-or-beeps-instead-of-replacing-selecti.md)
 - [issue-27-menu-bar-model-picker.md](../handoffs/issue-27-menu-bar-model-picker.md)
 - [issue-26-recent-history.md](../handoffs/issue-26-recent-history.md)
 - [issue-25-direct-action-hotkeys-skip-the-picker.md](../handoffs/issue-25-direct-action-hotkeys-skip-the-picker.md)
-- [issue-24-settings-hotkey-recorders-and-launch-at-login.md](../handoffs/issue-24-settings-hotkey-recorders-and-launch-at-login.md)
