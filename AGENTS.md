@@ -1,33 +1,33 @@
 # AGENTS.md — Text Assist
 
-Agent onboarding. Read this first, then the PRD in the order below.
+Agent onboarding: the project facts and the hard rules. The process lives in
+`.agents/workflow.md`.
 
 ## What this is
 
 Text Assist is a macOS menu-bar utility (agent app, no Dock icon). The user selects
 text in any app, presses `⌥⇧S`, picks an action from a non-activating floating picker,
-and sees the result in a floating panel. v2 adds **Write** (rewrite in place) and
-**Chat** (multi-turn with a pinned selection) on top of Transform (summarize).
+and sees the result in a floating panel. The actions are grouped as **Transform**
+(summarize), **Write** (rewrite in place) and **Chat** (multi-turn with a pinned
+selection).
 
 Stack: Swift 5 language mode, SwiftUI + AppKit, local Ollama (`/api/chat`, NDJSON
 streaming). **No automated tests** — verification is "it builds + a manual check in
 the running app".
 
-## Read order
+## Where the work comes from
 
-1. `tickets/PRD-v2.md` — product requirements and the full task breakdown (Epics 0–6).
-   §3.2 (constraints) and §7 (working agreements) govern every task.
-2. `Docs/design/v2/README.md` — the **approved** design tokens: color, type, spacing,
-   radius, panel sizes, states, SwiftUI button mapping.
-3. `Docs/design/v2/IMPLEMENTATION.md` — SwiftUI translation of those tokens (drop-in
-   values, component → file map, task mapping). Adds no new design decisions.
-4. `Docs/design/v2/text-assist-v2-mockup.html` — the visual mockup for all six v2
-   surfaces. Open in a browser; it has a Light/Dark switch in the header.
+GitHub issues are the only task list. **Any issue with no open dependency can be picked
+up** — there is no global order, no milestone gate, and no privileged "next" ticket. The
+issue's own `Depends on:` line is the whole sequencing rule.
 
-Later plans, newest first: `tickets/PRD-v5-draft-text.md`, `tickets/PRD-v4-providers.md`,
-`tickets/PRD-v3-visual-parity.md`. Releases, versioning and in-app updates:
-`Docs/releasing.md`. Where the work stands: `Docs/status/OVERVIEW.md` and the epic
-handoffs in `Docs/handoffs/`.
+An issue may point at background material: a spec or PRD under `tickets/`, design tokens
+under `Docs/design/`, or a previous handoff under `Docs/handoffs/`. Read the part the
+issue names, when it names one. Otherwise the issue body and the code are the
+specification.
+
+Where the work stands across all issues: `Docs/status/OVERVIEW.md` and the handoffs in
+`Docs/handoffs/`. Releases and versioning: `Docs/releasing.md`.
 
 ## Agent workflow
 
@@ -87,22 +87,15 @@ xcodebuild build -project TextAssist.xcodeproj -scheme "Text Assist" \
    app must stay frontmost so Replace works.
 6. Preserve the `///` doc-comment style on new public types and methods.
 
-## Working agreements (PRD §7)
+## Working agreements
 
 - One task = one reviewable change. Run the build check before declaring done.
 - Do not refactor unrelated code. Do not rename existing types.
 - "Done when" is checked by hand in the running app. There are no tests to write.
-- Orchestrator edits (`T3.5`, `T4.4`, `T6.1`, `T6.2`) all touch the same file — run
-  them **sequentially**. `T1.3`, `T1.4`, `T3.2`, `T3.3`, `T5.1` are parallelizable once
-  `T1.1` exists.
-
-## Milestone gate
-
-`M0` (design, task `T0.1`) is **approved**. Implement `M1` → `M5` in order
-(`tickets/PRD-v2.md` §8). The design is frozen — build to it, do not redesign flows.
-The ASCII sketches in PRD §4 are the flow baseline; the mockup refines them.
+- Two tasks that edit the same file do not run at once. `sequentialFiles` in
+  `.agents/config.json` lists the files known to collide; add to it when you find another.
 
 ## Layout
 
 `TextAssist/` holds `App`, `Core`, `Models`, `Providers`, `Stores`, `UI`, `Utilities`
-(all file-system-synchronized). The new v2 files are listed in PRD §6 ("File map").
+(all file-system-synchronized). Shared view helpers live in `UI/Shared/`.

@@ -76,7 +76,8 @@ bar() {
   echo
   echo "## Epics"
   echo
-  for n in $(jq -r '.epics | keys[]' "$CONFIG" | sort -n); do
+  for n in $(gh issue list --repo "$REPO" --label kind:epic --state all --limit 100 \
+               --json number --jq '.[].number' | sort -n); do
     title="$(gh issue view "$n" --repo "$REPO" --json title --jq '.title' 2>/dev/null || echo "Epic #$n")"
     echo "### #$n $title"
     echo

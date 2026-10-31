@@ -45,8 +45,8 @@ printf '%s' "$subs_json" | jq -r '.[] | [.number, (.state // "OPEN"), (.title //
 
 echo
 log "Sequential constraint"
-printf '  %s must run one at a time (same file: SummarizationOrchestrator.swift).\n' \
-  "$(jq -r '.sequentialTasks | join(", ")' "$CONFIG")"
+printf '  %s: only one task that edits these files runs at a time.\n' \
+  "$(jq -r '.sequentialFiles | join(", ")' "$CONFIG")"
 echo
 log "Reminder"
 printf '  The parent orchestrator aggregates only; it must not implement a child task.\n'
