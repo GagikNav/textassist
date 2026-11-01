@@ -72,14 +72,7 @@ while IFS='|' read -r title desc; do
     gh api "repos/$REPO/milestones" -f title="$title" -f description="$desc" >/dev/null
     printf '  milestone created: %s\n' "$title"
   fi
-done <<'MILESTONES'
-M0 - Design approved|Design gate. Mockup + tokens in Docs/design/v2/, approved (PRD-v2 section 8).
-M1 - Foundation|T1.1-T1.4. Foundation compiles; Short Summary works as before.
-M2 - Write + Replace|T2.1-T2.2, T3.1-T3.5. Option+Shift+S, g, Command+Return fixes text in TextEdit.
-M3 - Chat|T4.1-T4.4. Chat with pinned selection and Continue in Chat.
-M4 - Menu bar status|T5.1-T5.2. Green/red Ollama dot and model label.
-M5 - Polish (P1)|T6.1-T6.4. Direct hotkeys, history, settings, model picker.
-MILESTONES
+done < <(jq -r '.milestones | to_entries[] | "\(.value)|\(.key) milestone."' "$CONFIG")
 ok "milestones ready"
 
 # --- 3. .github/agents symlink ----------------------------------------------

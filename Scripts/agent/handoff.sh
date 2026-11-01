@@ -35,7 +35,7 @@ git -C "$REPO_ROOT" add "$hfile" 2>/dev/null || true
 
 if ! git -C "$REPO_ROOT" diff --cached --quiet; then
   task="$(task_of "$n")"
-  git -C "$REPO_ROOT" commit -q -m "chore(agent): handoff for #$n ($task)"
+  git -C "$REPO_ROOT" commit -q -m "chore(agent): handoff for #$n${task:+ ($task)}"
   ok "committed handoff, overview and index"
 else
   printf '  no handoff changes to commit\n'

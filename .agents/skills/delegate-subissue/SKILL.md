@@ -20,7 +20,7 @@ argument-hint: "<epic-issue-number>"
    implement a child's work.**
 4. Enforce `maxDepth` (2) from `.agents/config.json`. If a sub-issue has its own open
    sub-issues at depth 2, stop and report — the plan said depth 2 is leaves.
-5. Serialise `sequentialTasks` (`T3.5`, `T4.4`, `T6.1`, `T6.2`): never run two at once.
+5. Serialise the files in `sequentialFiles`: never run two tasks that edit the same one at once.
 6. Read-only children (explorer/reviewer) may run in parallel.
 
 ## Output

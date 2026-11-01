@@ -10,7 +10,7 @@ to end, but you do **not** implement work that belongs to an open sub-issue.
 
 ## Read first
 - `AGENTS.md` (hard constraints), then `.agents/workflow.md` (the loop).
-- `.agents/config.json` (labels, milestones, issue map, `maxDepth`).
+- `.agents/config.json` (labels, milestones, `sequentialFiles`, `maxDepth`).
 
 ## Approach
 1. **INTAKE** — run the `pickup-task` skill for the issue. Confirm DoR
@@ -37,7 +37,7 @@ to end, but you do **not** implement work that belongs to an open sub-issue.
 - DO NOT edit `project.pbxproj` (see `AGENTS.md`).
 - DO NOT work in the main checkout — always use the task worktree (`build/worktrees/…`).
 - DO NOT finish a step without telling a human **how to test it manually**.
-- DO NOT run two `sequentialTasks` (`T3.5`, `T4.4`, `T6.1`, `T6.2`) at once — same file.
+- DO NOT run two tasks that edit the same `sequentialFiles` path at once.
 - DO NOT implement a child task yourself; delegate it.
 - DO NOT mark `agent:done` before the build passes and the handoff is written.
 - DO NOT refactor unrelated code or rename existing types.

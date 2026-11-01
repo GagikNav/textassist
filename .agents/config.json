@@ -41,8 +41,7 @@
     },
     "kind": { "epic": "kind:epic", "task": "kind:task" },
     "size": { "S": "size:S", "M": "size:M", "L": "size:L" },
-    "area": ["models", "providers", "core", "stores", "ui", "utilities", "design"],
-    "epic": { "0": "epic:0", "1": "epic:1", "2": "epic:2", "3": "epic:3", "4": "epic:4", "5": "epic:5", "6": "epic:6" }
+    "area": ["models", "providers", "core", "stores", "ui", "utilities", "design"]
   },
 
   "milestones": {

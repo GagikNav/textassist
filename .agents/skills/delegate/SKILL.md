@@ -10,5 +10,5 @@ Apply the **delegate-subissue** skill (`.agents/skills/delegate-subissue/SKILL.m
 2. For each open sub-issue, start a **child Orchestrator** subagent (`Orchestrator`
    agent) scoped to that sub-issue; it runs the full workflow loop.
 3. The parent aggregates only — it must not implement a child's work.
-4. Enforce `maxDepth` = 2 and serialise `T3.5`, `T4.4`, `T6.1`, `T6.2`.
+4. Enforce `maxDepth` = 2 and serialise any `sequentialFiles` overlaps.
 5. Report the sub-issue → child → state table and what is blocked.

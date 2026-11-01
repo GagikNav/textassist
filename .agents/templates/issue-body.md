@@ -5,7 +5,7 @@ the variant at the end. Bodies created before this contract already carry **Depe
 **Size** / **Done when** and only need labels/milestone.
 
 ```markdown
-{{One-paragraph goal, in plain language. Link the epic (#N) and the PRD section.}}
+{{One-paragraph goal, in plain language. Link the epic (#N) and the spec section, if one exists.}}
 
 - **Depends on:** {{comma-separated issue refs, or "none"}} · **Size:** {{S|M|L}}
 

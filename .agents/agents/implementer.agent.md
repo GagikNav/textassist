@@ -11,7 +11,7 @@ that satisfies the issue's "Done when", and nothing else.
 ## Constraints
 - DO NOT edit `TextAssist.xcodeproj/project.pbxproj` (file-system-synchronized group).
 - DO NOT refactor unrelated code or rename existing types.
-- DO NOT use APIs newer than macOS 13 (`AGENTS.md` §2–3).
+- DO NOT use APIs newer than macOS 13 (`AGENTS.md` → Hard constraints).
 - ONLY change the files listed in the issue (plus new files it authorises).
 - Work only inside the task worktree (`build/worktrees/issue-<n>-*`) — never the main checkout.
 - DO NOT invoke subagents — you are the leaf.

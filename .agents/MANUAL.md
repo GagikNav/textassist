@@ -145,8 +145,9 @@ Switching session, model, or harness loses nothing: run `/resume`.
 - **State (exactly one per issue):** `agent:ready`, `agent:in-progress`, `agent:blocked`,
   `agent:review`, `agent:done`.
 - **Kind:** `kind:epic`, `kind:task` · **Size:** `size:S|M|L` · **Area:** `area:*` ·
-  **Epic:** `epic:0` … `epic:6`.
-- **Milestones:** `M0 - Design approved` … `M5 - Polish (P1)` (PRD §8).
+  **Epic:** `epic:N` (one per epic issue; the values live in the GitHub repo, not here).
+- **Milestones:** whatever `.agents/config.json` defines under `milestones` — add new ones
+  there and in GitHub before filing issues against them.
 
 ---
 

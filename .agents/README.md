@@ -8,7 +8,7 @@ same files. Harness-specific folders (`.github/`, `CLAUDE.md`) are thin adapters
 
 | Path | Purpose |
 |:--|:--|
-| `config.json` | Repo, labels, milestones, issue→task/dependency map, `maxDepth`. Scripts read this. |
+| `config.json` | Repo, labels, milestones, `sequentialFiles`, `maxDepth`. Scripts read this. |
 | `MANUAL.md` | **Human manual:** what every skill, agent, prompt and script does, and how to use them. Start here. |
 | `workflow.md` | The canonical loop, roles, delegation rules, guardrails, DoR/DoD. **Read this first.** |
 | `agents/*.agent.md` | Canonical agent definitions (orchestrator, explorer, implementer, reviewer). Copilot reads them via the `.github/agents` symlink. |

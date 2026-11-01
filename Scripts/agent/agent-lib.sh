@@ -42,10 +42,30 @@ cfg_raw()  { jq -r "$1" "$CONFIG"; }
 task_of()  { jq -r --arg n "$1" '.issues[$n].task // empty' "$CONFIG"; }
 epic_of()  { jq -r --arg n "$1" '.issues[$n].epic // empty' "$CONFIG"; }
 field_of() { jq -r --arg n "$1" --arg f "$2" '.issues[$n][$f] // empty' "$CONFIG"; }
-deps_of()  { jq -r --arg n "$1" '.issues[$n].blockedBy[]? // empty' "$CONFIG"; }
+
+# Dependency list for an issue: the `**Depends on:**`/`**Blocked by:**` line in its body,
+# plus anything the (optional) static map still records. The body is the source of truth.
+deps_of() {
+  local n="$1" body
+  body="$(gh issue view "$n" --repo "$REPO" --json body --jq '.body // ""' 2>/dev/null || true)"
+  {
+    printf '%s\n' "$body" \
+      | grep -iE '\*\*(depends on|blocked by):?\*\*' \
+      | grep -oE '#[0-9]+' | tr -d '#' || true
+    jq -r --arg n "$n" '.issues[$n].blockedBy[]? // empty' "$CONFIG" 2>/dev/null || true
+  } | sort -un
+}
 
 milestone_name() { jq -r --arg m "$1" '.milestones[$m] // empty' "$CONFIG"; }
-issue_milestone() { jq -r --arg n "$1" '.issues[$n].milestone // empty' "$CONFIG"; }
+# Milestone title for an issue, read from GitHub (the static map is only a fallback).
+issue_milestone() {
+  local n="$1" key title
+  key="$(jq -r --arg n "$n" '.issues[$n].milestone // empty' "$CONFIG")"
+  if [[ -n "$key" ]]; then
+    title="$(milestone_name "$key")"; [[ -n "$title" ]] && { printf '%s' "$title"; return; }
+  fi
+  gh issue view "$n" --repo "$REPO" --json milestone --jq '.milestone.title // ""' 2>/dev/null || true
+}
 
 state_label_for() {
   case "$1" in

@@ -1,10 +1,10 @@
 # Text Assist — Work Overview
 
-_Generated 2026-10-30 21:24 by `Scripts/agent/overview.sh`. Do not edit by hand._
+_Generated 2026-11-01 12:06 by `Scripts/agent/overview.sh`. Do not edit by hand._
 
 - Repo: [GagikNav/textassist](https://github.com/GagikNav/textassist)
 - Project: [#4](https://github.com/users/GagikNav/projects/4)
-- Total issues: 60
+- Total issues: 61
 
 ## Milestones
 
@@ -20,9 +20,9 @@ _Generated 2026-10-30 21:24 by `Scripts/agent/overview.sh`. Do not edit by hand.
 ## Now
 
 **In progress**
-- #67 Make Esc work while a text input has focus
 
 **Ready**
+- #106 Use Apple's on-device Foundation Model instead of Ollama (selectable provider)
 - #85 Add the Refine as Prompt style to the Write group
 - #79 Add ↑/↓/Return keyboard navigation to the style picker
 - #76 Homebrew tap and cask (optional second channel)
@@ -40,7 +40,6 @@ _Generated 2026-10-30 21:24 by `Scripts/agent/overview.sh`. Do not edit by hand.
 **Epics ready to delegate**
 - #89 Epic: Refine as Prompt — turn selected text into a better LLM prompt
 - #82 Epic: Keyboard navigation in the style picker menu
-- #68 Epic: Esc dismisses every Text Assist window
 - #52 Epic: Fix Ollama prompt repetition on style change
 
 ## Epics
@@ -104,15 +103,68 @@ _Generated 2026-10-30 21:24 by `Scripts/agent/overview.sh`. Do not edit by hand.
 |:--|--:|:--|
 | T0.1 Design mockup for all v2 surfaces (blocks Epics 1–6) | #28 | closed |
 
+### #47 Epic: Fix Ollama prompt repetition on style change
+
+| Task | Issue | State |
+|:--|--:|:--|
+
+### #52 Epic: Fix Ollama prompt repetition on style change
+
+| Task | Issue | State |
+|:--|--:|:--|
+| Add repeat_penalty/top_p/stop to Ollama chat options | #49 | open |
+| Cancel the in-flight Ollama stream immediately on style change | #50 | open |
+| Prevent superseded streams from clobbering popup state | #51 | open |
+
+### #68 Epic: Esc dismisses every Text Assist window
+
+| Task | Issue | State |
+|:--|--:|:--|
+| Close KeyablePanel windows on Esc (result popup, chat popup, settings) | #65 | closed |
+| Make Esc dismiss the menu-bar window | #66 | closed |
+| Make Esc work while a text input has focus | #67 | closed |
+
+### #69 Epic: In-app updates and versioned releases
+
+| Task | Issue | State |
+|:--|--:|:--|
+| Versioning policy, release guide and a reliable release version | #70 | closed |
+| Generate and document the Sparkle update-signing key (maintainer action) | #71 | closed |
+| Integrate Sparkle: updater service and Info.plist keys | #72 | closed |
+| Update UI: version label, Check for Updates… and auto-check setting | #73 | closed |
+| Release script: build ZIP, sign it and publish appcast.xml | #74 | closed |
+| Cut the first updater-enabled release and verify updating end to end | #75 | closed |
+| Homebrew tap and cask (optional second channel) | #76 | open |
+| Spike: stable signing so Accessibility survives updates | #77 | closed |
+| Sign releases with a stable self-signed certificate | #83 | closed |
+| Release notes: list what changed since the previous release | #103 | closed |
+
+### #82 Epic: Keyboard navigation in the style picker menu
+
+| Task | Issue | State |
+|:--|--:|:--|
+| Add ↑/↓/Return keyboard navigation to the style picker | #79 | open |
+| Highlight the selected picker row and add a key hint | #80 | open |
+| Document picker keys and verify the keyboard flow end to end | #81 | open |
+
+### #89 Epic: Refine as Prompt — turn selected text into a better LLM prompt
+
+| Task | Issue | State |
+|:--|--:|:--|
+| Add the Refine as Prompt style to the Write group | #85 | open |
+| Tune the prompt-refinement system prompt and add a sample set | #86 | open |
+| Make the Write result flow handle restructured, multi-line output | #87 | open |
+| Document Refine as Prompt and verify it appears everywhere styles are listed | #88 | open |
+
 ## Recent handoffs
 
 - [issue-67-make-esc-work-while-a-text-input-has-focus.md](../handoffs/issue-67-make-esc-work-while-a-text-input-has-focus.md)
-- [issue-9-summarystyle.md](../handoffs/issue-9-summarystyle.md)
-- [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
-- [issue-8-capture-metadata-source-app-pid-and-capture-origin.md](../handoffs/issue-8-capture-metadata-source-app-pid-and-capture-origin.md)
-- [issue-77-spike-stable-signing-so-accessibility-survives-updates.md](../handoffs/issue-77-spike-stable-signing-so-accessibility-survives-updates.md)
+- [issue-103-release-notes-list-what-changed-since-the-previous-release.md](../handoffs/issue-103-release-notes-list-what-changed-since-the-previous-release.md)
+- [issue-66-make-esc-dismiss-the-menu-bar-window.md](../handoffs/issue-66-make-esc-dismiss-the-menu-bar-window.md)
+- [issue-65-close-keyablepanel-on-esc.md](../handoffs/issue-65-close-keyablepanel-on-esc.md)
 - [issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md](../handoffs/issue-75-cut-the-first-updater-enabled-release-and-verify-updating-end-to-end.md)
-- [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)
+- [issue-83-sign-releases-with-a-stable-self-signed-certificate.md](../handoffs/issue-83-sign-releases-with-a-stable-self-signed-certificate.md)
+- [issue-69-epic-in-app-updates-and-versioned-releases.md](../handoffs/issue-69-epic-in-app-updates-and-versioned-releases.md)
 - [issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md](../handoffs/issue-73-update-ui-version-label-check-for-updates-and-auto-check-set.md)
 - [issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md](../handoffs/issue-72-integrate-sparkle-updater-service-and-info-plist-keys.md)
-- [issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md](../handoffs/issue-71-generate-and-document-the-sparkle-update-signing-key-maintai.md)
+- [issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md](../handoffs/issue-74-release-script-build-zip-sign-it-and-publish-appcast-xml.md)

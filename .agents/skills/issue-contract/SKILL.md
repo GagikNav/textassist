@@ -15,10 +15,11 @@ argument-hint: "<issue-number or 'new'>"
    - Task: goal, **Depends on / Size**, **Files**, **Done when**.
    - Epic: goal, **Blocked by**, and a task list; no "Done when" of its own.
 2. Apply exactly one of each label: `kind:` (`task`/`epic`), `size:` (`S`/`M`/`L`),
-   `area:`, and one `agent:` state (default `agent:ready`). Add an `epic:` label
-   (`epic:0…6`) only for the v2 plan; later work belongs to its epic through the native
-   sub-issue link (step 5).
-3. Assign the milestone (`M0`–`M5`) per `.agents/config.json`.
+   `area:`, and one `agent:` state (default `agent:ready`). The epic link is the native
+   sub-issue relationship (step 5); only add an `epic:` label when the repo already uses
+   one for that epic.
+3. Assign a milestone only if the repo has one that fits; milestones and epics live in
+   GitHub, not in this file.
 4. Set `agent:blocked` if any issue in **Depends on** is open; else `agent:ready`.
 5. Link the task as a **native sub-issue** of its epic.
 6. For a bulk pass over existing issues, run `Scripts/agent/normalize-issues.sh`.

@@ -6,7 +6,7 @@ Closes #{{ISSUE}}.
 {{One-paragraph summary of the change}}
 
 ## Why
-{{The issue goal; link the epic and PRD section}}
+{{The issue goal; link the epic and the spec section, if one exists}}
 
 ## How
 - {{Key implementation notes}}

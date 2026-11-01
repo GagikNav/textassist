@@ -104,16 +104,16 @@ bar() {
   echo
   echo "_Generated $(date '+%Y-%m-%d %H:%M') by \`Scripts/agent/overview.sh\`. Do not edit by hand._"
   echo
-  echo "| Issue | Task | Status | Updated | File |"
+  echo "| Issue | Title | Status | Updated | File |"
   echo "|--:|:--|:--|:--|:--|"
   if compgen -G "$REPO_ROOT/Docs/handoffs/issue-*.md" >/dev/null; then
     for f in $(ls -t "$REPO_ROOT/Docs/handoffs/"issue-*.md); do
       b="$(basename "$f")"
       num="$(printf '%s' "$b" | sed -E 's/^issue-([0-9]+)-.*/\1/')"
-      task="$(task_of "$num")"
+      title="$(jq -r --arg n "$num" '.[] | select(.number == ($n|tonumber)) | .title' "$tmp" 2>/dev/null | head -1)"
       status="$(grep -E '^\| Status \|' "$f" | awk -F'|' '{gsub(/ /,"",$3); print $3}' || true)"
       updated="$(grep -E '^\| Updated \|' "$f" | awk -F'|' '{gsub(/ /,"",$3); print $3}' || true)"
-      printf '| #%s | %s | %s | %s | [%s](./%s) |\n' "$num" "${task:-?}" "${status:-?}" "${updated:-?}" "$b" "$b"
+      printf '| #%s | %s | %s | %s | [%s](./%s) |\n' "$num" "${title:-—}" "${status:-?}" "${updated:-?}" "$b" "$b"
     done
   else
     echo "| _none_ | | | | |"

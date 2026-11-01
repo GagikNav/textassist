@@ -12,7 +12,7 @@ description: "Regenerate the holistic project overview and handoff index from Gi
 ## Procedure
 1. Run `Scripts/agent/overview.sh`. It reads `gh issue list` (all states), milestones,
    labels, and `Docs/handoffs/`, then writes:
-   - `Docs/status/OVERVIEW.md` — milestones M0–M5 with progress, per-epic tables,
+   - `Docs/status/OVERVIEW.md` — milestone progress, per-epic tables,
      in-progress/blocked lists, and the latest handoffs.
    - `Docs/handoffs/INDEX.md` — issue → handoff file → status → date.
 2. If the Project scope is available, it also prints a link to the board; otherwise it

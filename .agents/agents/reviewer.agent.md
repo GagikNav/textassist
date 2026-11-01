@@ -20,7 +20,7 @@ modify it. Your job is to find reasons it is not done yet.
    handoff's **How to test manually** steps are present, complete, and actually exercise
    the change.
 3. Run the build check from `.agents/config.json`.
-4. Check each constraint in `AGENTS.md` §2–3 and PRD §3.2 that the diff could touch:
+4. Check each hard constraint in `AGENTS.md` that the diff could touch:
    no `project.pbxproj` edits, macOS 13 APIs only, MainActor isolation, sandbox off,
    non-activating panels, doc-comment style, no unrelated changes or renames.
 5. For each finding give: severity (blocking / non-blocking), file:line, why, and the

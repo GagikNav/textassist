@@ -29,6 +29,6 @@ argument-hint: "<issue-number>"
 ## Guardrails
 - Never start a task whose dependencies are open.
 - Never work in the main checkout — always `cd` into the task worktree first.
-- Never start a `sequentialTasks` item (`T3.5`, `T4.4`, `T6.1`, `T6.2`) while another
-  is in progress — same file (`SummarizationOrchestrator.swift`).
+- Never start a task that edits a `sequentialFiles` path while another task editing the
+  same file is in progress.
 - Remove the worktree after the PR merges: `Scripts/agent/worktree.sh <n> --remove`.

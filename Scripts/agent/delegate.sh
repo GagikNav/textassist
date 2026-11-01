@@ -27,7 +27,7 @@ echo
 
 printf '%s' "$subs_json" | jq -r '.[] | [.number, (.state // "OPEN"), (.title // "")] | @tsv' \
 | while IFS=$'\t' read -r num state title; do
-    task="$(task_of "$num")"; [[ -n "$task" ]] || task="?"
+    label="$(task_of "$num")"; [[ -n "$label" ]] || label="$(printf '%.44s' "$title")"
     deps="$(deps_of "$num")"
     ready="yes"
     blocked_list=""
@@ -35,11 +35,11 @@ printf '%s' "$subs_json" | jq -r '.[] | [.number, (.state // "OPEN"), (.title //
       if ! issue_is_closed "$d"; then ready="no"; blocked_list="$blocked_list #$d"; fi
     done
     if [[ "$state" == "CLOSED" ]]; then
-      printf '  #%-3s %-6s CLOSED\n' "$num" "$task"
+      printf '  #%-3s CLOSED     %s\n' "$num" "$label"
     elif [[ "$ready" == "yes" ]]; then
-      printf '  #%-3s %-6s READY      → spawn Orchestrator subagent on #%s\n' "$num" "$task" "$num"
+      printf '  #%-3s READY      %s  → spawn Orchestrator subagent on #%s\n' "$num" "$label" "$num"
     else
-      printf '  #%-3s %-6s BLOCKED by%s\n' "$num" "$task" "$blocked_list"
+      printf '  #%-3s BLOCKED    %s  (by%s)\n' "$num" "$label" "$blocked_list"
     fi
   done
 
